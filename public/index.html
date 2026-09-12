@@ -920,7 +920,7 @@
               <div
                 class="hero-slide ${index === 0 ? "active" : ""}"
                 data-index="${index}"
-                onclick="location.href='/watch.html?id=${encodeURIComponent(video.youtube_id)}'"
+                onclick="window.location.href='/watch.html?id='+encodeURIComponent('${video.youtube_id}')"
               >
 
                 <img
@@ -1238,21 +1238,7 @@
 
 
   <!-- EXISTING APP.JS -->
-  <script>
-/* NIKHILVERSE internal video navigation safety net */
-document.addEventListener('click', function(event){
-  const card = event.target.closest('.card, .hero-slide');
-  if (!card) return;
-  const onclick = card.getAttribute('onclick') || '';
-  const match = onclick.match(/[?&]v=([^&'"\s)]+)/i);
-  if (match && match[1]) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    location.href = '/watch.html?id=' + encodeURIComponent(match[1]);
-  }
-}, true);
-</script>
-<script src="/app.js"></script>
+  <script src="/app.js"></script>
 
 </body>
 
