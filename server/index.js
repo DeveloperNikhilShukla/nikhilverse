@@ -657,212 +657,68 @@ app.get(
 );
 
 
-
 // ======================================================
 // YOUTUBE PLAYLISTS
 // ======================================================
 
-app.get(
-  '/api/playlists',
-  async (req, res) => {
-    try {
-      const playlists = [];
-
-      for (const channel of youtubeChannels) {
-        const channelResponse = await youtubeGet('channels', {
-          part: 'id,snippet',
-          forHandle: channel.handle
-        });
-
-        const channelItem = channelResponse.items?.[0];
-
-        if (!channelItem) {
-          console.warn(
-            `Playlist channel not found: ${channel.handle}`
-          );
-          continue;
-        }
-
-        let pageToken = '';
-
-        do {
-          const params = {
-            part: 'snippet,contentDetails',
-            channelId: channelItem.id,
-            maxResults: '50'
-          };
-
-          if (pageToken) {
-            params.pageToken = pageToken;
-          }
-
-          const response = await youtubeGet(
-            'playlists',
-            params
-          );
-
-          for (const playlist of response.items || []) {
-            const snippet = playlist.snippet || {};
-            const thumbnails = snippet.thumbnails || {};
-
-            const thumbnail =
-              thumbnails.maxres?.url ||
-              thumbnails.standard?.url ||
-              thumbnails.high?.url ||
-              thumbnails.medium?.url ||
-              thumbnails.default?.url ||
-              `https://i.ytimg.com/vi/${playlist.id}/hqdefault.jpg`;
-
-            playlists.push({
-              id: playlist.id,
-              title: snippet.title || 'Untitled Playlist',
-              description: snippet.description || '',
-              thumbnail,
-              channel: channel.name,
-              channelHandle: channel.handle,
-              videoCount: Number(
-                playlist.contentDetails?.itemCount || 0
-              )
-            });
-          }
-
-          pageToken = response.nextPageToken || '';
-        } while (pageToken);
-      }
-
-      const uniquePlaylists = Array.from(
-        new Map(
-          playlists.map(playlist => [playlist.id, playlist])
-        ).values()
-      );
-
-      res.json({
-        ok: true,
-        count: uniquePlaylists.length,
-        playlists: uniquePlaylists
-      });
-    } catch (error) {
-      console.error(
-        'YouTube playlists error:',
-        error
-      );
-
-      res.status(500).json({
-        ok: false,
-        error:
-          error.message ||
-          'Unable to load YouTube playlists'
-      });
-    }
-  }
-);
-
-
-// ======================================================
-// INTERNAL PLAYLIST PAGE DATA
-// ======================================================
-
-app.get(['/api/playlist', '/api/playlist-data'], async (req, res) => {
+app.get('/api/playlists', async (req, res) => {
   try {
-    const playlistId = String(req.query.id || '').trim();
-
-    if (!playlistId) {
-      return res.status(400).json({
-        ok: false,
-        error: 'Playlist id is required'
-      });
+    const playlists = [];
+    for (const channel of youtubeChannels) {
+      const channelResponse = await youtubeGet('channels', { part: 'id,snippet', forHandle: channel.handle });
+      const channelItem = channelResponse.items?.[0];
+      if (!channelItem) continue;
+      let pageToken = '';
+      do {
+        const params = { part: 'snippet,contentDetails', channelId: channelItem.id, maxResults: '50' };
+        if (pageToken) params.pageToken = pageToken;
+        const response = await youtubeGet('playlists', params);
+        for (const playlist of response.items || []) {
+          const snippet = playlist.snippet || {};
+          const thumbnails = snippet.thumbnails || {};
+          const thumbnail = thumbnails.maxres?.url || thumbnails.standard?.url || thumbnails.high?.url || thumbnails.medium?.url || thumbnails.default?.url || '';
+          playlists.push({ id: playlist.id, title: snippet.title || 'Untitled Playlist', description: snippet.description || '', thumbnail, channel: channel.name, channelHandle: channel.handle, videoCount: Number(playlist.contentDetails?.itemCount || 0) });
+        }
+        pageToken = response.nextPageToken || '';
+      } while (pageToken);
     }
-
-    const playlistResponse = await youtubeGet('playlists', {
-      part: 'snippet,contentDetails',
-      id: playlistId
-    });
-
-    const playlist = playlistResponse.items?.[0];
-
-    if (!playlist) {
-      return res.status(404).json({
-        ok: false,
-        error: 'Playlist not found or not public'
-      });
-    }
-
-    const snippet = playlist.snippet || {};
-    const thumbnails = snippet.thumbnails || {};
-    const thumbnail =
-      thumbnails.maxres?.url ||
-      thumbnails.standard?.url ||
-      thumbnails.high?.url ||
-      thumbnails.medium?.url ||
-      thumbnails.default?.url || '';
-
-    const videos = [];
-    let pageToken = '';
-
-    do {
-      const params = {
-        part: 'snippet,contentDetails',
-        playlistId,
-        maxResults: '50'
-      };
-
-      if (pageToken) params.pageToken = pageToken;
-
-      const response = await youtubeGet('playlistItems', params);
-
-      for (const item of response.items || []) {
-        const itemSnippet = item.snippet || {};
-        const videoId = item.contentDetails?.videoId || '';
-
-        if (!videoId) continue;
-
-        const videoThumbnails = itemSnippet.thumbnails || {};
-        const videoThumbnail =
-          videoThumbnails.maxres?.url ||
-          videoThumbnails.standard?.url ||
-          videoThumbnails.high?.url ||
-          videoThumbnails.medium?.url ||
-          videoThumbnails.default?.url ||
-          `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-
-        videos.push({
-          id: videoId,
-          title: itemSnippet.title || 'Untitled video',
-          description: itemSnippet.description || '',
-          thumbnail: videoThumbnail,
-          position: Number(itemSnippet.position ?? videos.length),
-          publishedAt: itemSnippet.publishedAt || '',
-          channelTitle: itemSnippet.videoOwnerChannelTitle || ''
-        });
-      }
-
-      pageToken = response.nextPageToken || '';
-    } while (pageToken);
-
-    videos.sort((a, b) => a.position - b.position);
-
-    res.json({
-      ok: true,
-      playlist: {
-        id: playlist.id,
-        title: snippet.title || 'Untitled Playlist',
-        description: snippet.description || '',
-        thumbnail,
-        channelTitle: snippet.channelTitle || '',
-        videoCount: videos.length
-      },
-      videos
-    });
+    const unique = Array.from(new Map(playlists.map(p => [p.id, p])).values());
+    res.json({ ok: true, count: unique.length, playlists: unique });
   } catch (error) {
-    console.error('YouTube playlist details error:', error);
-
-    res.status(500).json({
-      ok: false,
-      error: error.message || 'Unable to load playlist'
-    });
+    console.error('YouTube playlists error:', error);
+    res.status(500).json({ ok: false, error: error.message || 'Unable to load playlists' });
   }
 });
 
+app.get('/api/playlist', async (req, res) => {
+  try {
+    const playlistId = String(req.query.id || '').trim();
+    if (!playlistId) return res.status(400).json({ ok: false, error: 'Playlist ID is required' });
+    const playlistResponse = await youtubeGet('playlists', { part: 'snippet,contentDetails', id: playlistId, maxResults: '1' });
+    const playlist = playlistResponse.items?.[0];
+    if (!playlist) return res.status(404).json({ ok: false, error: 'Playlist not found' });
+    const videos = [];
+    let pageToken = '';
+    do {
+      const params = { part: 'snippet,contentDetails,status', playlistId, maxResults: '50' };
+      if (pageToken) params.pageToken = pageToken;
+      const response = await youtubeGet('playlistItems', params);
+      for (const item of response.items || []) {
+        const videoId = item.contentDetails?.videoId || item.snippet?.resourceId?.videoId;
+        if (!videoId || item.status?.privacyStatus === 'private' || item.snippet?.title === 'Deleted video') continue;
+        const thumbnails = item.snippet?.thumbnails || {};
+        const thumbnail = thumbnails.maxres?.url || thumbnails.standard?.url || thumbnails.high?.url || thumbnails.medium?.url || thumbnails.default?.url || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        videos.push({ videoId, youtube_id: videoId, title: item.snippet?.title || 'Untitled video', description: item.snippet?.description || '', thumbnail, position: Number(item.snippet?.position ?? videos.length), channelTitle: item.snippet?.videoOwnerChannelTitle || '' });
+      }
+      pageToken = response.nextPageToken || '';
+    } while (pageToken);
+    videos.sort((a, b) => a.position - b.position);
+    res.json({ ok: true, playlist: { id: playlist.id, title: playlist.snippet?.title || 'Playlist', description: playlist.snippet?.description || '', channelTitle: playlist.snippet?.channelTitle || '', videoCount: Number(playlist.contentDetails?.itemCount || videos.length) }, videos });
+  } catch (error) {
+    console.error('YouTube playlist detail error:', error);
+    res.status(500).json({ ok: false, error: error.message || 'Unable to load playlist' });
+  }
+});
 
 // ======================================================
 // BLOGS
@@ -1414,56 +1270,122 @@ app.post(
 
 
 // ======================================================
-// NIKHIL AI
+// ======================================================
+// NIKHIL AI - OPENAI
 // ======================================================
 
-app.post(
-  '/api/ai',
-  (req, res) => {
+app.post('/api/ai', async (req, res) => {
+  try {
+    const q = String(req.body.message || '').trim();
 
-    const q =
-      String(
-        req.body.message || ''
-      ).trim();
+    if (!q) {
+      return res.status(400).json({
+        error: 'Message is required'
+      });
+    }
 
-    const terms =
-      q
-        .toLowerCase()
-        .split(/\s+/)
-        .filter(
-          x => x.length > 2
-        );
+    if (!process.env.OPENAI_API_KEY) {
+      return res.status(503).json({
+        error: 'OPENAI_API_KEY is not configured'
+      });
+    }
 
-    const matches =
-      db.videos
-        .filter(v =>
-          terms.some(t =>
-            String(
-              v.title +
-              ' ' +
-              v.description +
-              ' ' +
-              v.category
-            )
-              .toLowerCase()
-              .includes(t)
-          )
-        )
-        .slice(0, 5);
+    const terms = q
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(x => x.length > 2);
+
+    const matches = db.videos
+      .filter(v => {
+        const text = String(
+          (v.title || '') + ' ' +
+          (v.description || '') + ' ' +
+          (v.category || '') + ' ' +
+          (v.channel || '')
+        ).toLowerCase();
+
+        return terms.some(t => text.includes(t));
+      })
+      .slice(0, 10);
+
+    const contextVideos = matches.length
+      ? matches
+      : db.videos.slice(0, 10);
+
+    const contentContext = contextVideos
+      .map((v, i) =>
+        `${i + 1}. ${v.title}
+Channel: ${v.channel || 'NIKHILVERSE'}
+Category: ${v.category || 'Videos'}
+URL: ${v.youtube_url || ''}
+Description: ${v.description || ''}`
+      )
+      .join('\n\n');
+
+    const systemInstructions = `
+You are Nikhil AI, the official AI assistant for NIKHILVERSE.
+
+Your job:
+- Answer users naturally and helpfully.
+- You can answer general questions.
+- Help users discover NIKHILVERSE documentaries, videos and content.
+- When relevant, use the NIKHILVERSE content provided below.
+- Never invent a NIKHILVERSE video, title, URL, channel or fact.
+- If the provided NIKHILVERSE content does not contain the requested information, clearly say that you could not find it.
+- Reply in the same language/style as the user.
+- For Hindi/Hinglish users, reply in natural Hindi/Hinglish.
+- Keep normal answers concise but useful.
+
+NIKHILVERSE CONTENT:
+${contentContext}
+`;
+
+    const response = await fetch(
+      'https://api.openai.com/v1/responses',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: process.env.OPENAI_MODEL || 'gpt-5',
+          instructions: systemInstructions,
+          input: q,
+          store: false
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('OpenAI API error:', data);
+
+      return res.status(500).json({
+        error:
+          data?.error?.message ||
+          'OpenAI API request failed'
+      });
+    }
+
+    const answer =
+      data.output_text ||
+      'Sorry, mujhe abhi response nahi mila.';
 
     res.json({
+      answer,
+      results: matches
+    });
 
-      answer:
-        process.env.OPENAI_API_KEY
-          ? 'Nikhil AI is configured for API integration; connect your OpenAI Responses API call in this endpoint.'
-          : 'Hi! Main Nikhil AI hoon. Main general questions mein help kar sakta hoon aur NIKHILVERSE ke available content ko search kar sakta hoon. Live AI replies ke liye OPENAI_API_KEY add karein.',
+  } catch (e) {
+    console.error('Nikhil AI error:', e);
 
-      results:
-        matches
+    res.status(500).json({
+      error: 'Nikhil AI temporarily unavailable'
     });
   }
-);
-
+});
 
 // ======================================================
 // FRONTEND FALLBACK
