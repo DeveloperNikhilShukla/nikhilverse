@@ -384,6 +384,19 @@ body{
   display:block;
 }
 
+.nv-logo-mark{
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+  display:flex;
+}
+
+.nv-logo-mark svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
 .watch-logo-text{
   display:flex;
   flex-direction:column;
@@ -456,7 +469,8 @@ body{
 }
 
 .watch-ai,
-.watch-premium{
+.watch-premium,
+.watch-app{
   height:38px;
   padding:0 13px;
   border-radius:20px;
@@ -479,6 +493,29 @@ body{
   color:#111;
   background:#fff;
   border:1px solid #fff;
+}
+
+.watch-app{
+  color:#dce8f7;
+  background:#0b1728;
+  border:1px solid #2a4565;
+  padding:0 13px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  white-space:nowrap;
+  font-size:12px;
+  font-weight:700;
+}
+
+.app-nav-link{
+  color:#75b9ff !important;
+}
+
+.app-nav-link:hover{
+  color:#fff !important;
 }
 
 .back-btn{
@@ -574,6 +611,19 @@ body{
   width:46px;
   height:46px;
   object-fit:contain;
+}
+
+.nv-footer-logo{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  display:flex;
+}
+
+.nv-footer-logo svg{
+  width:100%;
+  height:100%;
+  display:block;
 }
 
 .footer-brand h2{
@@ -678,6 +728,12 @@ body{
   .watch-logo img{
     width:40px;
     height:40px;
+  }
+
+  .nv-logo-mark{
+    width:40px;
+    height:40px;
+    flex-basis:40px;
   }
 
   .watch-logo-text b{
@@ -785,10 +841,14 @@ body{
 
   <a href="/" class="watch-logo" aria-label="NIKHILVERSE Home">
 
-    <img
-      src="/assets/nikhilverse-logo.png"
-      alt="NIKHILVERSE Logo"
-    >
+    <span class="nv-logo-mark" aria-hidden="true">
+      <svg viewBox="0 0 64 64">
+        <rect x="2" y="2" width="60" height="60" rx="15" fill="#081525" stroke="#23466d" stroke-width="2"/>
+        <circle cx="32" cy="32" r="21" fill="none" stroke="#2196ff" stroke-width="3"/>
+        <path d="M19 42V22l13 13 13-13v20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="32" cy="32" r="4" fill="#6db7ff"/>
+      </svg>
+    </span>
 
     <span class="watch-logo-text">
       <b>NIKHILVERSE</b>
@@ -806,6 +866,7 @@ body{
     <a href="/#scifi">Sci-Fi</a>
     <a href="/#videos">New &amp; Popular</a>
     <a href="/#videos">My List</a>
+    <a class="app-nav-link" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">📱 App</a>
 
   </nav>
 
@@ -827,6 +888,13 @@ body{
     <a class="watch-premium" href="/#premium">
       👑 Premium
     </a>
+
+    <a
+      class="watch-app"
+      href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+      target="_blank"
+      rel="noopener"
+    >📱 App</a>
 
     <a class="back-btn" href="/">
       ← Back
@@ -886,7 +954,18 @@ body{
   <div class="footer-inner">
 
     <div class="footer-brand">
-      <h2>NIKHIL <span>VERSE</span></h2>
+
+      <div class="footer-logo-row">
+        <span class="nv-footer-logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64">
+            <rect x="2" y="2" width="60" height="60" rx="15" fill="#081525" stroke="#23466d" stroke-width="2"/>
+            <circle cx="32" cy="32" r="21" fill="none" stroke="#2196ff" stroke-width="3"/>
+            <path d="M19 42V22l13 13 13-13v20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="32" cy="32" r="4" fill="#6db7ff"/>
+          </svg>
+        </span>
+        <h2>NIKHIL <span>VERSE</span></h2>
+      </div>
       <p>
         Discover stories worth watching — science, technology,
         history, documentaries and ideas from NIKHILVERSE.
