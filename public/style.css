@@ -1,5 +1,11 @@
 /* =========================================================
-   NIKHILVERSE — NETFLIX STYLE RESPONSIVE UI
+   NIKHILVERSE
+   Netflix Inspired Responsive UI
+   Complete Main Stylesheet
+   ========================================================= */
+
+/* =========================================================
+   RESET
    ========================================================= */
 
 * {
@@ -8,15 +14,20 @@
 
 html {
   scroll-behavior: smooth;
+  background: #050505;
 }
 
 body {
   margin: 0;
   padding: 0;
   background: #050505;
-  color: #fff;
+  color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
 }
 
 a {
@@ -25,12 +36,31 @@ a {
 }
 
 button,
-input {
-  font: inherit;
+input,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 /* =========================================================
-   HEADER
+   COMMON
+   ========================================================= */
+
+.meta {
+  color: #999;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================================
+   HEADER / NAVBAR
    ========================================================= */
 
 .topbar {
@@ -43,68 +73,116 @@ input {
 
   display: flex;
   align-items: center;
+
+  padding: 8px 4%;
+
   gap: 22px;
 
-  padding: 10px 4%;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.98),
+      rgba(0, 0, 0, 0.94)
+    );
 
-  background: rgba(0, 0, 0, 0.96);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
+
+/* =========================================================
+   BRAND
+   ========================================================= */
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+
+  gap: 9px;
+
   flex-shrink: 0;
+
+  min-width: 175px;
 }
 
 .brand img {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
+
   object-fit: contain;
-  border-radius: 8px;
+
+  border-radius: 6px;
 }
 
 .brand span {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+
+  line-height: 1.05;
 }
 
 .brand span b {
   font-size: 18px;
-  letter-spacing: 0.5px;
+  font-weight: 800;
+
+  letter-spacing: 0.4px;
 }
 
 .brand span small {
-  font-size: 10px;
-  color: #aaa;
-  margin-top: 3px;
+  margin-top: 4px;
+
+  color: #999;
+
+  font-size: 9px;
+
+  letter-spacing: 1px;
 }
+
+/* =========================================================
+   MAIN NAV
+   ========================================================= */
 
 .main-nav {
   display: flex;
   align-items: center;
+
   gap: 20px;
+
   flex: 1;
+
+  min-width: 0;
 }
 
 .main-nav a {
-  color: #ddd;
-  font-size: 14px;
+  color: #d6d6d6;
+
+  font-size: 13px;
+  font-weight: 500;
+
   white-space: nowrap;
-  transition: 0.2s;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.main-nav a:hover,
-.main-nav a.active {
-  color: #fff;
+.main-nav a:hover {
+  color: #ffffff;
 }
+
+.main-nav a.active {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
 
 .header-actions {
   display: flex;
   align-items: center;
+
   gap: 10px;
+
   flex-shrink: 0;
 }
 
@@ -114,59 +192,101 @@ input {
 }
 
 .search input {
-  width: 180px;
-  height: 36px;
+  width: 255px;
+  height: 38px;
 
-  padding: 0 12px;
+  padding: 0 13px;
 
   border: 1px solid #333;
-  border-radius: 5px;
+  border-radius: 6px;
 
   outline: none;
 
-  background: #111;
-  color: #fff;
+  background: #151515;
+  color: #ffffff;
+
+  font-size: 12px;
 }
 
 .search input::placeholder {
   color: #888;
 }
 
+.search input:focus {
+  border-color: #666;
+}
+
+/* AI BUTTON */
+
 .ai-btn {
-  height: 36px;
+  height: 38px;
+
   padding: 0 14px;
 
   border: 1px solid #333;
-  border-radius: 5px;
+  border-radius: 6px;
 
   background: #151515;
-  color: #fff;
 
-  cursor: pointer;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
 }
 
 .ai-btn:hover {
   background: #222;
 }
 
+/* PREMIUM */
+
 .premium-btn {
-  color: #fff;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+
+  padding: 0 15px;
+
+  border-radius: 6px;
+
+  background: #e50914;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
   white-space: nowrap;
+
+  transition: background 0.2s ease;
 }
 
+.premium-btn:hover {
+  background: #f40612;
+}
+
+/* PROFILE */
+
 .profile-btn {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  border-radius: 50%;
-  background: #222;
   border: 1px solid #444;
+  border-radius: 50%;
 
-  font-size: 16px;
+  background: #18202b;
+
+  color: #ffffff;
+
+  font-size: 14px;
 }
 
 /* =========================================================
@@ -177,75 +297,120 @@ input {
   position: relative;
 
   width: 100%;
-  min-height: 430px;
+  min-height: 470px;
 
   display: flex;
   align-items: center;
 
-  padding: 70px 5%;
+  padding: 75px 5%;
+
+  overflow: hidden;
 
   background:
     linear-gradient(
       90deg,
       #050505 0%,
-      rgba(5, 5, 5, 0.95) 30%,
-      rgba(5, 5, 5, 0.35) 70%,
-      #050505 100%
+      rgba(5, 5, 5, 0.92) 30%,
+      rgba(5, 5, 5, 0.48) 65%,
+      rgba(5, 5, 5, 0.95) 100%
     );
 }
 
+.hero::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 120px;
+
+  background:
+    linear-gradient(
+      transparent,
+      #050505
+    );
+
+  pointer-events: none;
+}
+
 .hero-content {
-  max-width: 650px;
+  position: relative;
+  z-index: 2;
+
+  max-width: 680px;
 }
 
 .hero h1 {
   margin: 0 0 18px;
 
-  font-size: clamp(38px, 5vw, 70px);
-  line-height: 1.05;
+  font-size: clamp(38px, 5vw, 68px);
 
-  letter-spacing: -1px;
+  line-height: 1.03;
+
+  letter-spacing: -1.5px;
 }
 
 .hero p {
+  margin: 0;
+
   max-width: 620px;
 
-  color: #ccc;
-  font-size: 17px;
+  color: #c8c8c8;
+
+  font-size: 16px;
+
   line-height: 1.6;
 }
 
 .hero-buttons {
   display: flex;
+  align-items: center;
+
   gap: 12px;
+
   margin-top: 25px;
 }
 
 .hero-buttons a,
 .hero-buttons button {
-  padding: 12px 22px;
+  min-height: 42px;
 
-  border-radius: 5px;
+  padding: 0 20px;
+
   border: 0;
+  border-radius: 5px;
 
-  cursor: pointer;
+  font-weight: 700;
 }
 
 /* =========================================================
-   MAIN CONTENT
+   MAIN
    ========================================================= */
 
 main {
   width: 100%;
 }
 
+/* =========================================================
+   CONTENT SECTION
+   ========================================================= */
+
 .content-section {
   width: 100%;
-  max-width: 1600px;
+
+  max-width: 1500px;
 
   margin: 0 auto;
+
   padding: 30px 4%;
 }
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
 
 .section-title {
   display: flex;
@@ -256,55 +421,91 @@ main {
 }
 
 .section-title h2 {
+  position: relative;
+
   margin: 0;
 
-  font-size: 24px;
-  font-weight: 700;
+  padding-left: 12px;
+
+  font-size: 23px;
+
+  line-height: 1.2;
+}
+
+.section-title h2::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+
+  width: 4px;
+
+  background: #e50914;
+
+  border-radius: 2px;
+}
+
+.section-title a {
+  color: #ccc;
+
+  font-size: 13px;
+}
+
+.section-title a:hover {
+  color: #fff;
 }
 
 /* =========================================================
-   VIDEO GRID — IMPORTANT
+   VIDEO GRIDS
    ========================================================= */
+
+/*
+   IMPORTANT:
+   These rules keep all video sections full width.
+*/
 
 .video-grid {
   display: grid !important;
 
   grid-template-columns:
-    repeat(4, minmax(0, 1fr)) !important;
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
 
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
 
-  gap: 18px !important;
-
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
-/*
-   Latest Episodes mirror wrapper
-*/
+/* =========================================================
+   LATEST EPISODES MIRROR
+   ========================================================= */
 
 .video-grid:has(.video-grid-mirror) {
   display: block !important;
 
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
 }
 
 .video-grid-mirror {
   display: grid !important;
 
   grid-template-columns:
-    repeat(4, minmax(0, 1fr)) !important;
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
 
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
 
-  gap: 18px !important;
-
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
 /* =========================================================
@@ -312,22 +513,24 @@ main {
    ========================================================= */
 
 .card {
-  width: 100% !important;
-  min-width: 0 !important;
+  width: 100%;
+
+  min-width: 0;
 
   overflow: hidden;
 
   background: #151515;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+
+  border-radius: 7px;
 
   cursor: pointer;
 
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
+    transform 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease;
 
   position: relative;
 }
@@ -337,23 +540,29 @@ main {
 
   background: #1d1d1d;
 
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.18);
 
   z-index: 5;
 }
 
+/* =========================================================
+   THUMBNAIL
+   ========================================================= */
+
 .card .thumb {
-  width: 100% !important;
+  width: 100%;
 
   aspect-ratio: 16 / 9;
 
   overflow: hidden;
 
-  background: #222;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: #222;
+
+  color: #ffffff;
 }
 
 .card .thumb img {
@@ -362,7 +571,7 @@ main {
   width: 100% !important;
   height: 100% !important;
 
-  object-fit: cover !important;
+  object-fit: cover;
 
   transition: transform 0.3s ease;
 }
@@ -371,49 +580,54 @@ main {
   transform: scale(1.04);
 }
 
+/* =========================================================
+   CARD BODY
+   ========================================================= */
+
 .card .body {
   width: 100%;
 
-  padding: 13px 14px 15px;
+  padding: 12px 13px 14px;
 }
 
 .card h3 {
-  margin: 7px 0 8px;
+  margin: 7px 0 7px;
 
-  font-size: 16px;
+  color: #ffffff;
+
+  font-size: 15px;
+
   line-height: 1.35;
 
-  color: #fff;
-
   display: -webkit-box;
+
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
   overflow: hidden;
 }
 
-.meta {
+.card .meta {
   color: #999;
 
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 11px;
 }
 
 /* =========================================================
-   DOCUMENTARY GRID
+   DOCUMENTARIES
    ========================================================= */
 
 #documentaries .video-grid {
   display: grid !important;
 
   grid-template-columns:
-    repeat(4, minmax(0, 1fr)) !important;
+    repeat(4, minmax(0, 1fr));
 
   width: 100% !important;
 }
 
 /* =========================================================
-   BLOG GRID
+   BLOG
    ========================================================= */
 
 .blog-grid {
@@ -422,9 +636,9 @@ main {
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  width: 100%;
-
   gap: 18px;
+
+  width: 100%;
 }
 
 .blog {
@@ -433,20 +647,26 @@ main {
   background: #151515;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
+
   border-radius: 8px;
 }
 
 .blog .img {
   width: 100%;
+
   aspect-ratio: 16 / 9;
 
-  background: #222;
   overflow: hidden;
+
+  background: #222;
 }
 
 .blog .img img {
+  display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
 }
 
@@ -457,16 +677,23 @@ main {
 .blog h3 {
   margin: 8px 0;
 
+  color: #ffffff;
+
   font-size: 18px;
+
   line-height: 1.35;
 }
 
 .blog p {
+  margin: 0;
+
+  color: #999;
+
   line-height: 1.5;
 }
 
 /* =========================================================
-   PREMIUM PLANS
+   PREMIUM SECTION
    ========================================================= */
 
 .plans {
@@ -475,55 +702,71 @@ main {
   grid-template-columns:
     repeat(2, minmax(0, 1fr));
 
-  gap: 20px;
+  gap: 18px;
 
   width: 100%;
 }
 
 .plan {
-  padding: 25px;
+  padding: 25px 22px;
 
   background: #151515;
 
   border: 1px solid #292929;
-  border-radius: 10px;
+
+  border-radius: 9px;
 }
 
 .plan span {
   color: #aaa;
-  font-size: 14px;
+
+  font-size: 13px;
 }
 
 .plan h3 {
-  margin: 10px 0;
+  margin: 12px 0 15px;
+
+  color: #ffffff;
 
   font-size: 22px;
 }
 
 .plan h3 strong {
-  font-size: 38px;
+  font-size: 36px;
 }
 
 .plan p {
+  margin: 0;
+
+  min-height: 42px;
+
   color: #bbb;
+
+  font-size: 14px;
+
   line-height: 1.5;
 }
 
 .plan button {
   width: 100%;
 
-  margin-top: 10px;
-  padding: 12px 15px;
+  margin-top: 20px;
+
+  height: 38px;
 
   border: 0;
+
   border-radius: 5px;
 
-  background: #fff;
-  color: #000;
+  background: #ffffff;
+
+  color: #000000;
+
+  font-size: 14px;
 
   font-weight: 700;
 
-  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .plan button:hover {
@@ -546,22 +789,28 @@ main {
 
   padding: 18px;
 
-  background: #111;
+  background: #111111;
 
   border: 1px solid #333;
+
   border-radius: 10px;
 
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.75);
 }
 
 #chat {
   max-height: 300px;
 
-  overflow-y: auto;
-
   margin-bottom: 12px;
 
-  line-height: 1.5;
+  overflow-y: auto;
+
+  color: #ddd;
+
+  font-size: 14px;
+
+  line-height: 1.55;
 }
 
 #msg {
@@ -569,17 +818,19 @@ main {
 
   min-height: 44px;
 
-  padding: 10px;
+  padding: 10px 12px;
 
   resize: vertical;
 
+  outline: none;
+
   border: 1px solid #333;
+
   border-radius: 5px;
 
   background: #050505;
-  color: #fff;
 
-  outline: none;
+  color: #ffffff;
 }
 
 #msg::placeholder {
@@ -594,13 +845,30 @@ footer {
   width: 100%;
 
   margin-top: 50px;
-  padding: 40px 5%;
+
+  padding: 38px 5%;
 
   background: #090909;
 
   border-top: 1px solid #222;
 
   color: #888;
+}
+
+footer h3 {
+  margin: 0 0 12px;
+
+  color: #aaa;
+
+  font-size: 16px;
+}
+
+footer p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
 }
 
 footer a {
@@ -616,38 +884,47 @@ footer a:hover {
    ========================================================= */
 
 @media (min-width: 1500px) {
+
   .content-section {
+    max-width: 1600px;
+
     padding-left: 3%;
     padding-right: 3%;
   }
 
   .video-grid,
   .video-grid-mirror {
-    gap: 20px !important;
+    gap: 20px;
   }
 }
 
 /* =========================================================
-   TABLET / SMALL DESKTOP
+   DESKTOP / SMALL DESKTOP
    ========================================================= */
 
-@media (max-width: 1200px) {
-  .video-grid,
-  .video-grid-mirror {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr)) !important;
-  }
+@media (max-width: 1250px) {
 
   .main-nav {
-    gap: 13px;
+    gap: 14px;
   }
 
   .main-nav a {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .search input {
-    width: 140px;
+    width: 190px;
+  }
+
+  .video-grid,
+  .video-grid-mirror {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  #documentaries .video-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
   }
 
   .blog-grid {
@@ -660,11 +937,17 @@ footer a:hover {
    TABLET
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
+
   .topbar {
     gap: 12px;
 
-    padding: 10px 3%;
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+
+  .brand {
+    min-width: auto;
   }
 
   .brand span {
@@ -688,7 +971,7 @@ footer a:hover {
   }
 
   .search input {
-    width: 120px;
+    width: 140px;
   }
 
   .premium-btn {
@@ -696,12 +979,8 @@ footer a:hover {
   }
 
   .video-grid,
-  .video-grid-mirror {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr)) !important;
-  }
-
-  .blog-grid {
+  .video-grid-mirror,
+  #documentaries .video-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }
@@ -716,11 +995,12 @@ footer a:hover {
    MOBILE
    ========================================================= */
 
-@media (max-width: 560px) {
+@media (max-width: 600px) {
+
   .topbar {
     min-height: 60px;
 
-    padding: 8px 12px;
+    padding: 7px 12px;
 
     gap: 8px;
   }
@@ -731,13 +1011,13 @@ footer a:hover {
   }
 
   .main-nav {
-    order: 3;
-
     position: absolute;
 
     left: 0;
     right: 0;
     top: 60px;
+
+    display: flex;
 
     padding: 9px 12px;
 
@@ -745,6 +1025,12 @@ footer a:hover {
 
     border-top: 1px solid #222;
     border-bottom: 1px solid #222;
+
+    overflow-x: auto;
+  }
+
+  .main-nav a {
+    font-size: 12px;
   }
 
   .header-actions {
@@ -753,16 +1039,27 @@ footer a:hover {
 
   .search input {
     width: 105px;
+
+    font-size: 10px;
   }
 
   .ai-btn {
     padding: 0 9px;
+
+    font-size: 11px;
   }
 
-  .hero {
-    min-height: 390px;
+  .profile-btn {
+    width: 34px;
+    height: 34px;
+  }
 
-    padding: 50px 20px;
+  /* HERO */
+
+  .hero {
+    min-height: 400px;
+
+    padding: 55px 20px;
   }
 
   .hero h1 {
@@ -773,24 +1070,29 @@ footer a:hover {
     font-size: 14px;
   }
 
+  /* SECTIONS */
+
   .content-section {
-    padding: 24px 12px;
+    padding: 25px 12px;
+  }
+
+  .section-title {
+    margin-bottom: 14px;
   }
 
   .section-title h2 {
     font-size: 20px;
   }
 
-  /*
-     MOBILE: 2 CARDS PER ROW
-  */
+  /* VIDEO GRID */
 
   .video-grid,
-  .video-grid-mirror {
+  .video-grid-mirror,
+  #documentaries .video-grid {
     grid-template-columns:
-      repeat(2, minmax(0, 1fr)) !important;
+      repeat(2, minmax(0, 1fr));
 
-    gap: 10px !important;
+    gap: 10px;
   }
 
   .card {
@@ -802,19 +1104,30 @@ footer a:hover {
   }
 
   .card h3 {
-    font-size: 13px;
-
-    -webkit-line-clamp: 2;
+    font-size: 12px;
   }
 
-  .meta {
-    font-size: 10px;
+  .card .meta {
+    font-size: 9px;
   }
+
+  /* BLOG */
 
   .blog-grid {
     grid-template-columns:
       1fr;
   }
+
+  /* PLANS */
+
+  .plans {
+    grid-template-columns:
+      1fr;
+
+    gap: 12px;
+  }
+
+  /* AI */
 
   #ai {
     right: 10px;
@@ -825,72 +1138,16 @@ footer a:hover {
 }
 
 /* =========================================================
-   EXTRA SAFETY — FORCE FULL WIDTH
+   EXTRA SAFETY
    ========================================================= */
 
 #videoGrid,
 #docGrid,
 #videoGridMirror {
   width: 100% !important;
-  max-width: none !important;
-}
-
-#videoGrid .card,
-#docGrid .card,
-#videoGridMirror .card {
-  width: 100% !important;
-  max-width: none !important;
-}
-
-/* Prevent old fixed-width rules from shrinking cards */
-
-.video-grid > *,
-.video-grid-mirror > * {
-  min-width: 0 !important;
-  max-width: none !important;
-}
-
-/* =========================================================
-   FINAL FIX - FORCE CONTENT SECTIONS FULL WIDTH
-   ========================================================= */
-
-.content-section,
-.content-section > div,
-.content-section .video-grid,
-#videoGrid,
-#docGrid,
-#videoGridMirror,
-.video-grid-mirror {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-}
-
-/* Latest Episodes wrapper */
-.content-section .video-grid:has(#videoGridMirror) {
-  display: block !important;
-  width: 100% !important;
   max-width: 100% !important;
 }
 
-/* Latest Episodes actual cards */
-#videoGridMirror {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 18px !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* Normal video sections */
-#videoGrid,
-#docGrid {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 18px !important;
-}
-
-/* Cards */
 #videoGrid .card,
 #docGrid .card,
 #videoGridMirror .card {
@@ -899,7 +1156,6 @@ footer a:hover {
   max-width: none !important;
 }
 
-/* Thumbnail */
 #videoGrid .thumb,
 #docGrid .thumb,
 #videoGridMirror .thumb {
@@ -907,39 +1163,16 @@ footer a:hover {
   aspect-ratio: 16 / 9 !important;
 }
 
-/* Desktop */
-@media (min-width: 1201px) {
-  #videoGrid,
-  #docGrid,
-  #videoGridMirror {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  }
+/* Prevent horizontal overflow */
+
+.content-section,
+.video-grid,
+.video-grid-mirror,
+.blog-grid,
+.plans {
+  min-width: 0;
 }
 
-/* Tablet */
-@media (max-width: 1200px) {
-  #videoGrid,
-  #docGrid,
-  #videoGridMirror {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
-}
-
-/* Small tablet */
-@media (max-width: 900px) {
-  #videoGrid,
-  #docGrid,
-  #videoGridMirror {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-
-/* Mobile */
-@media (max-width: 560px) {
-  #videoGrid,
-  #docGrid,
-  #videoGridMirror {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-  }
-}
+/* =========================================================
+   END
+   ========================================================= */
