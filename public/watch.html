@@ -32,410 +32,440 @@ body{
 }
 
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .watch-header{
-
-  height:76px;
-
+  min-height:76px;
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
-
   padding:0 5%;
-
   background:#07101e;
-
   border-bottom:1px solid #17263b;
-
   position:sticky;
-
   top:0;
-
   z-index:50;
-
 }
 
 .watch-logo{
-
   display:flex;
-
   align-items:center;
-
   gap:10px;
-
   text-decoration:none;
-
   color:#fff;
-
   font-size:24px;
-
   font-weight:900;
-
   letter-spacing:1px;
-
+  white-space:nowrap;
 }
 
 .watch-logo span{
-
   color:#2196ff;
+}
 
+.watch-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:22px;
+  margin:0 24px;
+  flex:1;
+}
+
+.watch-nav a{
+  color:#b9c9dc;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  white-space:nowrap;
+  transition:.2s ease;
+}
+
+.watch-nav a:hover{
+  color:#fff;
 }
 
 .back-btn{
-
   text-decoration:none;
-
   color:#dce8f7;
-
   background:#0b1728;
-
   border:1px solid #263c59;
-
   padding:10px 16px;
-
   border-radius:9px;
-
   font-size:14px;
+  white-space:nowrap;
+  transition:.2s ease;
+}
 
+.back-btn:hover{
+  background:#10223a;
+  border-color:#2c6da9;
 }
 
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 .watch-page{
-
   width:min(1250px,92%);
-
   margin:35px auto 70px;
-
 }
 
 
-/* PLAYER */
+/* =========================
+   PLAYER
+========================= */
 
 .player-box{
-
   width:100%;
-
   background:#000;
-
   border-radius:14px;
-
   overflow:hidden;
-
   border:1px solid #1a2b42;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.55);
-
+  box-shadow:0 25px 80px rgba(0,0,0,.55);
 }
 
 .player{
-
   position:relative;
-
   width:100%;
-
   aspect-ratio:16/9;
-
   background:#000;
-
 }
 
 .player iframe{
-
   position:absolute;
-
   inset:0;
-
   width:100%;
-
   height:100%;
-
   border:0;
-
 }
 
 
-/* INFO */
+/* =========================
+   VIDEO INFO
+========================= */
 
 .video-info{
-
   margin-top:22px;
-
   padding:25px;
-
   background:#0a1423;
-
   border:1px solid #192b43;
-
   border-radius:14px;
-
 }
 
 .video-info h1{
-
   margin:0 0 10px;
-
   font-size:28px;
-
   line-height:1.35;
-
 }
 
 .video-meta{
-
   color:#7f95b0;
-
   font-size:14px;
-
 }
 
 .video-description{
-
   margin-top:18px;
-
   color:#c3d0df;
-
   line-height:1.75;
-
   font-size:15px;
-
   white-space:pre-wrap;
-
 }
 
 
-/* CHANNEL VIDEOS */
+/* =========================
+   CHANNEL VIDEOS
+========================= */
 
 .channel-section{
-
   margin-top:45px;
-
 }
 
 .section-title{
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
-
   margin-bottom:20px;
-
 }
 
 .section-title h2{
-
   margin:0;
-
   font-size:25px;
-
 }
 
 .channel-name{
-
   color:#6caeff;
-
   font-size:13px;
-
 }
 
-
 .video-grid{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
-
+  grid-template-columns:repeat(4,minmax(0,1fr));
   gap:18px;
-
 }
 
 .video-card{
-
   background:#0a1423;
-
   border:1px solid #1a2b42;
-
   border-radius:12px;
-
   overflow:hidden;
-
   cursor:pointer;
-
   transition:.2s ease;
-
 }
 
 .video-card:hover{
-
   transform:translateY(-4px);
-
   border-color:#2c6da9;
-
+  box-shadow:0 12px 35px rgba(0,0,0,.35);
 }
 
 .video-thumb{
-
   width:100%;
-
   aspect-ratio:16/9;
-
   background:#07101b;
-
   overflow:hidden;
-
 }
 
 .video-thumb img{
-
   width:100%;
-
   height:100%;
-
   object-fit:cover;
-
   display:block;
-
 }
 
 .video-card-body{
-
   padding:13px;
-
 }
 
 .video-card-body h3{
-
   margin:0;
-
   font-size:15px;
-
   line-height:1.45;
-
   display:-webkit-box;
-
   -webkit-box-orient:vertical;
-
   -webkit-line-clamp:2;
-
   overflow:hidden;
-
 }
 
 .video-card-meta{
-
   margin-top:8px;
-
   color:#7086a3;
-
   font-size:11px;
-
 }
 
 .loading{
-
   padding:70px 20px;
-
   text-align:center;
-
   color:#8196b1;
-
 }
 
 .error{
-
   padding:70px 20px;
-
   text-align:center;
-
   color:#ff7885;
-
 }
 
 
-/* MOBILE */
+/* =========================
+   FOOTER
+========================= */
+
+.watch-footer{
+  margin-top:70px;
+  padding:48px 5% 28px;
+  background:#07101e;
+  border-top:1px solid #17263b;
+}
+
+.footer-inner{
+  width:min(1250px,92%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:40px;
+}
+
+.footer-brand h2{
+  margin:0 0 12px;
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.footer-brand h2 span{
+  color:#2196ff;
+}
+
+.footer-brand p{
+  margin:0;
+  max-width:430px;
+  color:#8196b1;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.footer-column h3{
+  margin:0 0 14px;
+  font-size:14px;
+}
+
+.footer-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+}
+
+.footer-links a{
+  color:#8ea2ba;
+  text-decoration:none;
+  font-size:13px;
+}
+
+.footer-links a:hover{
+  color:#fff;
+}
+
+.footer-social{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.footer-social a{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 12px;
+  border:1px solid #263c59;
+  border-radius:8px;
+  color:#cbd8e7;
+  text-decoration:none;
+  font-size:12px;
+  background:#0b1728;
+  transition:.2s ease;
+}
+
+.footer-social a:hover{
+  border-color:#2c6da9;
+  color:#fff;
+  transform:translateY(-2px);
+}
+
+.footer-bottom{
+  width:min(1250px,92%);
+  margin:34px auto 0;
+  padding-top:20px;
+  border-top:1px solid #17263b;
+  color:#657a94;
+  font-size:12px;
+  text-align:center;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1150px){
+
+  .watch-nav{
+    gap:14px;
+    margin:0 15px;
+  }
+
+  .watch-nav a{
+    font-size:12px;
+  }
+
+}
 
 @media(max-width:1000px){
 
   .video-grid{
-
-    grid-template-columns:
-      repeat(3,minmax(0,1fr));
-
+    grid-template-columns:repeat(3,minmax(0,1fr));
   }
 
 }
 
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:700px){
 
   .watch-header{
-
-    height:65px;
-
-    padding:0 4%;
-
+    min-height:65px;
+    height:auto;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:12px 4%;
   }
 
   .watch-logo{
-
     font-size:20px;
-
   }
 
   .back-btn{
-
     padding:8px 11px;
-
     font-size:12px;
+    margin-left:auto;
+  }
 
+  .watch-nav{
+    order:3;
+    width:100%;
+    margin:2px 0 0;
+    justify-content:flex-start;
+    overflow-x:auto;
+    padding-bottom:4px;
+    gap:18px;
+    scrollbar-width:none;
+  }
+
+  .watch-nav::-webkit-scrollbar{
+    display:none;
+  }
+
+  .watch-nav a{
+    font-size:12px;
   }
 
   .watch-page{
-
     width:94%;
-
     margin-top:20px;
-
   }
 
   .video-grid{
-
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
-
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:12px;
-
   }
 
   .video-info{
-
     padding:18px;
-
   }
 
   .video-info h1{
-
     font-size:21px;
+  }
 
+  .footer-inner{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+
+  .watch-footer{
+    padding-top:38px;
   }
 
 }
 
-
 @media(max-width:450px){
 
   .video-grid{
-
     grid-template-columns:1fr;
-
   }
 
 }
@@ -448,15 +478,48 @@ body{
 <body>
 
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="watch-header">
 
-  <a
-    href="/"
-    class="watch-logo"
-  >
+  <a href="/" class="watch-logo">
     NIKHIL<span>VERSE</span>
   </a>
 
+  <nav
+    class="watch-nav"
+    aria-label="Primary navigation"
+  >
+
+    <a href="/">Home</a>
+
+    <a href="/#videos">
+      Movies
+    </a>
+
+    <a href="/#shows">
+      TV Shows
+    </a>
+
+    <a href="/#documentaries">
+      Documentaries
+    </a>
+
+    <a href="/#scifi">
+      Sci-Fi
+    </a>
+
+    <a href="/#videos">
+      New &amp; Popular
+    </a>
+
+    <a href="/#videos">
+      My List
+    </a>
+
+  </nav>
 
   <a
     href="/"
@@ -468,6 +531,9 @@ body{
 </header>
 
 
+<!-- =========================
+     MAIN
+========================= -->
 
 <main class="watch-page">
 
@@ -482,6 +548,152 @@ body{
 </main>
 
 
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="watch-footer">
+
+  <div class="footer-inner">
+
+
+    <!-- BRAND -->
+
+    <div class="footer-brand">
+
+      <h2>
+        NIKHIL
+        <span>VERSE</span>
+      </h2>
+
+      <p>
+        Discover stories worth watching —
+        science, technology, history,
+        documentaries and ideas from
+        NIKHILVERSE.
+      </p>
+
+    </div>
+
+
+    <!-- EXPLORE -->
+
+    <div class="footer-column">
+
+      <h3>
+        Explore
+      </h3>
+
+      <div class="footer-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/#videos">
+          Movies
+        </a>
+
+        <a href="/#shows">
+          TV Shows
+        </a>
+
+        <a href="/#documentaries">
+          Documentaries
+        </a>
+
+        <a href="/#scifi">
+          Sci-Fi
+        </a>
+
+        <a href="/#blog">
+          Blog
+        </a>
+
+        <a href="/#premium">
+          Premium
+        </a>
+
+        <a href="/admin/">
+          Admin
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- SOCIAL -->
+
+    <div class="footer-column">
+
+      <h3>
+        Follow NIKHILVERSE
+      </h3>
+
+      <div class="footer-social">
+
+        <a
+          href="https://www.youtube.com/@SIFIByNikhil"
+          target="_blank"
+          rel="noopener"
+        >
+          YouTube
+        </a>
+
+        <a
+          href="https://instagram.com/nikhilshuklaindianarmy"
+          target="_blank"
+          rel="noopener"
+        >
+          Instagram
+        </a>
+
+        <a
+          href="https://www.facebook.com/theancienthistorianss/"
+          target="_blank"
+          rel="noopener"
+        >
+          Facebook
+        </a>
+
+        <a
+          href="https://x.com/nikhilshuklaind"
+          target="_blank"
+          rel="noopener"
+        >
+          X
+        </a>
+
+        <a
+          href="https://t.me/TheAncientHistorians/10"
+          target="_blank"
+          rel="noopener"
+        >
+          Telegram
+        </a>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    © 2026 NIKHILVERSE.
+    All rights reserved.
+
+  </div>
+
+</footer>
+
+
+<!-- =========================
+     WATCH PAGE SCRIPT
+========================= -->
 
 <script>
 
@@ -490,9 +702,14 @@ const params =
     window.location.search
   );
 
+
 const videoId =
   params.get("id");
 
+
+/* =========================
+   GET VIDEOS
+========================= */
 
 async function getVideos(){
 
@@ -512,26 +729,51 @@ async function getVideos(){
 }
 
 
+/* =========================
+   ESCAPE HTML
+========================= */
+
 function escapeHTML(value){
 
   return String(value ?? "")
 
-    .replaceAll("&","&amp;")
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
 
-    .replaceAll("<","&lt;")
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
 
-    .replaceAll(">","&gt;")
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
 
-    .replaceAll('"',"&quot;")
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
 
-    .replaceAll("'","&#039;");
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
+/* =========================
+   OPEN VIDEO
+========================= */
+
 function openVideo(id){
 
-  if(!id) return;
+  if(!id){
+    return;
+  }
 
   window.location.href =
     "/watch.html?id=" +
@@ -539,6 +781,10 @@ function openVideo(id){
 
 }
 
+
+/* =========================
+   RENDER WATCH PAGE
+========================= */
 
 function renderWatchPage(
   video,
@@ -550,47 +796,61 @@ function renderWatchPage(
     "NIKHILVERSE";
 
 
+  /* SAME CHANNEL VIDEOS */
+
   const sameChannel =
-    allVideos.filter(v =>
+    allVideos.filter(
+      v =>
 
-      String(
-        v.channel || ""
-      ).toLowerCase()
+        String(
+          v.channel || ""
+        ).toLowerCase()
 
-      ===
+        ===
 
-      String(
-        channel
-      ).toLowerCase()
+        String(
+          channel
+        ).toLowerCase()
 
     );
 
+
+  /* REMOVE CURRENT VIDEO */
 
   const otherVideos =
-    sameChannel.filter(v =>
+    sameChannel.filter(
+      v =>
 
-      String(
-        v.youtube_id || ""
-      )
+        String(
+          v.youtube_id || ""
+        )
 
-      !==
+        !==
 
-      String(
-        video.youtube_id || ""
-      )
+        String(
+          video.youtube_id || ""
+        )
 
     );
 
+
+  /* PAGE TITLE */
 
   document.title =
     (video.title || "Watch") +
     " - NIKHILVERSE";
 
 
+  /* =========================
+     PAGE HTML
+  ========================= */
+
   document.getElementById(
     "watchContent"
   ).innerHTML = `
 
+
+    <!-- PLAYER -->
 
     <div class="player-box">
 
@@ -624,13 +884,16 @@ function renderWatchPage(
     </div>
 
 
+    <!-- VIDEO INFO -->
 
     <section class="video-info">
 
       <h1>
+
         ${escapeHTML(
           video.title || ""
         )}
+
       </h1>
 
 
@@ -678,9 +941,11 @@ function renderWatchPage(
         : ""
       }
 
+
     </section>
 
 
+    <!-- MORE FROM CHANNEL -->
 
     ${
       otherVideos.length
@@ -692,12 +957,16 @@ function renderWatchPage(
           <div class="section-title">
 
             <h2>
+
               More from
               ${escapeHTML(channel)}
+
             </h2>
 
             <span class="channel-name">
+
               NIKHILVERSE
+
             </span>
 
           </div>
@@ -705,21 +974,31 @@ function renderWatchPage(
 
           <div class="video-grid">
 
-            ${otherVideos.map(v => `
+
+            ${otherVideos.map(
+              v => `
 
               <article
                 class="video-card"
                 onclick="openVideo('${escapeHTML(v.youtube_id)}')"
               >
 
+
                 <div class="video-thumb">
 
                   <img
+
                     src="${
                       v.thumbnail
-                      ? escapeHTML(v.thumbnail)
+
+                      ? escapeHTML(
+                          v.thumbnail
+                        )
+
                       : "https://i.ytimg.com/vi/" +
-                        encodeURIComponent(v.youtube_id) +
+                        encodeURIComponent(
+                          v.youtube_id
+                        ) +
                         "/hqdefault.jpg"
                     }"
 
@@ -728,6 +1007,7 @@ function renderWatchPage(
                     )}"
 
                     loading="lazy"
+
                   >
 
                 </div>
@@ -736,9 +1016,11 @@ function renderWatchPage(
                 <div class="video-card-body">
 
                   <h3>
+
                     ${escapeHTML(
                       v.title || ""
                     )}
+
                   </h3>
 
 
@@ -750,10 +1032,12 @@ function renderWatchPage(
 
                     ${
                       v.category
+
                       ? " · " +
                         escapeHTML(
                           v.category
                         )
+
                       : ""
                     }
 
@@ -761,9 +1045,12 @@ function renderWatchPage(
 
                 </div>
 
+
               </article>
 
-            `).join("")}
+            `
+            ).join("")}
+
 
           </div>
 
@@ -780,6 +1067,10 @@ function renderWatchPage(
 }
 
 
+/* =========================
+   LOAD WATCH PAGE
+========================= */
+
 async function loadWatchPage(){
 
   const container =
@@ -788,12 +1079,16 @@ async function loadWatchPage(){
     );
 
 
+  /* NO VIDEO ID */
+
   if(!videoId){
 
     container.innerHTML = `
 
       <div class="error">
+
         Video not found.
+
       </div>
 
     `;
@@ -805,31 +1100,43 @@ async function loadWatchPage(){
 
   try{
 
+
+    /* GET ALL VIDEOS */
+
     const videos =
       await getVideos();
 
 
+    /* FIND SELECTED VIDEO */
+
     const video =
-      videos.find(v =>
+      videos.find(
+        v =>
 
-        String(
-          v.youtube_id || ""
-        )
+          String(
+            v.youtube_id || ""
+          )
 
-        ===
+          ===
 
-        String(videoId)
+          String(
+            videoId
+          )
 
       );
 
+
+    /* VIDEO NOT FOUND */
 
     if(!video){
 
       container.innerHTML = `
 
         <div class="error">
+
           This video is not available
           on NIKHILVERSE.
+
         </div>
 
       `;
@@ -839,6 +1146,8 @@ async function loadWatchPage(){
     }
 
 
+    /* RENDER */
+
     renderWatchPage(
       video,
       videos
@@ -846,6 +1155,7 @@ async function loadWatchPage(){
 
 
   }catch(error){
+
 
     console.error(
       "Watch page error:",
@@ -856,8 +1166,10 @@ async function loadWatchPage(){
     container.innerHTML = `
 
       <div class="error">
+
         Unable to load this video.
         Please try again.
+
       </div>
 
     `;
@@ -866,6 +1178,10 @@ async function loadWatchPage(){
 
 }
 
+
+/* =========================
+   START
+========================= */
 
 loadWatchPage();
 
