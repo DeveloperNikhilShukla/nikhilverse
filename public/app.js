@@ -1,7 +1,7 @@
-async function get(url){
+async function get(url) {
   const response = await fetch(url);
 
-  if(!response.ok){
+  if (!response.ok) {
     throw new Error("Request failed: " + url);
   }
 
@@ -9,30 +9,48 @@ async function get(url){
 }
 
 
+/* ================= HTML ESCAPE ================= */
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
 /* ================= VIDEO CARD ================= */
 
-function card(v){
+function card(v) {
 
-  const id = v.youtube_id || "";
+  const id = String(v.youtube_id || "").trim();
+
+  if (!id) return "";
 
   return `
     <article
       class="card"
-      onclick="openVideo('${encodeURIComponent(id)}')"
+      data-video-id="${escapeHTML(id)}"
+      role="button"
+      tabindex="0"
     >
 
       <div class="thumb">
 
         ${
           v.thumbnail
-          ? `
-            <img
-              src="${v.thumbnail}"
-              alt="${escapeHTML(v.title || "")}"
-              loading="lazy"
-            >
-          `
-          : "▶"
+            ? `
+              <img
+                src="${escapeHTML(v.thumbnail)}"
+                alt="${escapeHTML(v.title || "")}"
+                loading="lazy"
+              >
+            `
+            : `
+              <span>▶</span>
+            `
         }
 
       </div>
@@ -41,11 +59,13 @@ function card(v){
 
         <span class="meta">
           ${
-            v.access === "premium"
-            ? "🔒 PREMIUM"
-            : "FREE"
+            String(v.access || "").toLowerCase() === "premium"
+              ? "🔒 PREMIUM"
+              : "FREE"
           }
+
           ·
+
           ${escapeHTML(v.channel || "NIKHILVERSE")}
         </span>
 
@@ -54,7 +74,7 @@ function card(v){
         </h3>
 
         <div class="meta">
-          ${escapeHTML(v.category || "Story")}
+          ${escapeHTML(v.category || "Videos")}
         </div>
 
       </div>
@@ -64,46 +84,93 @@ function card(v){
 }
 
 
-/* ================= OPEN VIDEO ================= */
+/* ================= OPEN NIKHILVERSE WATCH PAGE ================= */
 
-function openVideo(id){
+function openVideo(id) {
 
-  if(!id) return;
+  if (!id) return;
 
-  const decoded =
-    decodeURIComponent(id);
+  id = decodeURIComponent(String(id).trim());
 
-  window.location.href =
+  /*
+    IMPORTANT:
+    Never send the user directly to YouTube.
+
+    Always open our own watch.html page.
+  */
+
+  const watchURL =
     "/watch.html?id=" +
-    encodeURIComponent(decoded);
+    encodeURIComponent(id);
 
+  window.location.assign(watchURL);
 }
 
 
-/* ================= HTML SAFETY ================= */
+/* ================= CARD CLICK HANDLER ================= */
 
-function escapeHTML(value){
+document.addEventListener("click", function (event) {
 
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  /*
+    Find clicked video card
+  */
 
-}
+  const cardElement =
+    event.target.closest(".card");
+
+  if (!cardElement) return;
+
+  const id =
+    cardElement.dataset.videoId;
+
+  if (!id) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  openVideo(id);
+
+});
 
 
-/* ================= LOAD SITE ================= */
+/* ================= CARD KEYBOARD ================= */
 
-async function load(){
+document.addEventListener("keydown", function (event) {
 
-  try{
+  if (
+    event.key !== "Enter" &&
+    event.key !== " "
+  ) {
+    return;
+  }
+
+  const cardElement =
+    event.target.closest(".card");
+
+  if (!cardElement) return;
+
+  const id =
+    cardElement.dataset.videoId;
+
+  if (!id) return;
+
+  event.preventDefault();
+
+  openVideo(id);
+
+});
+
+
+/* ================= LOAD WEBSITE ================= */
+
+async function load() {
+
+  try {
 
     const [
       videos,
       blogs,
-      plans
+      planList
     ] = await Promise.all([
       get("/api/videos"),
       get("/api/blogs"),
@@ -111,275 +178,254 @@ async function load(){
     ]);
 
 
-    /* Latest Videos */
-
-    videoGrid.innerHTML =
-      videos
-        .map(card)
-        .join("")
-      ||
-      `
-        <p class="meta">
-          No videos available.
-        </p>
-      `;
-
-
-    /* Documentaries */
-
-    const documentaries =
-      videos.filter(v =>
-        String(v.category || "")
-          .toLowerCase()
-          .includes("doc")
-      );
-
-    docGrid.innerHTML =
-      documentaries
-        .map(card)
-        .join("")
-      ||
-      `
-        <p class="meta">
-          No documentaries available.
-        </p>
-      `;
-
-
-    /* Sci-Fi */
-
-    const scifi =
-      videos.filter(v =>
-        String(v.category || "")
-          .toLowerCase()
-          .includes("sci")
-      );
-
-    scifiGrid.innerHTML =
-      scifi
-        .map(card)
-        .join("")
-      ||
-      `
-        <p class="meta">
-          No Sci-Fi videos available.
-        </p>
-      `;
-
-
-    /* TV Shows */
-
-    const shows =
-      videos.filter(v =>
-        String(v.category || "")
-          .toLowerCase()
-          .includes("show")
-      );
-
-    showGrid.innerHTML =
-      shows
-        .map(card)
-        .join("")
-      ||
-      `
-        <p class="meta">
-          No episodes available.
-        </p>
-      `;
-
-
-    /* Blog */
-
-    blogGrid.innerHTML =
-      blogs.map(b => `
-
-        <article class="blog">
-
-          <div class="img">
-
-            ${
-              b.featured_image
-              ? `
-                <img
-                  src="${b.featured_image}"
-                  alt="${escapeHTML(b.title || "")}"
-                >
-              `
-              : ""
-            }
-
-          </div>
-
-          <div class="body">
-
-            <span class="meta">
-              ${escapeHTML(b.author || "Nikhil")}
-            </span>
-
-            <h3>
-              ${escapeHTML(b.title || "")}
-            </h3>
-
-            <p class="meta">
-              ${escapeHTML(b.excerpt || "")}
-            </p>
-
-          </div>
-
-        </article>
-
-      `).join("")
-      ||
-      `
-        <p class="meta">
-          No articles yet.
-        </p>
-      `;
-
-
-    /* Premium Plans */
-
-    plans.innerHTML =
-      plansData(plans);
-
-  }catch(error){
-
-    console.error(
-      "NIKHILVERSE load error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ================= PLANS ================= */
-
-function plansData(items){
-
-  return items.map(p => `
-
-    <div class="plan">
-
-      <span>
-        ${escapeHTML(p.name || "Premium")}
-      </span>
-
-      <h3>
-        ₹<strong>
-          ${escapeHTML(p.price || "0")}
-        </strong>
-        /
-        ${escapeHTML(p.period || "month")}
-      </h3>
-
-      <p>
-        ${escapeHTML(p.features || "")}
-      </p>
-
-      <button
-        onclick="alert('Razorpay checkout requires live credentials in .env')"
-      >
-        Join Premium
-      </button>
-
-    </div>
-
-  `).join("");
-
-}
-
-
-/* ================= AI ================= */
-
-function openAI(){
-
-  const box =
-    document.getElementById("ai");
-
-  if(!box) return;
-
-  box.hidden =
-    !box.hidden;
-
-}
-
-
-async function askAI(){
-
-  const input =
-    document.getElementById("msg");
-
-  const chat =
-    document.getElementById("chat");
-
-  if(!input || !chat) return;
-
-  const question =
-    input.value.trim();
-
-  if(!question) return;
-
-  chat.innerHTML =
-    "<b>You:</b> " +
-    escapeHTML(question) +
-    "<br><br>Thinking…";
-
-  input.value = "";
-
-  try{
-
-    const response =
-      await fetch(
-        "/api/ai",
-        {
-          method:"POST",
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-          body:JSON.stringify({
-            message:question
-          })
-        }
-      );
-
-    const result =
-      await response.json();
-
-    chat.innerHTML =
-      "<b>You:</b> " +
-      escapeHTML(question) +
-      "<br><br>" +
-      escapeHTML(
-        result.answer ||
-        "Sorry, I could not answer."
-      );
-
-    if(
-      result.results &&
-      result.results.length
-    ){
-
-      chat.innerHTML +=
-        "<br><br><b>Related:</b><br>" +
-        result.results
-          .map(
-            x =>
-              "• " +
-              escapeHTML(x.title || "")
-          )
-          .join("<br>");
+    /* ================= ALL VIDEOS ================= */
+
+    const videoGridElement =
+      document.getElementById("videoGrid");
+
+    if (videoGridElement) {
+
+      videoGridElement.innerHTML =
+        videos
+          .map(card)
+          .join("")
+        ||
+        `
+          <p class="meta">
+            No videos available.
+          </p>
+        `;
 
     }
 
-  }catch(error){
 
-    chat.innerHTML =
-      "<b>Error:</b> AI service unavailable.";
+    /* ================= DOCUMENTARIES ================= */
 
-    console.error(error);
+    const docGridElement =
+      document.getElementById("docGrid");
+
+    if (docGridElement) {
+
+      const documentaries =
+        videos.filter(v => {
+
+          const category =
+            String(v.category || "")
+              .toLowerCase();
+
+          return (
+            category.includes("doc") ||
+            category.includes("document")
+          );
+
+        });
+
+      docGridElement.innerHTML =
+        documentaries
+          .map(card)
+          .join("")
+        ||
+        `
+          <p class="meta">
+            No documentaries available.
+          </p>
+        `;
+
+    }
+
+
+    /* ================= SCI-FI ================= */
+
+    const scifiGridElement =
+      document.getElementById("scifiGrid");
+
+    if (scifiGridElement) {
+
+      const scifi =
+        videos.filter(v => {
+
+          const category =
+            String(v.category || "")
+              .toLowerCase();
+
+          return (
+            category.includes("sci") ||
+            category.includes("science fiction")
+          );
+
+        });
+
+      scifiGridElement.innerHTML =
+        scifi
+          .map(card)
+          .join("")
+        ||
+        `
+          <p class="meta">
+            No Sci-Fi videos available.
+          </p>
+        `;
+
+    }
+
+
+    /* ================= SHOWS ================= */
+
+    const showGridElement =
+      document.getElementById("showGrid");
+
+    if (showGridElement) {
+
+      const shows =
+        videos.filter(v => {
+
+          const category =
+            String(v.category || "")
+              .toLowerCase();
+
+          return (
+            category.includes("show") ||
+            category.includes("episode") ||
+            category.includes("tv")
+          );
+
+        });
+
+      showGridElement.innerHTML =
+        shows
+          .map(card)
+          .join("")
+        ||
+        `
+          <p class="meta">
+            No TV episodes available.
+          </p>
+        `;
+
+    }
+
+
+    /* ================= BLOG ================= */
+
+    const blogGridElement =
+      document.getElementById("blogGrid");
+
+    if (blogGridElement) {
+
+      blogGridElement.innerHTML =
+        (blogList || [])
+          .map(blog => `
+
+            <article class="blog">
+
+              <div class="img">
+
+                ${
+                  blog.featured_image
+                    ? `
+                      <img
+                        src="${escapeHTML(blog.featured_image)}"
+                        alt="${escapeHTML(blog.title || "")}"
+                        loading="lazy"
+                      >
+                    `
+                    : ""
+                }
+
+              </div>
+
+              <div class="body">
+
+                <span class="meta">
+                  ${escapeHTML(
+                    blog.author || "Nikhil"
+                  )}
+                </span>
+
+                <h3>
+                  ${escapeHTML(
+                    blog.title || ""
+                  )}
+                </h3>
+
+                <p class="meta">
+                  ${escapeHTML(
+                    blog.excerpt || ""
+                  )}
+                </p>
+
+              </div>
+
+            </article>
+
+          `)
+          .join("");
+
+    }
+
+
+    /* ================= PREMIUM PLANS ================= */
+
+    const plansElement =
+      document.getElementById("plans");
+
+    if (plansElement) {
+
+      plansElement.innerHTML =
+        (planList || [])
+          .map(plan => `
+
+            <div class="plan">
+
+              <span>
+                ${escapeHTML(
+                  plan.name || "Premium"
+                )}
+              </span>
+
+              <h3>
+
+                ₹
+                <strong>
+                  ${escapeHTML(
+                    plan.price || "0"
+                  )}
+                </strong>
+
+                /
+                ${escapeHTML(
+                  plan.period || "month"
+                )}
+
+              </h3>
+
+              <p>
+                ${escapeHTML(
+                  plan.features || ""
+                )}
+              </p>
+
+              <button
+                type="button"
+                onclick="alert('Premium checkout is coming soon.')"
+              >
+                Join Premium
+              </button>
+
+            </div>
+
+          `)
+          .join("");
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "NIKHILVERSE loading error:",
+      error
+    );
 
   }
 
@@ -391,16 +437,16 @@ async function askAI(){
 const searchInput =
   document.getElementById("siteSearch");
 
-if(searchInput){
+if (searchInput) {
 
   searchInput.addEventListener(
     "keydown",
-    function(event){
+    function (event) {
 
-      if(
+      if (
         event.key === "Enter" &&
         this.value.trim()
-      ){
+      ) {
 
         window.location.href =
           "/?q=" +
@@ -412,6 +458,86 @@ if(searchInput){
 
     }
   );
+
+}
+
+
+/* ================= AI ================= */
+
+function openAI() {
+
+  const ai =
+    document.getElementById("ai");
+
+  if (!ai) return;
+
+  ai.hidden =
+    !ai.hidden;
+
+}
+
+
+async function askAI() {
+
+  const input =
+    document.getElementById("msg");
+
+  const chat =
+    document.getElementById("chat");
+
+  if (!input || !chat) return;
+
+  const message =
+    input.value.trim();
+
+  if (!message) return;
+
+  chat.innerHTML =
+    "<b>You:</b> " +
+    escapeHTML(message) +
+    "<br><br>Thinking...";
+
+  input.value = "";
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/ai",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            message
+          })
+        }
+      );
+
+    const result =
+      await response.json();
+
+    chat.innerHTML =
+      "<b>You:</b> " +
+      escapeHTML(message) +
+      "<br><br>" +
+      escapeHTML(
+        result.answer ||
+        "Sorry, I could not answer."
+      );
+
+  } catch (error) {
+
+    console.error(error);
+
+    chat.innerHTML =
+      "<b>Error:</b> AI service unavailable.";
+
+  }
 
 }
 
