@@ -1,36 +1,19 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  >
-
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>NIKHILVERSE — Sci-Fi by Nikhil</title>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
 
-  <link
-    rel="stylesheet"
-    href="/style.css"
-  >
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -48,8 +31,9 @@
     >
 
       <img
-        src="/assets/nikhilverse-logo.png"
+        src="/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
+        onerror="this.style.display='none'"
       >
 
       <span>
@@ -62,10 +46,7 @@
 
     <nav>
 
-      <a
-        class="active"
-        href="#home"
-      >
+      <a class="active" href="#home">
         Home
       </a>
 
@@ -86,7 +67,7 @@
       </a>
 
       <a href="#videos">
-        New & Popular
+        New &amp; Popular
       </a>
 
       <a href="#videos">
@@ -114,6 +95,7 @@
       <button
         class="ai-btn"
         onclick="openAI()"
+        type="button"
       >
         🤖 Nikhil AI
       </button>
@@ -130,7 +112,7 @@
       <a
         class="profile-btn"
         href="/admin/"
-        title="Profile / Admin"
+        title="Admin"
       >
         ●
       </a>
@@ -140,235 +122,270 @@
   </header>
 
 
-  <!-- =========================
-       HERO
-       ========================= -->
+  <main>
 
-  <section
-    id="home"
-    class="hero"
-  >
+    <!-- =========================
+         HERO + CAROUSEL
+         ========================= -->
 
-    <!-- Carousel background -->
-    <div
-      id="heroCarousel"
-      class="hero-carousel"
-    ></div>
+    <section
+      id="home"
+      class="hero"
+    >
+
+      <!-- First 5 latest video thumbnails -->
+      <div
+        id="heroCarousel"
+        class="hero-carousel"
+        aria-hidden="true"
+      ></div>
 
 
-    <!-- Dark overlay -->
-    <div class="hero-overlay"></div>
+      <!-- Dark overlay -->
+      <div class="hero-overlay"></div>
 
 
-    <div class="hero-content">
+      <!-- Hero text -->
+      <div class="hero-content">
+
+        <small>
+          THE HOME OF YOUR STORIES
+        </small>
+
+        <h1>
+          Discover stories
+          <br>
+          <i>worth watching.</i>
+        </h1>
+
+        <p>
+          Cinematic documentaries, shows and original
+          storytelling from Nikhil.
+        </p>
+
+        <a
+          class="cta"
+          href="#videos"
+        >
+          Explore Videos →
+        </a>
+
+      </div>
+
+
+      <!-- Carousel buttons -->
+
+      <button
+        id="heroPrev"
+        class="hero-arrow hero-prev"
+        type="button"
+        aria-label="Previous"
+      >
+        ‹
+      </button>
+
+
+      <button
+        id="heroNext"
+        class="hero-arrow hero-next"
+        type="button"
+        aria-label="Next"
+      >
+        ›
+      </button>
+
+
+      <!-- Carousel dots -->
+
+      <div
+        id="heroDots"
+        class="hero-dots"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         LATEST VIDEOS
+         ========================= -->
+
+    <section
+      id="videos"
+      class="content-section"
+    >
+
+      <div class="section-title">
+
+        <h2>
+          Latest Videos
+        </h2>
+
+        <span>
+          Fresh uploads from NIKHILVERSE
+        </span>
+
+      </div>
+
+
+      <div
+        id="videoGrid"
+        class="video-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         DOCUMENTARIES
+         ========================= -->
+
+    <section
+      id="documentaries"
+      class="content-section"
+    >
+
+      <div class="section-title">
+
+        <h2>
+          Documentaries
+        </h2>
+
+        <span>
+          Deep stories. Real subjects.
+        </span>
+
+      </div>
+
+
+      <div
+        id="docGrid"
+        class="video-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         SCI-FI
+         ========================= -->
+
+    <section
+      id="scifi"
+      class="content-section"
+    >
+
+      <div class="section-title">
+
+        <h2>
+          Sci-Fi
+        </h2>
+
+        <span>
+          Science, space and the unknown.
+        </span>
+
+      </div>
+
+
+      <div
+        id="scifiGrid"
+        class="video-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         TV SHOWS
+         ========================= -->
+
+    <section
+      id="shows"
+      class="content-section"
+    >
+
+      <div class="section-title">
+
+        <h2>
+          Latest Episodes
+        </h2>
+
+        <span>
+          Shows and series by Nikhil.
+        </span>
+
+      </div>
+
+
+      <div
+        id="showGrid"
+        class="video-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         BLOG
+         ========================= -->
+
+    <section
+      id="blog"
+      class="content-section"
+    >
+
+      <div class="section-title">
+
+        <h2>
+          From the NIKHILVERSE Blog
+        </h2>
+
+        <span>
+          Stories behind the stories.
+        </span>
+
+      </div>
+
+
+      <div
+        id="blogGrid"
+        class="blog-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================
+         PREMIUM
+         ========================= -->
+
+    <section
+      id="premium"
+      class="pricing"
+    >
 
       <small>
-        THE HOME OF YOUR STORIES
+        NIKHILVERSE PREMIUM
       </small>
 
-      <h1>
-        Discover stories
-        <br>
-        <i>worth watching.</i>
-      </h1>
+      <h2>
+        More stories. More mysteries. More to explore.
+      </h2>
 
       <p>
-        Cinematic documentaries, shows and original
-        storytelling from Nikhil.
+        Unlock premium documentaries, exclusive series,
+        early access and bonus content.
       </p>
 
-      <a
-        class="cta"
-        href="#videos"
-      >
-        Explore Videos →
-      </a>
 
-    </div>
+      <div
+        id="plans"
+        class="plans"
+      ></div>
 
+    </section>
 
-    <!-- Carousel controls -->
-
-    <button
-      id="heroPrev"
-      class="hero-arrow hero-prev"
-      type="button"
-      aria-label="Previous"
-    >
-      ‹
-    </button>
-
-    <button
-      id="heroNext"
-      class="hero-arrow hero-next"
-      type="button"
-      aria-label="Next"
-    >
-      ›
-    </button>
-
-
-    <div
-      id="heroDots"
-      class="hero-dots"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       LATEST VIDEOS
-       ========================= -->
-
-  <section
-    id="videos"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Latest Videos
-      </h2>
-
-    </div>
-
-    <div
-      id="videoGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       DOCUMENTARIES
-       ========================= -->
-
-  <section
-    id="documentaries"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Documentaries
-      </h2>
-
-    </div>
-
-    <div
-      id="docGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       SCI-FI
-       ========================= -->
-
-  <section
-    id="scifi"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Sci-Fi
-      </h2>
-
-    </div>
-
-    <div
-      id="scifiGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       TV SHOWS
-       ========================= -->
-
-  <section
-    id="shows"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Latest Episodes
-      </h2>
-
-    </div>
-
-    <div
-      id="showGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       BLOG
-       ========================= -->
-
-  <section
-    id="blog"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        From the NIKHILVERSE Blog
-      </h2>
-
-    </div>
-
-    <div
-      id="blogGrid"
-      class="blog-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       PREMIUM
-       ========================= -->
-
-  <section
-    id="premium"
-    class="pricing"
-  >
-
-    <small>
-      NIKHILVERSE PREMIUM
-    </small>
-
-    <h2>
-      More stories. More mysteries. More to explore.
-    </h2>
-
-    <p>
-      Unlock premium documentaries, exclusive series,
-      early access and bonus content.
-    </p>
-
-    <div
-      id="plans"
-      class="plans"
-    ></div>
-
-  </section>
+  </main>
 
 
   <!-- =========================
@@ -380,8 +397,9 @@
     <div class="footer-brand">
 
       <img
-        src="/assets/nikhilverse-logo.png"
+        src="/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
+        onerror="this.style.display='none'"
       >
 
       <div>
@@ -397,6 +415,7 @@
       </div>
 
     </div>
+
 
     <a href="/admin/">
       Admin Panel
@@ -471,7 +490,7 @@
 
   <!-- =====================================================
        HERO CAROUSEL
-       Uses first 5 videos from existing /api/videos
+       First 5 latest videos from /api/videos
        ===================================================== -->
 
   <script>
@@ -490,74 +509,150 @@
       const next =
         document.getElementById("heroNext");
 
-      if (!carousel) return;
+
+      if (
+        !carousel ||
+        !dots ||
+        !prev ||
+        !next
+      ) {
+        return;
+      }
+
 
       try {
 
         const response =
           await fetch("/api/videos");
 
+
+        if (!response.ok) {
+          throw new Error(
+            "Could not load videos"
+          );
+        }
+
+
         const videos =
           await response.json();
 
+
         const latest =
-          videos
-            .filter(v => v.thumbnail && v.youtube_id)
-            .slice(0, 5);
+          Array.isArray(videos)
+            ? videos
+                .filter(
+                  v =>
+                    v &&
+                    v.thumbnail &&
+                    v.youtube_id
+                )
+                .slice(0, 5)
+            : [];
+
 
         if (!latest.length) {
+
+          carousel.innerHTML = "";
+
+          prev.hidden = true;
+
+          next.hidden = true;
+
+          dots.innerHTML = "";
+
           return;
         }
 
+
         let current = 0;
 
+
         carousel.innerHTML =
-          latest.map((video, index) => {
+          latest
+            .map(
+              (video, index) => `
 
-            return `
-              <div
-                class="hero-slide ${index === 0 ? "active" : ""}"
-                data-index="${index}"
-                onclick="window.open(
-                  'https://www.youtube.com/watch?v=${video.youtube_id}',
-                  '_blank'
-                )"
-              >
-
-                <img
-                  src="${video.thumbnail}"
-                  alt=""
+                <button
+                  class="hero-slide ${
+                    index === 0
+                      ? "active"
+                      : ""
+                  }"
+                  type="button"
+                  data-index="${index}"
+                  aria-label="Open ${
+                    String(
+                      video.title ||
+                      "video"
+                    ).replace(
+                      /"/g,
+                      "&quot;"
+                    )
+                  }"
+                  onclick="
+                    window.open(
+                      'https://www.youtube.com/watch?v=${encodeURIComponent(
+                        video.youtube_id
+                      )}',
+                      '_blank',
+                      'noopener'
+                    )
+                  "
                 >
 
-              </div>
-            `;
+                  <img
+                    src="${video.thumbnail}"
+                    alt=""
+                    loading="${
+                      index === 0
+                        ? "eager"
+                        : "lazy"
+                    }"
+                  >
 
-          }).join("");
+                </button>
+
+              `
+            )
+            .join("");
 
 
         dots.innerHTML =
-          latest.map((video, index) => {
+          latest
+            .map(
+              (_, index) => `
 
-            return `
-              <button
-                class="hero-dot ${index === 0 ? "active" : ""}"
-                data-index="${index}"
-                type="button"
-                aria-label="Slide ${index + 1}"
-              ></button>
-            `;
+                <button
+                  class="hero-dot ${
+                    index === 0
+                      ? "active"
+                      : ""
+                  }"
+                  type="button"
+                  data-index="${index}"
+                  aria-label="Show slide ${
+                    index + 1
+                  }"
+                ></button>
 
-          }).join("");
+              `
+            )
+            .join("");
 
 
         const slides =
           Array.from(
-            document.querySelectorAll(".hero-slide")
+            document.querySelectorAll(
+              ".hero-slide"
+            )
           );
+
 
         const dotButtons =
           Array.from(
-            document.querySelectorAll(".hero-dot")
+            document.querySelectorAll(
+              ".hero-dot"
+            )
           );
 
 
@@ -567,34 +662,42 @@
             (index + slides.length) %
             slides.length;
 
-          slides.forEach((slide, i) => {
 
-            slide.classList.toggle(
-              "active",
-              i === current
-            );
+          slides.forEach(
+            (slide, i) => {
 
-          });
+              slide.classList.toggle(
+                "active",
+                i === current
+              );
 
-          dotButtons.forEach((dot, i) => {
+            }
+          );
 
-            dot.classList.toggle(
-              "active",
-              i === current
-            );
 
-          });
+          dotButtons.forEach(
+            (dot, i) => {
+
+              dot.classList.toggle(
+                "active",
+                i === current
+              );
+
+            }
+          );
 
         }
 
 
         next.addEventListener(
           "click",
-          function (event) {
+          event => {
 
             event.stopPropagation();
 
-            showSlide(current + 1);
+            showSlide(
+              current + 1
+            );
 
           }
         );
@@ -602,11 +705,13 @@
 
         prev.addEventListener(
           "click",
-          function (event) {
+          event => {
 
             event.stopPropagation();
 
-            showSlide(current - 1);
+            showSlide(
+              current - 1
+            );
 
           }
         );
@@ -617,7 +722,7 @@
 
             dot.addEventListener(
               "click",
-              function (event) {
+              event => {
 
                 event.stopPropagation();
 
@@ -630,15 +735,28 @@
         );
 
 
-        setInterval(
-          function () {
+        if (slides.length > 1) {
 
-            showSlide(current + 1);
+          setInterval(
+            () => {
 
-          },
-          5000
-        );
+              showSlide(
+                current + 1
+              );
 
+            },
+            5000
+          );
+
+        } else {
+
+          prev.hidden = true;
+
+          next.hidden = true;
+
+          dots.innerHTML = "";
+
+        }
 
       } catch (error) {
 
@@ -658,5 +776,4 @@
   <script src="/app.js"></script>
 
 </body>
-
 </html>
