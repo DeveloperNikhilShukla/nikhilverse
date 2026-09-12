@@ -1,334 +1,249 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+/* =========================================================
+   NIKHILVERSE HERO CAROUSEL
+   FIRST 5 LATEST UPLOADS
+   ========================================================= */
 
-  <title>NIKHILVERSE — Stories • Documentaries • Films</title>
+(async function loadHeroCarousel() {
 
-  <link rel="stylesheet" href="/style.css">
-</head>
+  const carousel = document.getElementById("heroCarousel");
+  const dotsBox = document.getElementById("heroDots");
+  const prevBtn = document.getElementById("heroPrev");
+  const nextBtn = document.getElementById("heroNext");
 
-<body>
+  if (!carousel) return;
 
-  <!-- =========================
-       HEADER
-       ========================= -->
+  try {
 
-  <header>
+    const response = await fetch("/api/videos");
 
-    <a class="brand" href="#home">
+    const videos = await response.json();
 
-      <img
-        src="/assets/nikhilverse-logo.png"
-        alt="NIKHILVERSE Logo"
-      >
+    /*
+      API ke first 5 videos = latest 5 uploads
+    */
 
-      <span>
-        <b>NIKHILVERSE</b>
-        <small>SCI-FI BY NIKHIL</small>
-      </span>
+    const latest = videos
+      .filter(v => v.thumbnail && v.youtube_id)
+      .slice(0, 5);
 
-    </a>
+    if (!latest.length) {
+      carousel.style.display = "none";
+      return;
+    }
 
-    <nav>
+    let current = 0;
+    let timer;
 
-      <a href="#home">Home</a>
+    /* Create Slides */
 
-      <a href="#videos">Explore</a>
+    carousel.innerHTML = latest.map((video, index) => {
 
-      <a href="#docs">Documentaries</a>
+      const safeTitle =
+        (video.title || "NIKHILVERSE")
+          .replace(/"/g, "&quot;");
 
-      <a href="#shows">Shows</a>
-
-      <a href="#blog">Blog</a>
-
-      <a class="pill" href="#premium">
-        Premium
-      </a>
-
-    </nav>
-
-    <button
-      class="ai-header-btn"
-      onclick="openAI()"
-    >
-      🤖 Nikhil AI ✦
-    </button>
-
-  </header>
-
-
-  <!-- =========================
-       MAIN
-       ========================= -->
-
-  <main>
-
-
-    <!-- =========================
-         HERO
-         ========================= -->
-
-    <section id="home" class="hero">
-
-      <div class="hero-content">
-
-        <small>
-          THE HOME OF YOUR STORIES
-        </small>
-
-        <h1>
-          Discover stories
-          <br>
-          <i>worth watching.</i>
-        </h1>
-
-        <p>
-          Cinematic documentaries, shows and
-          original storytelling from Nikhil.
-        </p>
-
-        <a
-          class="cta"
-          href="#videos"
+      return `
+        <div
+          class="hero-slide ${index === 0 ? "active" : ""}"
+          data-index="${index}"
+          onclick="window.open(
+            'https://www.youtube.com/watch?v=${video.youtube_id}',
+            '_blank'
+          )"
         >
-          Explore Videos →
-        </a>
 
-      </div>
+          <img
+            src="${video.thumbnail}"
+            alt="${safeTitle}"
+            loading="${index === 0 ? "eager" : "lazy"}"
+          >
 
-    </section>
+          <div class="hero-slide-title">
+            ${safeTitle}
+          </div>
 
+        </div>
+      `;
 
-    <!-- =========================
-         LATEST VIDEOS
-         ========================= -->
+    }).join("");
 
-    <section id="videos">
 
-      <div class="sectionhead">
+    /* Create Dots */
 
-        <h2>
-          Latest Videos
-        </h2>
-
-        <span>
-          SIFI By Nikhil • TAH By Nikhil
-        </span>
-
-      </div>
-
-      <div
-        id="videoGrid"
-        class="grid"
-      ></div>
-
-    </section>
-
-
-    <!-- =========================
-         DOCUMENTARIES
-         ========================= -->
-
-    <section id="docs">
-
-      <div class="sectionhead">
-
-        <h2>
-          Documentaries
-        </h2>
-
-        <span>
-          Deep stories. Real subjects.
-        </span>
-
-      </div>
-
-      <div
-        id="docGrid"
-        class="grid"
-      ></div>
-
-    </section>
-
-
-    <!-- =========================
-         SHOWS
-         ========================= -->
-
-    <section id="shows">
-
-      <div class="sectionhead">
-
-        <h2>
-          Shows
-        </h2>
-
-        <span>
-          Original stories & episodes
-        </span>
-
-      </div>
-
-      <div
-        id="showGrid"
-        class="grid"
-      ></div>
-
-    </section>
-
-
-    <!-- =========================
-         BLOG
-         ========================= -->
-
-    <section id="blog">
-
-      <div class="sectionhead">
-
-        <h2>
-          From the Journal
-        </h2>
-
-        <span>
-          Stories behind the stories
-        </span>
-
-      </div>
-
-      <div
-        id="blogGrid"
-        class="bloggrid"
-      ></div>
-
-    </section>
-
-
-    <!-- =========================
-         PREMIUM
-         ========================= -->
-
-    <section
-      id="premium"
-      class="pricing"
-    >
-
-      <small>
-        MEMBERSHIP
-      </small>
-
-      <h2>
-        Go deeper with NIKHILVERSE Premium.
-      </h2>
-
-      <div
-        id="plans"
-        class="plans"
-      ></div>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-       ========================= -->
-
-  <footer>
-
-    <div class="footer-brand">
-
-      <img
-        src="/assets/nikhilverse-logo.png"
-        alt="NIKHILVERSE"
-      >
-
-      <div>
-
-        <b>
-          NIKHILVERSE
-        </b>
-
-        <p>
-          Stories • Documentaries • Films • Ideas
-        </p>
-
-      </div>
-
-    </div>
-
-    <a href="/admin/">
-      Admin Panel
-    </a>
-
-  </footer>
-
-
-  <!-- =========================
-       NIKHIL AI
-       ========================= -->
-
-  <div
-    id="ai"
-    class="ai"
-    hidden
-  >
-
-    <div class="ahead">
-
-      <b>
-        🤖 Nikhil AI
-      </b>
-
+    dotsBox.innerHTML = latest.map((_, index) => `
       <button
-        onclick="openAI()"
-        aria-label="Close AI"
-      >
-        ×
-      </button>
-
-    </div>
-
-    <div id="chat">
-      Hi 👋 Ask me anything or ask me to find NIKHILVERSE content.
-    </div>
-
-    <div class="ainput">
-
-      <input
-        id="msg"
-        placeholder="Ask Nikhil…"
-        autocomplete="off"
-      >
-
-      <button
-        onclick="askAI()"
-      >
-        →
-      </button>
-
-    </div>
-
-  </div>
+        class="hero-dot ${index === 0 ? "active" : ""}"
+        data-index="${index}"
+        aria-label="Go to slide ${index + 1}"
+      ></button>
+    `).join("");
 
 
-  <!-- AI FLOATING BUTTON -->
+    const slides =
+      Array.from(
+        carousel.querySelectorAll(".hero-slide")
+      );
 
-  <button
-    class="aifab"
-    onclick="openAI()"
-    aria-label="Open Nikhil AI"
-  >
-    ✦
-  </button>
+    const dots =
+      Array.from(
+        dotsBox.querySelectorAll(".hero-dot")
+      );
 
 
-  <!-- IMPORTANT:
-       Existing app.js remains unchanged -->
+    /* Show Slide */
 
-  <script src="/app.js"></script>
+    function showSlide(index) {
 
-</body>
-</html>
+      current =
+        (index + slides.length) %
+        slides.length;
+
+      slides.forEach((slide, i) => {
+
+        slide.classList.toggle(
+          "active",
+          i === current
+        );
+
+      });
+
+      dots.forEach((dot, i) => {
+
+        dot.classList.toggle(
+          "active",
+          i === current
+        );
+
+      });
+
+    }
+
+
+    /* Next */
+
+    function nextSlide() {
+
+      showSlide(current + 1);
+
+    }
+
+
+    /* Previous */
+
+    function previousSlide() {
+
+      showSlide(current - 1);
+
+    }
+
+
+    /* Buttons */
+
+    nextBtn.addEventListener(
+      "click",
+      function(e) {
+
+        e.stopPropagation();
+
+        nextSlide();
+
+        restartTimer();
+
+      }
+    );
+
+
+    prevBtn.addEventListener(
+      "click",
+      function(e) {
+
+        e.stopPropagation();
+
+        previousSlide();
+
+        restartTimer();
+
+      }
+    );
+
+
+    /* Dots */
+
+    dots.forEach((dot, index) => {
+
+      dot.addEventListener(
+        "click",
+        function(e) {
+
+          e.stopPropagation();
+
+          showSlide(index);
+
+          restartTimer();
+
+        }
+      );
+
+    });
+
+
+    /* Auto Play */
+
+    function startTimer() {
+
+      timer = setInterval(
+        nextSlide,
+        5000
+      );
+
+    }
+
+
+    function restartTimer() {
+
+      clearInterval(timer);
+
+      startTimer();
+
+    }
+
+
+    startTimer();
+
+
+    /* Pause when mouse is over */
+
+    carousel.addEventListener(
+      "mouseenter",
+      function() {
+
+        clearInterval(timer);
+
+      }
+    );
+
+
+    carousel.addEventListener(
+      "mouseleave",
+      function() {
+
+        startTimer();
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Hero carousel error:",
+      error
+    );
+
+  }
+
+})();
+</script>
+
+<script src="/app.js"></script>
