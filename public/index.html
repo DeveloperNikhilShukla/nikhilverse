@@ -16,103 +16,136 @@
 
   <link rel="stylesheet" href="/style.css">
 
-
-  <!-- =====================================================
-       ANDROID APP PREMIUM STYLES
-       ===================================================== -->
-
   <style>
 
     /* =====================================================
-       HEADER ANDROID BUTTON
+       ANDROID APP - NAVBAR
        ===================================================== */
 
     .android-header-btn {
       position: relative;
-
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 7px;
 
-      padding: 10px 15px;
+      padding: 10px 16px;
 
-      border: 1px solid rgba(91, 169, 255, 0.45);
+      border: 1px solid rgba(90, 175, 255, .55);
       border-radius: 999px;
 
       background:
         linear-gradient(
           135deg,
-          rgba(39, 103, 190, 0.25),
-          rgba(17, 35, 67, 0.65)
+          rgba(25, 95, 180, .35),
+          rgba(15, 30, 65, .75)
         );
 
-      color: #ffffff;
-
+      color: #fff;
       text-decoration: none;
 
       font-size: 13px;
       font-weight: 800;
 
       white-space: nowrap;
+      overflow: hidden;
 
       box-shadow:
-        0 0 0 1px rgba(70, 145, 255, 0.05),
-        0 0 18px rgba(55, 145, 255, 0.16);
+        0 0 10px rgba(50, 150, 255, .25),
+        0 0 25px rgba(50, 150, 255, .12);
 
       transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease,
-        background 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease,
+        background .25s ease;
     }
-
 
     .android-header-btn::before {
       content: "";
-
       position: absolute;
-      inset: -2px;
 
-      border-radius: inherit;
+      top: 0;
+      left: -120%;
+
+      width: 90%;
+      height: 100%;
 
       background:
         linear-gradient(
           90deg,
           transparent,
-          rgba(95, 180, 255, 0.25),
+          rgba(255,255,255,.35),
           transparent
         );
 
-      opacity: 0;
+      transform: skewX(-20deg);
+
+      animation: androidShine 3.2s infinite;
+
+      pointer-events: none;
+    }
+
+    .android-header-btn::after {
+      content: "";
+
+      position: absolute;
+      inset: -3px;
+
+      border-radius: inherit;
+
+      border: 1px solid rgba(80,175,255,.25);
+
+      box-shadow:
+        0 0 15px rgba(50,150,255,.18);
+
+      opacity: .7;
 
       pointer-events: none;
 
-      transition: opacity 0.25s ease;
+      animation: androidPulse 2.2s ease-in-out infinite;
     }
 
-
     .android-header-btn:hover {
+      transform: translateY(-2px) scale(1.03);
 
-      transform: translateY(-2px);
-
-      border-color: rgba(105, 190, 255, 0.8);
+      border-color: rgba(120,205,255,.95);
 
       background:
         linear-gradient(
           135deg,
-          rgba(45, 120, 220, 0.38),
-          rgba(20, 45, 85, 0.8)
+          rgba(40,125,230,.48),
+          rgba(20,45,90,.9)
         );
 
       box-shadow:
-        0 0 20px rgba(55, 155, 255, 0.35),
-        0 0 45px rgba(55, 130, 255, 0.16);
+        0 0 15px rgba(60,165,255,.55),
+        0 0 35px rgba(60,145,255,.35),
+        0 0 65px rgba(50,125,255,.18);
     }
 
+    @keyframes androidShine {
+      0% {
+        left: -120%;
+      }
 
-    .android-header-btn:hover::before {
-      opacity: 1;
+      55% {
+        left: 130%;
+      }
+
+      100% {
+        left: 130%;
+      }
+    }
+
+    @keyframes androidPulse {
+      0%,100% {
+        opacity: .25;
+      }
+
+      50% {
+        opacity: .9;
+      }
     }
 
 
@@ -121,7 +154,6 @@
        ===================================================== */
 
     .app-section {
-
       position: relative;
 
       width: 100%;
@@ -135,33 +167,29 @@
       background:
         radial-gradient(
           circle at 15% 50%,
-          rgba(33, 125, 255, 0.22),
+          rgba(35,135,255,.25),
           transparent 32%
         ),
         radial-gradient(
           circle at 85% 50%,
-          rgba(95, 55, 255, 0.18),
+          rgba(100,65,255,.20),
           transparent 34%
         ),
         linear-gradient(
           180deg,
-          #030814 0%,
-          #071326 50%,
-          #030814 100%
+          #020711,
+          #071426,
+          #020711
         );
 
       border-top:
-        1px solid rgba(83, 158, 255, 0.20);
+        1px solid rgba(80,160,255,.22);
 
       border-bottom:
-        1px solid rgba(83, 158, 255, 0.20);
+        1px solid rgba(80,160,255,.22);
     }
 
-
-    /* Top glow */
-
     .app-section::before {
-
       content: "";
 
       position: absolute;
@@ -169,15 +197,15 @@
       top: -180px;
       left: 50%;
 
-      width: 700px;
-      height: 350px;
+      width: 800px;
+      height: 400px;
 
       transform: translateX(-50%);
 
       background:
         radial-gradient(
           ellipse,
-          rgba(64, 157, 255, 0.25),
+          rgba(55,155,255,.28),
           transparent 68%
         );
 
@@ -186,11 +214,7 @@
       pointer-events: none;
     }
 
-
-    /* Bottom glow */
-
     .app-section::after {
-
       content: "";
 
       position: absolute;
@@ -198,15 +222,15 @@
       bottom: -180px;
       left: 50%;
 
-      width: 800px;
-      height: 300px;
+      width: 900px;
+      height: 350px;
 
       transform: translateX(-50%);
 
       background:
         radial-gradient(
           ellipse,
-          rgba(69, 117, 255, 0.16),
+          rgba(80,110,255,.20),
           transparent 70%
         );
 
@@ -217,17 +241,16 @@
 
 
     /* =====================================================
-       MAIN APP CARD
+       APP BOX
        ===================================================== */
 
     .app-box {
-
       position: relative;
       z-index: 2;
 
       max-width: 1150px;
 
-      min-height: 360px;
+      min-height: 380px;
 
       margin: 0 auto;
 
@@ -242,69 +265,63 @@
       box-sizing: border-box;
 
       border:
-        1px solid rgba(105, 177, 255, 0.30);
+        1px solid rgba(100,180,255,.32);
 
       border-radius: 32px;
 
       background:
         linear-gradient(
           135deg,
-          rgba(16, 39, 72, 0.92),
-          rgba(5, 13, 29, 0.97)
+          rgba(15,40,75,.95),
+          rgba(4,12,27,.98)
         );
 
       box-shadow:
-        0 0 0 1px rgba(76, 150, 255, 0.05),
-        0 0 35px rgba(45, 130, 255, 0.12),
-        0 30px 90px rgba(0, 0, 0, 0.55);
+        0 0 25px rgba(45,140,255,.12),
+        0 0 70px rgba(45,120,255,.08),
+        0 30px 90px rgba(0,0,0,.55);
 
       overflow: hidden;
     }
 
-
-    /* Card internal glow */
-
     .app-box::before {
-
       content: "";
 
       position: absolute;
 
-      width: 500px;
-      height: 500px;
-
-      top: -280px;
+      top: -250px;
       right: -180px;
+
+      width: 600px;
+      height: 600px;
 
       background:
         radial-gradient(
           circle,
-          rgba(54, 143, 255, 0.20),
+          rgba(45,150,255,.22),
           transparent 68%
         );
 
-      filter: blur(8px);
+      filter: blur(10px);
 
       pointer-events: none;
     }
 
-
     .app-box::after {
-
       content: "";
 
       position: absolute;
 
-      width: 350px;
-      height: 350px;
+      bottom: -230px;
+      left: -150px;
 
-      bottom: -220px;
-      left: -130px;
+      width: 450px;
+      height: 450px;
 
       background:
         radial-gradient(
           circle,
-          rgba(91, 74, 255, 0.16),
+          rgba(90,65,255,.18),
           transparent 68%
         );
 
@@ -315,13 +332,12 @@
 
 
     /* =====================================================
-       PHONE / APP ICON
+       PHONE ICON
        ===================================================== */
 
     .app-icon {
-
       position: relative;
-      z-index: 2;
+      z-index: 3;
 
       flex: 0 0 155px;
 
@@ -333,34 +349,30 @@
       align-items: center;
       justify-content: center;
 
-      border-radius: 34px;
+      font-size: 70px;
 
-      font-size: 72px;
+      border-radius: 34px;
 
       background:
         linear-gradient(
           145deg,
-          rgba(54, 142, 255, 0.32),
-          rgba(44, 61, 150, 0.25)
+          rgba(50,145,255,.32),
+          rgba(50,60,155,.28)
         );
 
       border:
-        1px solid rgba(125, 193, 255, 0.42);
+        1px solid rgba(120,195,255,.45);
 
       box-shadow:
-        inset 0 0 35px rgba(95, 177, 255, 0.10),
-        0 0 25px rgba(50, 145, 255, 0.20),
-        0 25px 60px rgba(0, 0, 0, 0.45);
+        inset 0 0 40px rgba(100,180,255,.12),
+        0 0 30px rgba(50,145,255,.25),
+        0 25px 60px rgba(0,0,0,.45);
 
       animation:
-        appPhoneGlow 3s ease-in-out infinite;
+        phoneGlow 3s ease-in-out infinite;
     }
 
-
-    /* Small screen effect */
-
     .app-icon::before {
-
       content: "";
 
       position: absolute;
@@ -376,12 +388,10 @@
       border-radius: 999px;
 
       background:
-        rgba(255, 255, 255, 0.22);
+        rgba(255,255,255,.25);
     }
 
-
     .app-icon::after {
-
       content: "";
 
       position: absolute;
@@ -397,31 +407,23 @@
       border-radius: 999px;
 
       background:
-        rgba(255, 255, 255, 0.16);
+        rgba(255,255,255,.18);
     }
 
-
-    @keyframes appPhoneGlow {
-
-      0%,
-      100% {
-
+    @keyframes phoneGlow {
+      0%,100% {
         box-shadow:
-          inset 0 0 35px rgba(95, 177, 255, 0.10),
-          0 0 22px rgba(50, 145, 255, 0.18),
-          0 25px 60px rgba(0, 0, 0, 0.45);
-
+          inset 0 0 40px rgba(100,180,255,.10),
+          0 0 25px rgba(50,145,255,.18),
+          0 25px 60px rgba(0,0,0,.45);
       }
 
       50% {
-
         box-shadow:
-          inset 0 0 45px rgba(95, 177, 255, 0.14),
-          0 0 42px rgba(50, 145, 255, 0.34),
-          0 25px 60px rgba(0, 0, 0, 0.45);
-
+          inset 0 0 50px rgba(100,180,255,.15),
+          0 0 50px rgba(50,145,255,.40),
+          0 25px 60px rgba(0,0,0,.45);
       }
-
     }
 
 
@@ -430,66 +432,52 @@
        ===================================================== */
 
     .app-content {
-
       position: relative;
-      z-index: 2;
+      z-index: 3;
 
       flex: 1;
-
       min-width: 0;
     }
 
-
     .app-content small {
-
       display: block;
 
       margin-bottom: 12px;
 
-      color: #70b9ff;
+      color: #72bbff;
 
       font-size: 12px;
 
       font-weight: 800;
 
       letter-spacing: 2.5px;
-
-      text-transform: uppercase;
     }
 
-
     .app-content h2 {
-
       margin: 0 0 18px;
 
-      color: #ffffff;
+      color: #fff;
 
-      font-size: clamp(38px, 5vw, 64px);
+      font-size: clamp(38px,5vw,64px);
 
       line-height: 1.02;
 
       letter-spacing: -1.5px;
     }
 
-
     .app-content h2 i {
-
       color: #67afff;
 
-      font-style: italic;
-
       text-shadow:
-        0 0 24px rgba(80, 165, 255, 0.25);
+        0 0 25px rgba(70,160,255,.35);
     }
 
-
     .app-content p {
-
-      max-width: 690px;
+      max-width: 700px;
 
       margin: 0 0 28px;
 
-      color: #b5c4da;
+      color: #b6c5da;
 
       font-size: 16px;
 
@@ -498,11 +486,10 @@
 
 
     /* =====================================================
-       DOWNLOAD BUTTON
+       MAIN DOWNLOAD BUTTON
        ===================================================== */
 
     .app-download-main {
-
       position: relative;
 
       display: inline-flex;
@@ -512,18 +499,18 @@
 
       gap: 10px;
 
-      padding: 15px 27px;
+      padding: 15px 28px;
 
       border-radius: 13px;
 
       background:
         linear-gradient(
           135deg,
-          #76bcff,
-          #4f9bf0
+          #7bc0ff,
+          #4c99ef
         );
 
-      color: #03101f;
+      color: #03101e;
 
       text-decoration: none;
 
@@ -531,78 +518,60 @@
 
       font-weight: 900;
 
-      letter-spacing: 0.1px;
-
       box-shadow:
-        0 10px 30px rgba(45, 140, 255, 0.28),
-        0 0 25px rgba(55, 150, 255, 0.13);
+        0 10px 30px rgba(45,140,255,.30),
+        0 0 30px rgba(50,150,255,.15);
 
       transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        filter 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        filter .25s ease;
     }
 
-
     .app-download-main::after {
-
       content: "";
 
       position: absolute;
 
-      inset: -3px;
+      inset: -4px;
 
       border-radius: inherit;
 
       border:
-        1px solid rgba(125, 199, 255, 0.45);
-
-      opacity: 0.7;
-
-      pointer-events: none;
+        1px solid rgba(130,205,255,.45);
 
       animation:
-        downloadPulse 2.2s ease-in-out infinite;
+        downloadGlow 2s ease-in-out infinite;
     }
 
-
     .app-download-main:hover {
-
-      transform: translateY(-3px) scale(1.02);
+      transform:
+        translateY(-3px)
+        scale(1.03);
 
       filter: brightness(1.08);
 
       box-shadow:
-        0 15px 40px rgba(45, 140, 255, 0.40),
-        0 0 45px rgba(55, 150, 255, 0.25);
+        0 15px 45px rgba(45,140,255,.45),
+        0 0 50px rgba(55,155,255,.25);
     }
 
-
-    @keyframes downloadPulse {
-
-      0%,
-      100% {
-        opacity: 0.25;
+    @keyframes downloadGlow {
+      0%,100% {
+        opacity: .25;
       }
 
       50% {
-        opacity: 0.8;
+        opacity: .9;
       }
-
     }
 
-
-    /* =====================================================
-       APP NOTE
-       ===================================================== */
-
     .app-note {
-
       display: block;
 
       margin-top: 14px;
 
-      color: #71839d;
+      color: #71849e;
 
       font-size: 12px;
     }
@@ -616,55 +585,57 @@
 
       .android-header-btn {
         padding: 9px 12px;
-
         font-size: 12px;
       }
 
       .app-box {
-
         gap: 35px;
-
         padding: 42px;
       }
 
       .app-icon {
-
         flex-basis: 125px;
-
         width: 125px;
         height: 175px;
-
-        font-size: 60px;
+        font-size: 58px;
       }
-
     }
-
 
     @media (max-width: 760px) {
 
       .android-header-btn {
-
-        padding: 8px 11px;
+        width: 40px;
+        height: 40px;
+        padding: 0;
 
         font-size: 0;
       }
 
-      .android-header-btn::after {
-
-        content: "📱";
-
-        font-size: 17px;
+      .android-header-btn::before {
+        display: none;
       }
 
+      .android-header-btn::after {
+        content: "📱";
+
+        position: static;
+
+        border: 0;
+
+        box-shadow: none;
+
+        animation: none;
+
+        font-size: 18px;
+
+        opacity: 1;
+      }
 
       .app-section {
-
         padding: 70px 18px;
       }
 
-
       .app-box {
-
         flex-direction: column;
 
         text-align: center;
@@ -676,9 +647,7 @@
         border-radius: 26px;
       }
 
-
       .app-icon {
-
         flex: 0 0 auto;
 
         width: 105px;
@@ -689,53 +658,35 @@
         font-size: 48px;
       }
 
-
       .app-content p {
-
         margin-left: auto;
         margin-right: auto;
       }
 
-
       .app-download-main {
-
         width: 100%;
 
         box-sizing: border-box;
       }
-
     }
-
 
     @media (max-width: 480px) {
 
       .app-section {
-
         padding: 55px 14px;
       }
 
-
       .app-box {
-
         padding: 32px 18px;
       }
 
-
       .app-content h2 {
-
         font-size: 36px;
-
-        letter-spacing: -1px;
       }
-
 
       .app-content p {
-
         font-size: 14px;
-
-        line-height: 1.65;
       }
-
     }
 
   </style>
@@ -834,7 +785,7 @@
 
 
       <!-- =================================================
-           ANDROID APP HEADER BUTTON
+           ANDROID APP NAVBAR BUTTON
            ================================================= -->
 
       <a
@@ -875,9 +826,7 @@
   <main>
 
 
-    <!-- ===================================================
-         HERO
-         =================================================== -->
+    <!-- HERO -->
 
     <section
       id="home"
@@ -890,9 +839,7 @@
         aria-hidden="true"
       ></div>
 
-
       <div class="hero-overlay"></div>
-
 
       <div class="hero-content">
 
@@ -949,9 +896,7 @@
     </section>
 
 
-    <!-- ===================================================
-         LATEST VIDEOS
-         =================================================== -->
+    <!-- LATEST VIDEOS -->
 
     <section
       id="videos"
@@ -970,7 +915,6 @@
 
       </div>
 
-
       <div
         id="videoGrid"
         class="video-grid"
@@ -979,9 +923,7 @@
     </section>
 
 
-    <!-- ===================================================
-         DOCUMENTARIES
-         =================================================== -->
+    <!-- DOCUMENTARIES -->
 
     <section
       id="documentaries"
@@ -1000,7 +942,6 @@
 
       </div>
 
-
       <div
         id="docGrid"
         class="video-grid"
@@ -1009,9 +950,7 @@
     </section>
 
 
-    <!-- ===================================================
-         SCI-FI
-         =================================================== -->
+    <!-- SCI-FI -->
 
     <section
       id="scifi"
@@ -1030,7 +969,6 @@
 
       </div>
 
-
       <div
         id="scifiGrid"
         class="video-grid"
@@ -1039,9 +977,7 @@
     </section>
 
 
-    <!-- ===================================================
-         TV SHOWS
-         =================================================== -->
+    <!-- TV SHOWS -->
 
     <section
       id="shows"
@@ -1060,7 +996,6 @@
 
       </div>
 
-
       <div
         id="showGrid"
         class="video-grid"
@@ -1069,9 +1004,7 @@
     </section>
 
 
-    <!-- ===================================================
-         BLOG
-         =================================================== -->
+    <!-- BLOG -->
 
     <section
       id="blog"
@@ -1090,7 +1023,6 @@
 
       </div>
 
-
       <div
         id="blogGrid"
         class="blog-grid"
@@ -1099,9 +1031,7 @@
     </section>
 
 
-    <!-- ===================================================
-         PREMIUM
-         =================================================== -->
+    <!-- PREMIUM -->
 
     <section
       id="premium"
@@ -1121,14 +1051,12 @@
         early access and bonus content.
       </p>
 
-
       <div
         id="plans"
         class="plans"
       ></div>
 
     </section>
-
 
   </main>
 
@@ -1185,7 +1113,6 @@
 
       </div>
 
-
     </div>
 
   </section>
@@ -1206,7 +1133,6 @@
         onerror="this.style.display='none'"
       >
 
-
       <div>
 
         <b>
@@ -1222,9 +1148,7 @@
     </div>
 
 
-    <!-- ===================================================
-         SOCIAL MEDIA
-         =================================================== -->
+    <!-- SOCIAL MEDIA -->
 
     <div class="social-footer">
 
@@ -1334,7 +1258,7 @@
     </div>
 
 
-    <!-- Admin -->
+    <!-- ADMIN -->
 
     <a href="/admin/">
       Admin Panel
@@ -1354,13 +1278,11 @@
     hidden
   >
 
-
     <div class="ahead">
 
       <b>
         🤖 Nikhil AI
       </b>
-
 
       <button
         onclick="openAI()"
@@ -1379,14 +1301,12 @@
 
     <div class="ainput">
 
-
       <input
         id="msg"
         type="text"
         placeholder="Ask Nikhil..."
         autocomplete="off"
       >
-
 
       <button
         onclick="askAI()"
@@ -1395,16 +1315,12 @@
         →
       </button>
 
-
     </div>
-
 
   </div>
 
 
-  <!-- =====================================================
-       AI FLOATING BUTTON
-       ===================================================== -->
+  <!-- AI FLOATING BUTTON -->
 
   <button
     class="aifab"
@@ -1418,7 +1334,6 @@
 
   <!-- =====================================================
        HERO CAROUSEL
-       First 5 latest videos
        ===================================================== -->
 
   <script>
@@ -1699,9 +1614,7 @@
   </script>
 
 
-  <!-- =====================================================
-       EXISTING BACKEND / FRONTEND LOGIC
-       ===================================================== -->
+  <!-- EXISTING BACKEND / FRONTEND LOGIC -->
 
   <script src="/app.js"></script>
 
