@@ -849,3 +849,97 @@ footer a:hover {
   min-width: 0 !important;
   max-width: none !important;
 }
+
+/* =========================================================
+   FINAL FIX - FORCE CONTENT SECTIONS FULL WIDTH
+   ========================================================= */
+
+.content-section,
+.content-section > div,
+.content-section .video-grid,
+#videoGrid,
+#docGrid,
+#videoGridMirror,
+.video-grid-mirror {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Latest Episodes wrapper */
+.content-section .video-grid:has(#videoGridMirror) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Latest Episodes actual cards */
+#videoGridMirror {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Normal video sections */
+#videoGrid,
+#docGrid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+}
+
+/* Cards */
+#videoGrid .card,
+#docGrid .card,
+#videoGridMirror .card {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+/* Thumbnail */
+#videoGrid .thumb,
+#docGrid .thumb,
+#videoGridMirror .thumb {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+}
+
+/* Desktop */
+@media (min-width: 1201px) {
+  #videoGrid,
+  #docGrid,
+  #videoGridMirror {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+  #videoGrid,
+  #docGrid,
+  #videoGridMirror {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Small tablet */
+@media (max-width: 900px) {
+  #videoGrid,
+  #docGrid,
+  #videoGridMirror {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  #videoGrid,
+  #docGrid,
+  #videoGridMirror {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+}
