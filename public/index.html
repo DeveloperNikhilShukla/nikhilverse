@@ -32,226 +32,321 @@
     href="/style.css"
   >
 
-<style>
-/* =========================
-   NIKHILVERSE APP BUTTON
-========================= */
 
-.app-nav-link{
-  color:#69b4ff !important;
-  font-weight:700 !important;
-}
+  <!-- ==================================================
+       PLAYLIST NAVIGATION STYLES
+  =================================================== -->
 
-.app-nav-link:hover{
-  color:#fff !important;
-}
+  <style>
 
-.app-header-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:38px;
-  padding:0 13px;
-  border-radius:20px;
-  border:1px solid #2a4565;
-  background:#0b1728;
-  color:#dce8f7;
-  text-decoration:none;
-  font-size:12px;
-  font-weight:700;
-  white-space:nowrap;
-}
+    .playlist-nav-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
 
-.app-header-btn:hover{
-  border-color:#5aaeff;
-  color:#fff;
-}
+    .playlist-nav-btn{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:0;
+      border:0;
+      background:transparent;
+      color:inherit;
+      font:inherit;
+      cursor:pointer;
+      white-space:nowrap;
+    }
 
-.app-download-section{
-  width:min(1250px,90%);
-  margin:55px auto 30px;
-  padding:30px 34px;
-  border:1px solid #1b3553;
-  border-radius:16px;
-  background:linear-gradient(135deg,#081524,#0b1728);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:28px;
-}
+    .playlist-nav-btn:hover{
+      color:#fff;
+    }
 
-.app-download-section h2{
-  margin:0 0 8px;
-  font-size:24px;
-}
+    .playlist-nav-arrow{
+      font-size:11px;
+      transition:transform .2s ease;
+    }
 
-.app-download-section p{
-  margin:0;
-  color:#91a5bd;
-  font-size:13px;
-  line-height:1.65;
-}
+    .playlist-nav-btn.active .playlist-nav-arrow{
+      transform:rotate(180deg);
+    }
 
-.app-download-button{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 20px;
-  border-radius:10px;
-  background:#fff;
-  color:#101820;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:800;
-  white-space:nowrap;
-}
+    .playlist-panel{
+      position:absolute;
+      top:calc(100% + 18px);
+      left:50%;
+      width:min(980px,calc(100vw - 28px));
+      transform:translateX(-50%) translateY(-8px);
+      padding:18px;
+      background:linear-gradient(135deg,#07111f,#0b1829);
+      border:1px solid #274462;
+      border-radius:16px;
+      box-shadow:0 22px 65px rgba(0,0,0,.72),0 0 35px rgba(38,145,255,.12);
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      z-index:99999;
+      transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
+    }
 
-.app-download-button:hover{
-  transform:translateY(-2px);
-}
+    .playlist-panel.open{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+      transform:translateX(-50%) translateY(0);
+    }
 
-@media(max-width:900px){
-  .app-download-section{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-}
+    .playlist-panel-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:14px;
+    }
 
-@media(max-width:700px){
-  .app-header-btn{
-    display:none;
-  }
+    .playlist-heading{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
 
-  .app-download-section{
-    width:94%;
-    padding:22px;
-  }
+    .playlist-heading-icon{
+      width:38px;
+      height:38px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:10px;
+      background:linear-gradient(135deg,#147fe5,#54b1ff);
+      box-shadow:0 0 18px rgba(35,148,255,.3);
+    }
 
-  .app-download-section h2{
-    font-size:20px;
-  }
-}
-</style>
+    .playlist-heading strong{
+      display:block;
+      color:#fff;
+      font-size:16px;
+      font-weight:800;
+    }
 
+    .playlist-heading small{
+      display:block;
+      margin-top:3px;
+      color:#7790ab;
+      font-size:10px;
+    }
 
-<style>
-/* =====================================================
-   NIKHILVERSE — GLOWING APP DOWNLOAD BUTTON
-===================================================== */
+    .playlist-close{
+      width:34px;
+      height:34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #2b4663;
+      border-radius:50%;
+      background:#0a1727;
+      color:#fff;
+      font-size:20px;
+      cursor:pointer;
+    }
 
-.app-nav-link{
-  color:#65b5ff !important;
-  font-weight:800 !important;
-  white-space:nowrap !important;
-}
+    .playlist-slider{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
 
-.app-nav-link:hover{
-  color:#ffffff !important;
-  text-shadow:0 0 12px rgba(80,170,255,.9);
-}
+    .playlist-track{
+      display:flex;
+      align-items:stretch;
+      gap:14px;
+      width:100%;
+      overflow-x:auto;
+      scroll-behavior:smooth;
+      scrollbar-width:none;
+      padding:4px;
+    }
 
-.app-header-btn{
-  position:relative;
-  display:inline-flex !important;
-  align-items:center;
-  justify-content:center;
-  height:40px;
-  padding:0 16px;
-  border-radius:22px;
-  border:1px solid rgba(83,178,255,.75);
-  background:linear-gradient(135deg,#0d5fc0,#168cff,#4bb2ff);
-  color:#fff !important;
-  text-decoration:none !important;
-  font-size:12px;
-  font-weight:900;
-  white-space:nowrap;
-  box-shadow:
-    0 0 8px rgba(40,156,255,.85),
-    0 0 20px rgba(40,156,255,.55),
-    0 0 38px rgba(40,156,255,.28);
-  animation:nvAppGlow 1.8s ease-in-out infinite alternate;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
+    .playlist-track::-webkit-scrollbar{
+      display:none;
+    }
 
-.app-header-btn::before{
-  content:"";
-  position:absolute;
-  inset:-3px;
-  border-radius:25px;
-  border:1px solid rgba(91,190,255,.35);
-  pointer-events:none;
-}
+    .playlist-scroll{
+      flex:0 0 40px;
+      width:40px;
+      height:40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #31516f;
+      border-radius:50%;
+      background:#0a1727;
+      color:#fff;
+      font-size:25px;
+      cursor:pointer;
+    }
 
-.app-header-btn:hover{
-  transform:translateY(-2px) scale(1.03);
-  box-shadow:
-    0 0 10px rgba(40,156,255,1),
-    0 0 28px rgba(40,156,255,.8),
-    0 0 52px rgba(40,156,255,.45);
-}
+    .playlist-scroll:hover{
+      background:#168cff;
+      border-color:#62b6ff;
+    }
 
-@keyframes nvAppGlow{
-  from{
-    box-shadow:
-      0 0 7px rgba(40,156,255,.7),
-      0 0 16px rgba(40,156,255,.4),
-      0 0 30px rgba(40,156,255,.2);
-  }
+    .playlist-card{
+      flex:0 0 220px;
+      overflow:hidden;
+      text-decoration:none;
+      color:#fff;
+      background:linear-gradient(180deg,#0c1a2c,#091321);
+      border:1px solid #1d3854;
+      border-radius:13px;
+      transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+    }
 
-  to{
-    box-shadow:
-      0 0 10px rgba(40,156,255,1),
-      0 0 24px rgba(40,156,255,.7),
-      0 0 45px rgba(40,156,255,.35);
-  }
-}
+    .playlist-card:hover{
+      transform:translateY(-5px);
+      border-color:#3c9fff;
+      box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 20px rgba(40,153,255,.14);
+    }
 
-@media(max-width:700px){
+    .playlist-thumb-wrap{
+      position:relative;
+      width:100%;
+      height:120px;
+      overflow:hidden;
+      background:#050a12;
+    }
 
-  .app-header-btn{
-    display:none !important;
-  }
+    .playlist-thumb{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .35s ease;
+    }
 
-  .app-nav-link{
-    display:inline-block !important;
-  }
+    .playlist-card:hover .playlist-thumb{
+      transform:scale(1.06);
+    }
 
-}
-</style>
+    .playlist-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(to top,rgba(0,0,0,.48),transparent 55%);
+    }
 
+    .playlist-play{
+      width:42px;
+      height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:rgba(255,0,35,.94);
+      color:#fff;
+      font-size:17px;
+      box-shadow:0 5px 20px rgba(0,0,0,.35);
+    }
 
-<style>
+    .playlist-card-body{
+      padding:11px;
+    }
 
-.app-download-button-glow{
-  position:relative;
-  background:linear-gradient(
-    135deg,
-    #168cff,
-    #5eb8ff
-  ) !important;
+    .playlist-card-title{
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.4;
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2;
+      overflow:hidden;
+      min-height:36px;
+    }
 
-  color:#07111f !important;
+    .playlist-card-channel{
+      margin-top:7px;
+      color:#6fa7dd;
+      font-size:10px;
+      font-weight:600;
+    }
 
-  box-shadow:
-    0 0 12px rgba(40,156,255,.65),
-    0 0 28px rgba(40,156,255,.3);
+    .playlist-card-meta{
+      margin-top:4px;
+      color:#71869f;
+      font-size:10px;
+    }
 
-  font-weight:900 !important;
-}
+    .playlist-loading{
+      width:100%;
+      min-height:145px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#7890aa;
+      font-size:13px;
+    }
 
-.app-download-button-glow:hover{
-  box-shadow:
-    0 0 16px rgba(40,156,255,.95),
-    0 0 38px rgba(40,156,255,.5);
-}
+    .playlist-spinner{
+      width:20px;
+      height:20px;
+      margin-right:10px;
+      border:2px solid #29425d;
+      border-top-color:#4ba8ff;
+      border-radius:50%;
+      animation:playlistSpin .8s linear infinite;
+    }
 
-</style>
+    @keyframes playlistSpin{
+      to{transform:rotate(360deg)}
+    }
+
+    @media(max-width:900px){
+      .playlist-panel{
+        position:fixed;
+        top:74px;
+        left:12px;
+        right:12px;
+        width:auto;
+        transform:translateY(-8px);
+      }
+
+      .playlist-panel.open{
+        transform:translateY(0);
+      }
+
+      .playlist-card{
+        flex-basis:200px;
+      }
+    }
+
+    @media(max-width:600px){
+      .playlist-panel{
+        padding:13px;
+      }
+
+      .playlist-card{
+        flex-basis:185px;
+      }
+
+      .playlist-thumb-wrap{
+        height:102px;
+      }
+
+      .playlist-scroll{
+        flex-basis:34px;
+        width:34px;
+        height:34px;
+      }
+    }
+
+  </style>
 
 </head>
 
-
 <body>
-
 
   <!-- =========================
        HEADER
@@ -266,20 +361,13 @@
     >
 
       <img
-        src="/nikhilverse-logo.png"
+        src="/assets/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
       >
 
       <span>
-
-        <b>
-          NIKHILVERSE
-        </b>
-
-        <small>
-          SCI-FI BY NIKHIL
-        </small>
-
+        <b>NIKHILVERSE</b>
+        <small>SCI-FI BY NIKHIL</small>
       </span>
 
     </a>
@@ -310,22 +398,101 @@
         Sci-Fi
       </a>
 
+
+
+      <!-- ==================================================
+           YOUTUBE PLAYLISTS
+      =================================================== -->
+
+      <div
+        class="playlist-nav-wrap"
+        id="playlistNavWrap"
+      >
+
+        <button
+          class="playlist-nav-btn"
+          id="playlistNavBtn"
+          type="button"
+          aria-expanded="false"
+        >
+          <span>📂 Playlists</span>
+          <span class="playlist-nav-arrow">▾</span>
+        </button>
+
+        <div
+          class="playlist-panel"
+          id="playlistPanel"
+        >
+
+          <div class="playlist-panel-header">
+
+            <div class="playlist-heading">
+
+              <div class="playlist-heading-icon">
+                📂
+              </div>
+
+              <div>
+                <strong>YouTube Playlists</strong>
+                <small>All public playlists from your NIKHILVERSE channels</small>
+              </div>
+
+            </div>
+
+            <button
+              class="playlist-close"
+              id="playlistClose"
+              type="button"
+              aria-label="Close playlists"
+            >
+              ×
+            </button>
+
+          </div>
+
+          <div class="playlist-slider">
+
+            <button
+              class="playlist-scroll"
+              id="playlistLeft"
+              type="button"
+              aria-label="Previous playlists"
+            >
+              ‹
+            </button>
+
+            <div
+              class="playlist-track"
+              id="playlistTrack"
+            >
+              <div class="playlist-loading">
+                <span class="playlist-spinner"></span>
+                Loading playlists...
+              </div>
+            </div>
+
+            <button
+              class="playlist-scroll"
+              id="playlistRight"
+              type="button"
+              aria-label="Next playlists"
+            >
+              ›
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
       <a href="#videos">
         New & Popular
       </a>
 
       <a href="#videos">
         My List
-      </a>
-
-      <!-- APP -->
-      <a
-        class="app-nav-link"
-        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-        target="_blank"
-        rel="noopener"
-      >
-        📱 App
       </a>
 
     </nav>
@@ -335,9 +502,7 @@
 
       <label class="search">
 
-        <span>
-          ⌕
-        </span>
+        <span>⌕</span>
 
         <input
           id="siteSearch"
@@ -351,7 +516,6 @@
       <button
         class="ai-btn"
         onclick="openAI()"
-        type="button"
       >
         🤖 Nikhil AI
       </button>
@@ -362,17 +526,6 @@
         href="#premium"
       >
         👑 Premium
-      </a>
-
-
-      <!-- GLOWING APP BUTTON -->
-      <a
-        class="app-header-btn"
-        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-        target="_blank"
-        rel="noopener"
-      >
-        📱 Download App
       </a>
 
 
@@ -389,7 +542,6 @@
   </header>
 
 
-
   <!-- =========================
        HERO
        ========================= -->
@@ -399,12 +551,14 @@
     class="hero"
   >
 
+    <!-- Carousel background -->
     <div
       id="heroCarousel"
       class="hero-carousel"
     ></div>
 
 
+    <!-- Dark overlay -->
     <div class="hero-overlay"></div>
 
 
@@ -415,15 +569,9 @@
       </small>
 
       <h1>
-
         Discover stories
-
         <br>
-
-        <i>
-          worth watching.
-        </i>
-
+        <i>worth watching.</i>
       </h1>
 
       <p>
@@ -441,6 +589,8 @@
     </div>
 
 
+    <!-- Carousel controls -->
+
     <button
       id="heroPrev"
       class="hero-arrow hero-prev"
@@ -449,7 +599,6 @@
     >
       ‹
     </button>
-
 
     <button
       id="heroNext"
@@ -467,7 +616,6 @@
     ></div>
 
   </section>
-
 
 
   <!-- =========================
@@ -495,7 +643,6 @@
   </section>
 
 
-
   <!-- =========================
        DOCUMENTARIES
        ========================= -->
@@ -519,7 +666,6 @@
     ></div>
 
   </section>
-
 
 
   <!-- =========================
@@ -547,7 +693,6 @@
   </section>
 
 
-
   <!-- =========================
        TV SHOWS
        ========================= -->
@@ -573,7 +718,6 @@
   </section>
 
 
-
   <!-- =========================
        BLOG
        ========================= -->
@@ -597,7 +741,6 @@
     ></div>
 
   </section>
-
 
 
   <!-- =========================
@@ -630,40 +773,6 @@
   </section>
 
 
-
-  <!-- =========================
-       ANDROID APP
-       ========================= -->
-
-  <section class="app-download-section">
-
-    <div>
-
-      <h2>
-        📱 NIKHILVERSE Android App
-      </h2>
-
-      <p>
-        Watch NIKHILVERSE documentaries, sci-fi stories and
-        exclusive content directly from your Android device.
-      </p>
-
-    </div>
-
-
-    <a
-      class="app-download-button app-download-button-glow"
-      href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-      target="_blank"
-      rel="noopener"
-    >
-      📲 Download APK
-    </a>
-
-  </section>
-
-
-
   <!-- =========================
        FOOTER
        ========================= -->
@@ -673,7 +782,7 @@
     <div class="footer-brand">
 
       <img
-        src="/nikhilverse-logo.png"
+        src="/assets/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
       >
 
@@ -691,13 +800,11 @@
 
     </div>
 
-
     <a href="/admin/">
       Admin Panel
     </a>
 
   </footer>
-
 
 
   <!-- =========================
@@ -752,8 +859,7 @@
   </div>
 
 
-
-  <!-- AI FLOATING BUTTON -->
+  <!-- AI floating button -->
 
   <button
     class="aifab"
@@ -765,9 +871,9 @@
   </button>
 
 
-
   <!-- =====================================================
        HERO CAROUSEL
+       Uses first 5 videos from existing /api/videos
        ===================================================== -->
 
   <script>
@@ -788,7 +894,6 @@
 
       if (!carousel) return;
 
-
       try {
 
         const response =
@@ -797,82 +902,64 @@
         const videos =
           await response.json();
 
-
         const latest =
           videos
-            .filter(
-              v =>
-                v.thumbnail &&
-                v.youtube_id
-            )
+            .filter(v => v.thumbnail && v.youtube_id)
             .slice(0, 5);
-
 
         if (!latest.length) {
           return;
         }
 
-
         let current = 0;
 
-
         carousel.innerHTML =
-          latest.map(
-            (video, index) => {
+          latest.map((video, index) => {
 
-              return `
+            return `
+              <div
+                class="hero-slide ${index === 0 ? "active" : ""}"
+                data-index="${index}"
+                onclick="window.open(
+                  'https://www.youtube.com/watch?v=${video.youtube_id}',
+                  '_blank'
+                )"
+              >
 
-                <div
-                  class="hero-slide ${index === 0 ? "active" : ""}"
-                  data-index="${index}"
-                  data-video-id="${video.youtube_id}"
+                <img
+                  src="${video.thumbnail}"
+                  alt=""
                 >
 
-                  <img
-                    src="${video.thumbnail}"
-                    alt=""
-                  >
+              </div>
+            `;
 
-                </div>
-
-              `;
-
-            }
-          ).join("");
+          }).join("");
 
 
         dots.innerHTML =
-          latest.map(
-            (video, index) => {
+          latest.map((video, index) => {
 
-              return `
+            return `
+              <button
+                class="hero-dot ${index === 0 ? "active" : ""}"
+                data-index="${index}"
+                type="button"
+                aria-label="Slide ${index + 1}"
+              ></button>
+            `;
 
-                <button
-                  class="hero-dot ${index === 0 ? "active" : ""}"
-                  data-index="${index}"
-                  type="button"
-                  aria-label="Slide ${index + 1}"
-                ></button>
-
-              `;
-
-            }
-          ).join("");
+          }).join("");
 
 
         const slides =
           Array.from(
-            document.querySelectorAll(
-              ".hero-slide"
-            )
+            document.querySelectorAll(".hero-slide")
           );
-
 
         const dotButtons =
           Array.from(
-            document.querySelectorAll(
-              ".hero-dot"
-            )
+            document.querySelectorAll(".hero-dot")
           );
 
 
@@ -882,29 +969,23 @@
             (index + slides.length) %
             slides.length;
 
+          slides.forEach((slide, i) => {
 
-          slides.forEach(
-            (slide, i) => {
+            slide.classList.toggle(
+              "active",
+              i === current
+            );
 
-              slide.classList.toggle(
-                "active",
-                i === current
-              );
+          });
 
-            }
-          );
+          dotButtons.forEach((dot, i) => {
 
+            dot.classList.toggle(
+              "active",
+              i === current
+            );
 
-          dotButtons.forEach(
-            (dot, i) => {
-
-              dot.classList.toggle(
-                "active",
-                i === current
-              );
-
-            }
-          );
+          });
 
         }
 
@@ -915,9 +996,7 @@
 
             event.stopPropagation();
 
-            showSlide(
-              current + 1
-            );
+            showSlide(current + 1);
 
           }
         );
@@ -929,9 +1008,7 @@
 
             event.stopPropagation();
 
-            showSlide(
-              current - 1
-            );
+            showSlide(current - 1);
 
           }
         );
@@ -958,9 +1035,7 @@
         setInterval(
           function () {
 
-            showSlide(
-              current + 1
-            );
+            showSlide(current + 1);
 
           },
           5000
@@ -982,131 +1057,193 @@
 
 
 
-  <!-- =====================================================
-       INTERNAL WATCH PAGE CLICK HANDLER
-       Thumbnail click → /watch.html?id=VIDEO_ID
-       ===================================================== -->
+
+  <!-- ==================================================
+       PLAYLIST SLIDER JAVASCRIPT
+  =================================================== -->
 
   <script>
 
-    document.addEventListener(
-      "click",
-      function (event) {
+    (function(){
 
-        const target =
-          event.target.closest(
-            ".hero-slide, .card, [data-video-id]"
-          );
+      const btn = document.getElementById('playlistNavBtn');
+      const panel = document.getElementById('playlistPanel');
+      const close = document.getElementById('playlistClose');
+      const track = document.getElementById('playlistTrack');
+      const left = document.getElementById('playlistLeft');
+      const right = document.getElementById('playlistRight');
+      const wrap = document.getElementById('playlistNavWrap');
 
+      if (!btn || !panel || !track) return;
 
-        if (!target) {
-          return;
-        }
+      let loaded = false;
 
-
-        let id =
-          target.dataset.videoId ||
-          target.getAttribute(
-            "data-video-id"
-          ) ||
-          "";
-
-
-        /*
-          If card doesn't have data-video-id,
-          read the old inline YouTube onclick.
-        */
-
-        if (!id) {
-
-          const onclick =
-            target.getAttribute(
-              "onclick"
-            ) || "";
-
-
-          const match =
-            onclick.match(
-              /[?&]v=([^'"& )]+)/i
-            );
-
-
-          if (match) {
-            id = match[1];
-          }
-
-        }
-
-
-        /*
-          Also check YouTube links.
-        */
-
-        if (!id) {
-
-          const link =
-            target.closest("a") ||
-            target.querySelector(
-              'a[href*="youtube.com/watch"]'
-            );
-
-
-          if (link) {
-
-            const match =
-              (
-                link.href || ""
-              ).match(
-                /[?&]v=([^&]+)/i
-              );
-
-
-            if (match) {
-              id = match[1];
-            }
-
-          }
-
-        }
-
-
-        if (!id) {
-          return;
-        }
-
-
-        /*
-          IMPORTANT:
-          Stop old YouTube click.
-        */
-
-        event.preventDefault();
-
+      btn.addEventListener('click', async function(event){
         event.stopPropagation();
 
-        event.stopImmediatePropagation();
+        const open = panel.classList.toggle('open');
+        btn.classList.toggle('active', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 
+        if (open && !loaded) {
+          await loadPlaylists();
+        }
+      });
 
-        /*
-          Open NIKHILVERSE internal watch page.
-        */
+      close.addEventListener('click', function(event){
+        event.stopPropagation();
+        closePanel();
+      });
 
-        window.location.href =
-          "/watch.html?id=" +
-          encodeURIComponent(id);
+      document.addEventListener('click', function(event){
+        if (wrap && !wrap.contains(event.target)) {
+          closePanel();
+        }
+      });
 
-      },
-      true
-    );
+      document.addEventListener('keydown', function(event){
+        if (event.key === 'Escape') {
+          closePanel();
+        }
+      });
+
+      left.addEventListener('click', function(event){
+        event.stopPropagation();
+        track.scrollBy({ left: -520, behavior: 'smooth' });
+      });
+
+      right.addEventListener('click', function(event){
+        event.stopPropagation();
+        track.scrollBy({ left: 520, behavior: 'smooth' });
+      });
+
+      function closePanel(){
+        panel.classList.remove('open');
+        btn.classList.remove('active');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      async function loadPlaylists(){
+
+        track.innerHTML = `
+          <div class="playlist-loading">
+            <span class="playlist-spinner"></span>
+            Loading all YouTube playlists...
+          </div>
+        `;
+
+        try {
+          const response = await fetch('/api/playlists');
+          const data = await response.json();
+
+          if (!response.ok || !data.ok || !Array.isArray(data.playlists)) {
+            throw new Error(data.error || 'Playlist data unavailable');
+          }
+
+          const playlists = data.playlists;
+
+          if (!playlists.length) {
+            track.innerHTML = `
+              <div class="playlist-loading">
+                No public YouTube playlists found.
+              </div>
+            `;
+            loaded = true;
+            return;
+          }
+
+          playlists.sort(function(a, b){
+            const channelCompare = String(a.channel || '').localeCompare(
+              String(b.channel || '')
+            );
+
+            if (channelCompare !== 0) return channelCompare;
+
+            return String(a.title || '').localeCompare(
+              String(b.title || '')
+            );
+          });
+
+          track.innerHTML = playlists.map(function(playlist){
+            const id = encodeURIComponent(playlist.id || '');
+            const title = escapeHTML(playlist.title || 'Untitled Playlist');
+            const channel = escapeHTML(playlist.channel || 'YouTube');
+            const thumbnail = playlist.thumbnail || '/assets/nikhilverse-logo.png';
+            const count = Number(playlist.videoCount || 0);
+
+            return `
+              <a
+                class="playlist-card"
+                href="https://www.youtube.com/playlist?list=${id}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+
+                <div class="playlist-thumb-wrap">
+
+                  <img
+                    class="playlist-thumb"
+                    src="${thumbnail}"
+                    alt="${title}"
+                    loading="lazy"
+                  >
+
+                  <div class="playlist-overlay">
+                    <span class="playlist-play">▶</span>
+                  </div>
+
+                </div>
+
+                <div class="playlist-card-body">
+
+                  <div class="playlist-card-title">
+                    ${title}
+                  </div>
+
+                  <div class="playlist-card-channel">
+                    ${channel}
+                  </div>
+
+                  <div class="playlist-card-meta">
+                    📺 ${count} videos
+                  </div>
+
+                </div>
+
+              </a>
+            `;
+          }).join('');
+
+          loaded = true;
+
+        } catch (error) {
+          console.error('Playlist loading error:', error);
+
+          track.innerHTML = `
+            <div class="playlist-loading">
+              ❌ Playlists load nahi ho pa rahi hain.<br>
+              Please refresh and try again.
+            </div>
+          `;
+        }
+      }
+
+      function escapeHTML(value){
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+    })();
 
   </script>
 
 
-
   <!-- EXISTING APP.JS -->
-
   <script src="/app.js"></script>
-
 
 </body>
 
