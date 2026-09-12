@@ -22,9 +22,9 @@ html,
 body{
   margin:0;
   padding:0;
-  background:#050912;
+  background:#050810;
   color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Inter,Arial,sans-serif;
 }
 
 body{
@@ -32,403 +32,76 @@ body{
 }
 
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .watch-header{
-
-  height:76px;
-
+  height:64px;
   display:flex;
-
   align-items:center;
-
-  justify-content:space-between;
-
-  padding:0 5%;
-
-  background:#07101e;
-
-  border-bottom:1px solid #17263b;
-
-  position:sticky;
-
-  top:0;
-
-  z-index:50;
-
-}
-
-.watch-logo{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  text-decoration:none;
-
-  color:#fff;
-
-  font-size:24px;
-
-  font-weight:900;
-
-  letter-spacing:1px;
-
-}
-
-.watch-logo span{
-
-  color:#2196ff;
-
-}
-
-.back-btn{
-
-  text-decoration:none;
-
-  color:#dce8f7;
-
-  background:#0b1728;
-
-  border:1px solid #263c59;
-
-  padding:10px 16px;
-
-  border-radius:9px;
-
-  font-size:14px;
-
-}
-
-
-/* MAIN */
-
-.watch-page{
-
-  width:min(1250px,92%);
-
-  margin:35px auto 70px;
-
-}
-
-
-/* PLAYER */
-
-.player-box{
-
-  width:100%;
-
-  background:#000;
-
-  border-radius:14px;
-
-  overflow:hidden;
-
-  border:1px solid #1a2b42;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.55);
-
-}
-
-.player{
-
-  position:relative;
-
-  width:100%;
-
-  aspect-ratio:16/9;
-
-  background:#000;
-
-}
-
-.player iframe{
-
-  position:absolute;
-
-  inset:0;
-
-  width:100%;
-
-  height:100%;
-
-  border:0;
-
-}
-
-
-/* INFO */
-
-.video-info{
-
-  margin-top:22px;
-
-  padding:25px;
-
-  background:#0a1423;
-
-  border:1px solid #192b43;
-
-  border-radius:14px;
-
-}
-
-.video-info h1{
-
-  margin:0 0 10px;
-
-  font-size:28px;
-
-  line-height:1.35;
-
-}
-
-.video-meta{
-
-  color:#7f95b0;
-
-  font-size:14px;
-
-}
-
-.video-description{
-
-  margin-top:18px;
-
-  color:#c3d0df;
-
-  line-height:1.75;
-
-  font-size:15px;
-
-  white-space:pre-wrap;
-
-}
-
-
-/* CHANNEL VIDEOS */
-
-.channel-section{
-
-  margin-top:45px;
-
-}
-
-.section-title{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  margin-bottom:20px;
-
-}
-
-.section-title h2{
-
-  margin:0;
-
-  font-size:25px;
-
-}
-
-.channel-name{
-
-  color:#6caeff;
-
-  font-size:13px;
-
-}
-
-
-.video-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
-
   gap:18px;
-
-}
-
-.video-card{
-
-  background:#0a1423;
-
-  border:1px solid #1a2b42;
-
-  border-radius:12px;
-
-  overflow:hidden;
-
-  cursor:pointer;
-
-  transition:.2s ease;
-
-}
-
-.video-card:hover{
-
-  transform:translateY(-4px);
-
-  border-color:#2c6da9;
-
-}
-
-.video-thumb{
-
-  width:100%;
-
-  aspect-ratio:16/9;
-
-  background:#07101b;
-
-  overflow:hidden;
-
-}
-
-.video-thumb img{
-
-  width:100%;
-
-  height:100%;
-
-  object-fit:cover;
-
-  display:block;
-
-}
-
-.video-card-body{
-
-  padding:13px;
-
-}
-
-.video-card-body h3{
-
-  margin:0;
-
-  font-size:15px;
-
-  line-height:1.45;
-
-  display:-webkit-box;
-
-  -webkit-box-orient:vertical;
-
-  -webkit-line-clamp:2;
-
-  overflow:hidden;
-
-}
-
-.video-card-meta{
-
-  margin-top:8px;
-
-  color:#7086a3;
-
-  font-size:11px;
-
-}
-
-.loading{
-
-  padding:70px 20px;
-
-  text-align:center;
-
-  color:#8196b1;
-
-}
-
-.error{
-
-  padding:70px 20px;
-
-  text-align:center;
-
-  color:#ff7885;
-
-}
-
-
-/* FULL SITE NAVIGATION */
-
-.watch-header{
-  min-height:76px;
-  padding:0 6%;
-  gap:24px;
+  padding:0 4%;
+  background:rgba(5,8,16,.96);
+  border-bottom:1px solid #182033;
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(14px);
 }
 
 .watch-logo{
   display:flex;
   align-items:center;
-  gap:10px;
-  text-decoration:none;
+  gap:8px;
   color:#fff;
-  white-space:nowrap;
+  text-decoration:none;
+  flex-shrink:0;
 }
 
 .watch-logo img{
-  width:48px;
-  height:48px;
+  width:44px;
+  height:44px;
   object-fit:contain;
-  display:block;
-}
-
-.nv-logo-mark{
-  width:48px;
-  height:48px;
-  flex:0 0 48px;
-  display:flex;
-}
-
-.nv-logo-mark svg{
-  width:100%;
-  height:100%;
-  display:block;
 }
 
 .watch-logo-text{
   display:flex;
   flex-direction:column;
-  line-height:1.05;
+  line-height:1;
 }
 
 .watch-logo-text b{
-  font-size:18px;
-  letter-spacing:.4px;
+  font-size:17px;
+  letter-spacing:.7px;
 }
 
 .watch-logo-text small{
   margin-top:4px;
-  color:#667b96;
+  color:#738098;
   font-size:7px;
-  letter-spacing:2px;
+  letter-spacing:1.5px;
 }
+
+
+/* ================= NAV ================= */
 
 .watch-nav{
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:22px;
-  margin:0 15px;
+  gap:15px;
   flex:1;
+  min-width:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+
+.watch-nav::-webkit-scrollbar{
+  display:none;
 }
 
 .watch-nav a{
-  color:#b9c9dc;
+  color:#b7c1d5;
   text-decoration:none;
-  font-size:13px;
-  font-weight:600;
+  font-size:12px;
   white-space:nowrap;
 }
 
@@ -436,27 +109,35 @@ body{
   color:#fff;
 }
 
+.app-nav-link{
+  color:#6fbaff !important;
+  font-weight:700;
+}
+
+
+/* ================= ACTIONS ================= */
+
 .watch-actions{
   display:flex;
   align-items:center;
-  gap:9px;
-  margin-left:auto;
+  gap:7px;
+  flex-shrink:0;
 }
 
 .watch-search{
+  width:165px;
+  height:34px;
   display:flex;
   align-items:center;
-  width:190px;
-  height:38px;
-  padding:0 11px;
-  border:1px solid #1d304a;
+  gap:6px;
+  padding:0 10px;
+  background:#0b1220;
+  border:1px solid #202d45;
   border-radius:20px;
-  background:#070f1d;
 }
 
 .watch-search span{
-  color:#7e94ae;
-  margin-right:6px;
+  color:#7f8da5;
 }
 
 .watch-search input{
@@ -470,167 +151,279 @@ body{
 
 .watch-ai,
 .watch-premium,
-.watch-app{
-  height:38px;
-  padding:0 13px;
-  border-radius:20px;
+.watch-app,
+.back-btn{
+  height:34px;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-decoration:none;
+  padding:0 11px;
+  border-radius:20px;
   white-space:nowrap;
-  font-size:12px;
+  text-decoration:none;
+  font-size:11px;
   font-weight:700;
 }
 
 .watch-ai{
-  color:#e8f1ff;
-  border:1px solid #243953;
+  color:#fff;
   background:#081221;
+  border:1px solid #243953;
 }
 
 .watch-premium{
   color:#111;
   background:#fff;
-  border:1px solid #fff;
 }
 
 .watch-app{
-  color:#dce8f7;
-  background:#0b1728;
-  border:1px solid #2a4565;
-  padding:0 13px;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  white-space:nowrap;
-  font-size:12px;
-  font-weight:700;
-}
-
-.app-nav-link{
-  color:#75b9ff !important;
-}
-
-.app-nav-link:hover{
-  color:#fff !important;
+  color:#fff;
+  background:#168cff;
+  border:1px solid #52b2ff;
 }
 
 .back-btn{
-  text-decoration:none;
   color:#dce8f7;
   background:#0b1728;
   border:1px solid #263c59;
-  padding:10px 14px;
-  border-radius:9px;
-  font-size:12px;
-  white-space:nowrap;
 }
 
 
-/* ANDROID APP */
+/* ================= MAIN ================= */
 
-.app-download{
-  width:min(1250px,92%);
-  margin:0 auto 20px;
-  padding:30px 34px;
-  border:1px solid #1b3553;
-  border-radius:16px;
-  background:linear-gradient(135deg,#081524,#0b1728);
+.watch-page{
+  width:min(1120px,92%);
+  margin:25px auto 45px;
+}
+
+
+/* ================= PLAYER ================= */
+
+.player-box{
+  width:100%;
+  background:#000;
+  border:1px solid #18283d;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.player{
+  width:100%;
+  aspect-ratio:16/9;
+  position:relative;
+  background:#000;
+}
+
+.player iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+
+/* ================= VIDEO INFO ================= */
+
+.video-info{
+  margin-top:18px;
+  padding:20px;
+  background:#0a1020;
+  border:1px solid #18233a;
+  border-radius:12px;
+}
+
+.video-info h1{
+  margin:0 0 8px;
+  font-size:24px;
+  line-height:1.35;
+}
+
+.video-meta{
+  color:#7f95b0;
+  font-size:12px;
+}
+
+.video-description{
+  margin-top:15px;
+  color:#b9c7d8;
+  font-size:13px;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+
+
+/* ================= MORE VIDEOS ================= */
+
+.channel-section{
+  margin-top:38px;
+}
+
+.section-title{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:28px;
+  margin-bottom:16px;
+}
+
+.section-title h2{
+  margin:0;
+  font-size:23px;
+}
+
+.channel-name{
+  color:#6caeff;
+  font-size:11px;
+}
+
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+.video-card{
+  overflow:hidden;
+  background:#0a1020;
+  border:1px solid #18233a;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.video-card:hover{
+  transform:translateY(-4px);
+  border-color:#30476b;
+}
+
+.video-thumb{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:#101d31;
+}
+
+.video-thumb img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.video-card-body{
+  padding:11px;
+}
+
+.video-card-body h3{
+  margin:0;
+  font-size:13px;
+  line-height:1.4;
+
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+}
+
+.video-card-meta{
+  margin-top:7px;
+  color:#7086a3;
+  font-size:10px;
+}
+
+
+/* ================= APP DOWNLOAD ================= */
+
+.app-download{
+  width:min(1120px,92%);
+  margin:0 auto 25px;
+  padding:23px 27px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+
+  background:linear-gradient(
+    135deg,
+    #081524,
+    #0b1728
+  );
+
+  border:1px solid #1b3553;
+  border-radius:14px;
 }
 
 .app-download-copy h2{
-  margin:0 0 8px;
-  font-size:24px;
+  margin:0 0 7px;
+  font-size:20px;
 }
 
 .app-download-copy p{
   margin:0;
   color:#91a5bd;
+  font-size:12px;
   line-height:1.6;
-  font-size:13px;
 }
 
 .app-download-badge{
   display:inline-flex;
   align-items:center;
-  gap:10px;
-  padding:13px 18px;
+  gap:9px;
+  padding:11px 16px;
   border-radius:10px;
-  background:#fff;
-  color:#101820;
+  background:#168cff;
+  color:#fff;
   text-decoration:none;
   font-weight:800;
-  font-size:13px;
+  font-size:12px;
   white-space:nowrap;
 }
 
 .app-download-badge small{
   display:block;
-  font-size:9px;
-  font-weight:500;
+  font-size:8px;
 }
 
 .app-download-badge strong{
   display:block;
-  font-size:15px;
+  font-size:13px;
 }
 
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 .watch-footer{
-  margin-top:70px;
-  padding:48px 5% 28px;
+  margin-top:55px;
+  padding:40px 4% 25px;
+  border-top:1px solid #182033;
   background:#07101e;
-  border-top:1px solid #17263b;
 }
 
 .footer-inner{
-  width:min(1250px,92%);
+  width:min(1120px,92%);
   margin:auto;
   display:grid;
   grid-template-columns:1.4fr 1fr 1fr;
-  gap:40px;
+  gap:35px;
 }
 
 .footer-logo-row{
   display:flex;
   align-items:center;
-  gap:12px;
-  margin-bottom:12px;
+  gap:10px;
+  margin-bottom:10px;
 }
 
 .footer-logo-row img{
-  width:46px;
-  height:46px;
+  width:42px;
+  height:42px;
   object-fit:contain;
-}
-
-.nv-footer-logo{
-  width:46px;
-  height:46px;
-  flex:0 0 46px;
-  display:flex;
-}
-
-.nv-footer-logo svg{
-  width:100%;
-  height:100%;
-  display:block;
 }
 
 .footer-brand h2{
   margin:0;
-  font-size:23px;
-  font-weight:900;
-  letter-spacing:1px;
+  font-size:20px;
 }
 
 .footer-brand h2 span{
@@ -639,144 +432,140 @@ body{
 
 .footer-brand p{
   margin:0;
-  max-width:430px;
   color:#8196b1;
-  font-size:13px;
-  line-height:1.7;
+  font-size:12px;
+  line-height:1.6;
 }
 
 .footer-column h3{
-  margin:0 0 14px;
-  font-size:14px;
+  margin:0 0 12px;
+  font-size:13px;
 }
 
 .footer-links{
   display:flex;
   flex-wrap:wrap;
-  gap:10px 18px;
+  gap:8px 15px;
 }
 
 .footer-links a{
   color:#8ea2ba;
-  text-decoration:none;
-  font-size:13px;
-}
-
-.footer-links a:hover{
-  color:#fff;
+  font-size:11px;
 }
 
 .footer-social{
   display:flex;
   flex-wrap:wrap;
-  gap:10px;
+  gap:7px;
 }
 
 .footer-social a{
-  display:inline-flex;
-  align-items:center;
-  padding:8px 12px;
+  padding:7px 10px;
   border:1px solid #263c59;
-  border-radius:8px;
+  border-radius:7px;
   color:#cbd8e7;
-  text-decoration:none;
-  font-size:12px;
   background:#0b1728;
-}
-
-.footer-social a:hover{
-  border-color:#2c6da9;
-  color:#fff;
+  font-size:10px;
+  text-decoration:none;
 }
 
 .footer-bottom{
-  width:min(1250px,92%);
-  margin:34px auto 0;
-  padding-top:20px;
+  width:min(1120px,92%);
+  margin:25px auto 0;
+  padding-top:15px;
   border-top:1px solid #17263b;
   color:#657a94;
-  font-size:12px;
+  font-size:10px;
   text-align:center;
 }
 
+
+/* ================= STATES ================= */
+
+.loading,
+.error{
+  padding:70px 20px;
+  text-align:center;
+}
+
+.loading{
+  color:#8196b1;
+}
+
+.error{
+  color:#ff7885;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
 @media(max-width:1150px){
 
-  .watch-nav{
-    gap:14px;
+  .watch-header{
+    gap:12px;
+    padding:0 3%;
   }
 
-  .watch-nav a{
-    font-size:12px;
+  .watch-nav{
+    gap:10px;
   }
 
   .watch-search{
-    width:145px;
+    width:140px;
+  }
+
+  .video-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
   }
 
 }
 
-@media(max-width:700px){
 
-  .watch-header{
-    min-height:65px;
-    height:auto;
-    flex-wrap:wrap;
-    gap:10px;
-    padding:12px 4%;
-  }
+@media(max-width:850px){
 
-  .watch-logo img{
-    width:40px;
-    height:40px;
-  }
-
-  .nv-logo-mark{
-    width:40px;
-    height:40px;
-    flex-basis:40px;
-  }
-
-  .watch-logo-text b{
-    font-size:16px;
-  }
-
-  .watch-logo-text small{
-    font-size:6px;
-  }
-
-  .watch-nav{
-    order:3;
-    width:100%;
-    margin:2px 0 0;
-    justify-content:flex-start;
-    overflow-x:auto;
-    padding-bottom:4px;
-    gap:18px;
-    scrollbar-width:none;
-  }
-
-  .watch-nav::-webkit-scrollbar{
+  .watch-logo-text{
     display:none;
   }
 
-  .watch-nav a{
-    font-size:12px;
+  .watch-actions .watch-search{
+    display:none;
   }
 
-  .watch-actions{
-    order:4;
-    width:100%;
-    margin-left:0;
-    overflow-x:auto;
-    padding-bottom:3px;
+  .video-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
-  .watch-search{
-    min-width:190px;
+  .footer-inner{
+    grid-template-columns:1fr 1fr;
   }
 
-  .watch-actions .back-btn{
-    margin-left:0;
+}
+
+
+@media(max-width:600px){
+
+  .watch-header{
+    height:60px;
+    padding:0 10px;
+  }
+
+  .watch-logo img{
+    width:42px;
+    height:42px;
+  }
+
+  .watch-nav{
+    position:absolute;
+    top:60px;
+    left:0;
+    right:0;
+    padding:9px 12px;
+    background:#050810;
+    border-bottom:1px solid #182033;
+  }
+
+  .watch-app{
+    display:none;
   }
 
   .watch-page{
@@ -784,47 +573,46 @@ body{
     margin-top:20px;
   }
 
-  .video-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:12px;
-  }
-
   .video-info{
-    padding:18px;
+    padding:16px;
   }
 
   .video-info h1{
-    font-size:21px;
+    font-size:20px;
+  }
+
+  .video-grid{
+    gap:9px;
+  }
+
+  .video-card-body{
+    padding:9px;
+  }
+
+  .video-card-body h3{
+    font-size:12px;
   }
 
   .app-download{
     width:94%;
-    padding:22px;
+    padding:20px;
     flex-direction:column;
     align-items:flex-start;
   }
 
-  .app-download-copy h2{
-    font-size:21px;
-  }
-
   .footer-inner{
+    width:94%;
     grid-template-columns:1fr;
-    gap:28px;
-  }
-
-  .watch-footer{
-    padding-top:38px;
+    gap:25px;
   }
 
 }
 
-@media(max-width:450px){
+
+@media(max-width:420px){
 
   .video-grid{
-
     grid-template-columns:1fr;
-
   }
 
 }
@@ -833,31 +621,34 @@ body{
 
 </head>
 
-
 <body>
 
 
+<!-- ================= HEADER ================= -->
+
 <header class="watch-header">
 
-  <a href="/" class="watch-logo" aria-label="NIKHILVERSE Home">
+  <a href="/" class="watch-logo">
 
-    <span class="nv-logo-mark" aria-hidden="true">
-      <svg viewBox="0 0 64 64">
-        <rect x="2" y="2" width="60" height="60" rx="15" fill="#081525" stroke="#23466d" stroke-width="2"/>
-        <circle cx="32" cy="32" r="21" fill="none" stroke="#2196ff" stroke-width="3"/>
-        <path d="M19 42V22l13 13 13-13v20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="32" cy="32" r="4" fill="#6db7ff"/>
-      </svg>
-    </span>
+    <img
+      src="/nikhilverse-logo.png"
+      alt="NIKHILVERSE"
+    >
 
     <span class="watch-logo-text">
+
       <b>NIKHILVERSE</b>
-      <small>SCI-FI BY NIKHIL</small>
+
+      <small>
+        SCI-FI BY NIKHIL
+      </small>
+
     </span>
 
   </a>
 
-  <nav class="watch-nav" aria-label="Primary navigation">
+
+  <nav class="watch-nav">
 
     <a href="/">Home</a>
     <a href="/#videos">Movies</a>
@@ -866,37 +657,67 @@ body{
     <a href="/#scifi">Sci-Fi</a>
     <a href="/#videos">New &amp; Popular</a>
     <a href="/#videos">My List</a>
-    <a class="app-nav-link" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">📱 App</a>
+
+    <a
+      class="app-nav-link"
+      href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+      target="_blank"
+      rel="noopener"
+    >
+      📱 App
+    </a>
 
   </nav>
+
 
   <div class="watch-actions">
 
     <label class="watch-search">
+
       <span>⌕</span>
+
       <input
         type="search"
-        placeholder="Search movies, shows, documentaries..."
-        onkeydown="if(event.key==='Enter' && this.value.trim()) window.location.href='/?q='+encodeURIComponent(this.value.trim())"
+        placeholder="Search..."
+        onkeydown="
+          if(event.key==='Enter' && this.value.trim())
+          window.location.href='/?q='+encodeURIComponent(this.value.trim())
+        "
       >
+
     </label>
 
-    <a class="watch-ai" href="/#ai">
+
+    <a
+      class="watch-ai"
+      href="/#ai"
+    >
       🤖 Nikhil AI
     </a>
 
-    <a class="watch-premium" href="/#premium">
+
+    <a
+      class="watch-premium"
+      href="/#premium"
+    >
       👑 Premium
     </a>
+
 
     <a
       class="watch-app"
       href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
       target="_blank"
       rel="noopener"
-    >📱 App</a>
+    >
+      📱 App
+    </a>
 
-    <a class="back-btn" href="/">
+
+    <a
+      class="back-btn"
+      href="/"
+    >
       ← Back
     </a>
 
@@ -905,6 +726,7 @@ body{
 </header>
 
 
+<!-- ================= WATCH CONTENT ================= -->
 
 <main class="watch-page">
 
@@ -919,19 +741,23 @@ body{
 </main>
 
 
+<!-- ================= APP DOWNLOAD ================= -->
+
 <section class="app-download">
 
   <div class="app-download-copy">
 
-    <h2>NIKHILVERSE Android App 📱</h2>
+    <h2>
+      NIKHILVERSE Android App 📱
+    </h2>
 
     <p>
-      Take NIKHILVERSE with you. Watch documentaries,
-      sci-fi stories and exclusive content directly
-      from the Android app.
+      Watch documentaries, sci-fi stories and
+      exclusive NIKHILVERSE content on Android.
     </p>
 
   </div>
+
 
   <a
     class="app-download-badge"
@@ -939,42 +765,57 @@ body{
     target="_blank"
     rel="noopener"
   >
-    <span style="font-size:25px;">▶</span>
+
+    <span style="font-size:23px">
+      ▶
+    </span>
+
     <span>
       <small>GET IT NOW</small>
       <strong>Download APK</strong>
     </span>
+
   </a>
 
 </section>
 
 
+<!-- ================= FOOTER ================= -->
+
 <footer class="watch-footer">
 
   <div class="footer-inner">
 
+
     <div class="footer-brand">
 
       <div class="footer-logo-row">
-        <span class="nv-footer-logo" aria-hidden="true">
-          <svg viewBox="0 0 64 64">
-            <rect x="2" y="2" width="60" height="60" rx="15" fill="#081525" stroke="#23466d" stroke-width="2"/>
-            <circle cx="32" cy="32" r="21" fill="none" stroke="#2196ff" stroke-width="3"/>
-            <path d="M19 42V22l13 13 13-13v20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="32" cy="32" r="4" fill="#6db7ff"/>
-          </svg>
-        </span>
-        <h2>NIKHIL <span>VERSE</span></h2>
+
+        <img
+          src="/nikhilverse-logo.png"
+          alt="NIKHILVERSE"
+        >
+
+        <h2>
+          NIKHIL <span>VERSE</span>
+        </h2>
+
       </div>
+
       <p>
-        Discover stories worth watching — science, technology,
-        history, documentaries and ideas from NIKHILVERSE.
+        Discover stories worth watching — science,
+        technology, history, documentaries and ideas.
       </p>
+
     </div>
 
+
     <div class="footer-column">
+
       <h3>Explore</h3>
+
       <div class="footer-links">
+
         <a href="/">Home</a>
         <a href="/#videos">Movies</a>
         <a href="/#shows">TV Shows</a>
@@ -983,21 +824,64 @@ body{
         <a href="/#blog">Blog</a>
         <a href="/#premium">Premium</a>
         <a href="/admin/">Admin</a>
+
       </div>
+
     </div>
 
+
     <div class="footer-column">
+
       <h3>Follow NIKHILVERSE</h3>
+
       <div class="footer-social">
-        <a href="https://www.youtube.com/@SIFIByNikhil" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://instagram.com/nikhilshuklaindianarmy" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.facebook.com/theancienthistorianss/" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://x.com/nikhilshuklaind" target="_blank" rel="noopener">X</a>
-        <a href="https://t.me/TheAncientHistorians/10" target="_blank" rel="noopener">Telegram</a>
+
+        <a
+          href="https://www.youtube.com/@SIFIByNikhil"
+          target="_blank"
+          rel="noopener"
+        >
+          YouTube
+        </a>
+
+        <a
+          href="https://instagram.com/nikhilshuklaindianarmy"
+          target="_blank"
+          rel="noopener"
+        >
+          Instagram
+        </a>
+
+        <a
+          href="https://www.facebook.com/theancienthistorianss/"
+          target="_blank"
+          rel="noopener"
+        >
+          Facebook
+        </a>
+
+        <a
+          href="https://x.com/nikhilshuklaind"
+          target="_blank"
+          rel="noopener"
+        >
+          X
+        </a>
+
+        <a
+          href="https://t.me/TheAncientHistorians/10"
+          target="_blank"
+          rel="noopener"
+        >
+          Telegram
+        </a>
+
       </div>
+
     </div>
 
   </div>
+
 
   <div class="footer-bottom">
     © 2026 NIKHILVERSE. All rights reserved.
@@ -1005,6 +889,8 @@ body{
 
 </footer>
 
+
+<!-- ================= WATCH SCRIPT ================= -->
 
 <script>
 
@@ -1038,15 +924,10 @@ async function getVideos(){
 function escapeHTML(value){
 
   return String(value ?? "")
-
     .replaceAll("&","&amp;")
-
     .replaceAll("<","&lt;")
-
     .replaceAll(">","&gt;")
-
     .replaceAll('"',"&quot;")
-
     .replaceAll("'","&#039;");
 
 }
@@ -1073,34 +954,11 @@ function renderWatchPage(
     "NIKHILVERSE";
 
 
-  const sameChannel =
+  const otherVideos =
     allVideos.filter(v =>
 
-      String(
-        v.channel || ""
-      ).toLowerCase()
-
-      ===
-
-      String(
-        channel
-      ).toLowerCase()
-
-    );
-
-
-  const otherVideos =
-    sameChannel.filter(v =>
-
-      String(
-        v.youtube_id || ""
-      )
-
-      !==
-
-      String(
-        video.youtube_id || ""
-      )
+      String(v.youtube_id || "") !==
+      String(video.youtube_id || "")
 
     );
 
@@ -1114,20 +972,13 @@ function renderWatchPage(
     "watchContent"
   ).innerHTML = `
 
-
     <div class="player-box">
 
       <div class="player">
 
         <iframe
-
           src="https://www.youtube.com/embed/${encodeURIComponent(video.youtube_id)}?rel=0&modestbranding=1"
-
-          title="${escapeHTML(
-            video.title ||
-            "NIKHILVERSE Video"
-          )}"
-
+          title="${escapeHTML(video.title || "NIKHILVERSE Video")}"
           allow="
             accelerometer;
             autoplay;
@@ -1137,9 +988,7 @@ function renderWatchPage(
             picture-in-picture;
             web-share
           "
-
           allowfullscreen>
-
         </iframe>
 
       </div>
@@ -1147,15 +996,11 @@ function renderWatchPage(
     </div>
 
 
-
     <section class="video-info">
 
       <h1>
-        ${escapeHTML(
-          video.title || ""
-        )}
+        ${escapeHTML(video.title || "")}
       </h1>
-
 
       <div class="video-meta">
 
@@ -1167,9 +1012,7 @@ function renderWatchPage(
         ${
           video.category
           ? " · " +
-            escapeHTML(
-              video.category
-            )
+            escapeHTML(video.category)
           : ""
         }
 
@@ -1188,15 +1031,11 @@ function renderWatchPage(
       ${
         video.description
         ? `
-
           <div class="video-description">
-
             ${escapeHTML(
               video.description
             )}
-
           </div>
-
         `
         : ""
       }
@@ -1204,10 +1043,8 @@ function renderWatchPage(
     </section>
 
 
-
     ${
       otherVideos.length
-
       ? `
 
         <section class="channel-section">
@@ -1215,8 +1052,7 @@ function renderWatchPage(
           <div class="section-title">
 
             <h2>
-              More from
-              ${escapeHTML(channel)}
+              More from ${escapeHTML(channel)}
             </h2>
 
             <span class="channel-name">
@@ -1232,7 +1068,7 @@ function renderWatchPage(
 
               <article
                 class="video-card"
-                onclick="openVideo('${escapeHTML(v.youtube_id)}')"
+                onclick="openVideo('${encodeURIComponent(v.youtube_id || "")}')"
               >
 
                 <div class="video-thumb">
@@ -1245,11 +1081,7 @@ function renderWatchPage(
                         encodeURIComponent(v.youtube_id) +
                         "/hqdefault.jpg"
                     }"
-
-                    alt="${escapeHTML(
-                      v.title || ""
-                    )}"
-
+                    alt="${escapeHTML(v.title || "")}"
                     loading="lazy"
                   >
 
@@ -1259,11 +1091,8 @@ function renderWatchPage(
                 <div class="video-card-body">
 
                   <h3>
-                    ${escapeHTML(
-                      v.title || ""
-                    )}
+                    ${escapeHTML(v.title || "")}
                   </h3>
-
 
                   <div class="video-card-meta">
 
@@ -1274,9 +1103,7 @@ function renderWatchPage(
                     ${
                       v.category
                       ? " · " +
-                        escapeHTML(
-                          v.category
-                        )
+                        escapeHTML(v.category)
                       : ""
                     }
 
@@ -1293,9 +1120,7 @@ function renderWatchPage(
         </section>
 
       `
-
       : ""
-
     }
 
   `;
@@ -1314,11 +1139,9 @@ async function loadWatchPage(){
   if(!videoId){
 
     container.innerHTML = `
-
       <div class="error">
         Video not found.
       </div>
-
     `;
 
     return;
@@ -1334,27 +1157,18 @@ async function loadWatchPage(){
 
     const video =
       videos.find(v =>
-
-        String(
-          v.youtube_id || ""
-        )
-
-        ===
-
+        String(v.youtube_id || "") ===
         String(videoId)
-
       );
 
 
     if(!video){
 
       container.innerHTML = `
-
         <div class="error">
           This video is not available
           on NIKHILVERSE.
         </div>
-
       `;
 
       return;
@@ -1375,14 +1189,11 @@ async function loadWatchPage(){
       error
     );
 
-
     container.innerHTML = `
-
       <div class="error">
         Unable to load this video.
         Please try again.
       </div>
-
     `;
 
   }
@@ -1394,7 +1205,5 @@ loadWatchPage();
 
 </script>
 
-
 </body>
-
 </html>
