@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>NIKHILVERSE - Watch</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background:#050912;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.watch-header{
+
+  height:76px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:0 5%;
+
+  background:#07101e;
+
+  border-bottom:1px solid #17263b;
+
+  position:sticky;
+
+  top:0;
+
+  z-index:50;
+
+}
+
+.watch-logo{
+
+  display:flex;
+
+  align-items:center;
+
+  text-decoration:none;
+
+  color:#fff;
+
+  font-size:24px;
+
+  font-weight:900;
+
+  letter-spacing:1px;
+
+}
+
+.watch-logo span{
+
+  color:#2196ff;
+
+}
+
+.back-btn{
+
+  display:inline-block;
+
+  text-decoration:none;
+
+  color:#dce8f7;
+
+  background:#0b1728;
+
+  border:1px solid #263c59;
+
+  padding:10px 16px;
+
+  border-radius:9px;
+
+  font-size:14px;
+
+  transition:.2s;
+
+}
+
+.back-btn:hover{
+
+  background:#132842;
+
+  border-color:#347fc2;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.watch-page{
+
+  width:min(1250px,92%);
+
+  margin:35px auto 70px;
+
+}
+
+
+/* =====================================================
+   VIDEO PLAYER
+===================================================== */
+
+.player-box{
+
+  width:100%;
+
+  background:#000;
+
+  border-radius:14px;
+
+  overflow:hidden;
+
+  border:1px solid #1a2b42;
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.55);
+
+}
+
+.player{
+
+  position:relative;
+
+  width:100%;
+
+  aspect-ratio:16/9;
+
+  background:#000;
+
+}
+
+.player iframe{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+
+  height:100%;
+
+  border:0;
+
+}
+
+
+/* =====================================================
+   VIDEO INFORMATION
+===================================================== */
+
+.video-info{
+
+  margin-top:22px;
+
+  padding:25px;
+
+  background:#0a1423;
+
+  border:1px solid #192b43;
+
+  border-radius:14px;
+
+}
+
+.video-info h1{
+
+  margin:0 0 10px;
+
+  font-size:28px;
+
+  line-height:1.35;
+
+}
+
+.video-meta{
+
+  color:#7f95b0;
+
+  font-size:14px;
+
+}
+
+.video-description{
+
+  margin-top:18px;
+
+  color:#c3d0df;
+
+  line-height:1.75;
+
+  font-size:15px;
+
+  white-space:pre-wrap;
+
+}
+
+
+/* =====================================================
+   CHANNEL SECTION
+===================================================== */
+
+.channel-section{
+
+  margin-top:45px;
+
+}
+
+.section-title{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin-bottom:20px;
+
+}
+
+.section-title h2{
+
+  margin:0;
+
+  font-size:25px;
+
+}
+
+.channel-name{
+
+  color:#6caeff;
+
+  font-size:13px;
+
+}
+
+
+/* =====================================================
+   VIDEO GRID
+===================================================== */
+
+.video-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+
+  gap:18px;
+
+}
+
+.video-card{
+
+  background:#0a1423;
+
+  border:1px solid #1a2b42;
+
+  border-radius:12px;
+
+  overflow:hidden;
+
+  cursor:pointer;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+
+}
+
+.video-card:hover{
+
+  transform:translateY(-4px);
+
+  border-color:#2c6da9;
+
+  box-shadow:
+    0 15px 35px rgba(0,0,0,.55);
+
+}
+
+.video-thumb{
+
+  width:100%;
+
+  aspect-ratio:16/9;
+
+  background:#07101b;
+
+  overflow:hidden;
+
+}
+
+.video-thumb img{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:cover;
+
+  display:block;
+
+}
+
+.video-card-body{
+
+  padding:13px;
+
+}
+
+.video-card-body h3{
+
+  margin:0;
+
+  font-size:15px;
+
+  line-height:1.45;
+
+  display:-webkit-box;
+
+  -webkit-box-orient:vertical;
+
+  -webkit-line-clamp:2;
+
+  overflow:hidden;
+
+}
+
+.video-card-meta{
+
+  margin-top:8px;
+
+  color:#7086a3;
+
+  font-size:11px;
+
+}
+
+
+/* =====================================================
+   LOADING / ERROR
+===================================================== */
+
+.loading{
+
+  padding:70px 20px;
+
+  text-align:center;
+
+  color:#8196b1;
+
+}
+
+.error{
+
+  padding:70px 20px;
+
+  text-align:center;
+
+  color:#ff7885;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1000px){
+
+  .video-grid{
+
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
+
+  }
+
+}
+
+
+@media(max-width:700px){
+
+  .watch-header{
+
+    height:65px;
+
+    padding:0 4%;
+
+  }
+
+  .watch-logo{
+
+    font-size:20px;
+
+  }
+
+  .back-btn{
+
+    padding:8px 11px;
+
+    font-size:12px;
+
+  }
+
+  .watch-page{
+
+    width:94%;
+
+    margin-top:20px;
+
+  }
+
+  .video-grid{
+
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:12px;
+
+  }
+
+  .video-info{
+
+    padding:18px;
+
+  }
+
+  .video-info h1{
+
+    font-size:21px;
+
+  }
+
+}
+
+
+@media(max-width:450px){
+
+  .video-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .section-title{
+
+    align-items:flex-start;
+
+    flex-direction:column;
+
+    gap:6px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="watch-header">
+
+  <a
+    href="/"
+    class="watch-logo"
+  >
+    NIKHIL<span>VERSE</span>
+  </a>
+
+
+  <a
+    href="/"
+    class="back-btn"
+  >
+    ← Back to NIKHILVERSE
+  </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="watch-page">
+
+  <div id="watchContent">
+
+    <div class="loading">
+      Loading video...
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<script>
+
+/* =====================================================
+   GET VIDEO ID
+===================================================== */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const videoId =
+  params.get('id');
+
+
+/* =====================================================
+   API
+===================================================== */
+
+async function getVideos(){
+
+  const response =
+    await fetch('/api/videos');
+
+  if(!response.ok){
+
+    throw new Error(
+      'Unable to load videos'
+    );
+
+  }
+
+  return response.json();
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+  return String(value ?? '')
+
+    .replaceAll(
+      '&',
+      '&amp;'
+    )
+
+    .replaceAll(
+      '<',
+      '&lt;'
+    )
+
+    .replaceAll(
+      '>',
+      '&gt;'
+    )
+
+    .replaceAll(
+      '"',
+      '&quot;'
+    )
+
+    .replaceAll(
+      "'",
+      '&#039;'
+    );
+
+}
+
+
+/* =====================================================
+   OPEN ANOTHER VIDEO
+===================================================== */
+
+function openVideo(id){
+
+  if(!id) return;
+
+  window.location.href =
+    `/watch.html?id=${encodeURIComponent(id)}`;
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(date){
+
+  if(!date) return '';
+
+  try{
+
+    return new Date(date)
+      .toLocaleDateString(
+        'en-IN',
+        {
+          day:'numeric',
+          month:'short',
+          year:'numeric'
+        }
+      );
+
+  }catch(e){
+
+    return '';
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER WATCH PAGE
+===================================================== */
+
+function renderWatchPage(
+  video,
+  allVideos
+){
+
+  const channel =
+    video.channel ||
+    'NIKHILVERSE';
+
+
+  /* -----------------------------------------------
+     SAME CHANNEL VIDEOS
+  ------------------------------------------------ */
+
+  const channelVideos =
+    allVideos.filter(v => {
+
+      return String(
+        v.channel || ''
+      ).toLowerCase()
+      ===
+      String(channel).toLowerCase();
+
+    });
+
+
+  /* -----------------------------------------------
+     REMOVE CURRENT VIDEO
+  ------------------------------------------------ */
+
+  const otherVideos =
+    channelVideos.filter(v => {
+
+      return String(
+        v.youtube_id || ''
+      )
+      !==
+      String(
+        video.youtube_id || ''
+      );
+
+    });
+
+
+  /* -----------------------------------------------
+     PAGE TITLE
+  ------------------------------------------------ */
+
+  document.title =
+    `${video.title || 'Watch'} - NIKHILVERSE`;
+
+
+  /* -----------------------------------------------
+     PAGE
+  ------------------------------------------------ */
+
+  document.getElementById(
+    'watchContent'
+  ).innerHTML = `
+
+
+    <!-- PLAYER -->
+
+    <div class="player-box">
+
+      <div class="player">
+
+        <iframe
+
+          src="https://www.youtube.com/embed/${encodeURIComponent(video.youtube_id)}?rel=0&modestbranding=1"
+
+          title="${escapeHTML(
+            video.title ||
+            'NIKHILVERSE Video'
+          )}"
+
+          allow="
+            accelerometer;
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;
+            web-share
+          "
+
+          allowfullscreen>
+
+        </iframe>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- VIDEO INFO -->
+
+    <section class="video-info">
+
+      <h1>
+        ${escapeHTML(
+          video.title || ''
+        )}
+      </h1>
+
+
+      <div class="video-meta">
+
+        ${escapeHTML(
+          video.channel ||
+          'NIKHILVERSE'
+        )}
+
+        ${
+          video.category
+          ? `
+            ·
+            ${escapeHTML(
+              video.category
+            )}
+          `
+          : ''
+        }
+
+        ${
+          video.access
+          ? `
+            ·
+            ${escapeHTML(
+              video.access
+            ).toUpperCase()}
+          `
+          : ''
+        }
+
+        ${
+          video.published_at
+          ? `
+            ·
+            ${formatDate(
+              video.published_at
+            )}
+          `
+          : ''
+        }
+
+      </div>
+
+
+      ${
+        video.description
+        ? `
+
+          <div class="video-description">
+
+            ${escapeHTML(
+              video.description
+            )}
+
+          </div>
+
+        `
+        : ''
+      }
+
+    </section>
+
+
+
+    <!-- SAME CHANNEL VIDEOS -->
+
+    ${
+      otherVideos.length
+      ? `
+
+        <section class="channel-section">
+
+          <div class="section-title">
+
+            <h2>
+              More from
+              ${escapeHTML(channel)}
+            </h2>
+
+            <span class="channel-name">
+              NIKHILVERSE
+            </span>
+
+          </div>
+
+
+          <div class="video-grid">
+
+            ${otherVideos.map(v => `
+
+              <article
+                class="video-card"
+                onclick="openVideo('${escapeHTML(
+                  v.youtube_id
+                )}')"
+              >
+
+
+                <div class="video-thumb">
+
+                  ${
+                    v.thumbnail
+                    ? `
+
+                      <img
+                        src="${escapeHTML(
+                          v.thumbnail
+                        )}"
+
+                        alt="${escapeHTML(
+                          v.title || ''
+                        )}"
+
+                        loading="lazy"
+                      >
+
+                    `
+                    : `
+
+                      <img
+                        src="https://i.ytimg.com/vi/${encodeURIComponent(
+                          v.youtube_id
+                        )}/hqdefault.jpg"
+
+                        alt="${escapeHTML(
+                          v.title || ''
+                        )}"
+
+                        loading="lazy"
+                      >
+
+                    `
+                  }
+
+                </div>
+
+
+
+                <div class="video-card-body">
+
+                  <h3>
+
+                    ${escapeHTML(
+                      v.title || ''
+                    )}
+
+                  </h3>
+
+
+                  <div class="video-card-meta">
+
+                    ${escapeHTML(
+                      v.channel ||
+                      ''
+                    )}
+
+                    ${
+                      v.category
+                      ? `
+                        ·
+                        ${escapeHTML(
+                          v.category
+                        )}
+                      `
+                      : ''
+                    }
+
+                  </div>
+
+                </div>
+
+
+              </article>
+
+            `).join('')}
+
+          </div>
+
+        </section>
+
+      `
+      : `
+
+        <section class="channel-section">
+
+          <div class="empty">
+            No more videos available
+            from this channel.
+          </div>
+
+        </section>
+
+      `
+    }
+
+  `;
+
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+async function loadWatchPage(){
+
+  const container =
+    document.getElementById(
+      'watchContent'
+    );
+
+
+  /* -----------------------------------------------
+     NO ID
+  ------------------------------------------------ */
+
+  if(!videoId){
+
+    container.innerHTML = `
+
+      <div class="error">
+
+        Video not found.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  try{
+
+    const videos =
+      await getVideos();
+
+
+    const video =
+      videos.find(v => {
+
+        return String(
+          v.youtube_id || ''
+        )
+        ===
+        String(videoId);
+
+      });
+
+
+    /* ---------------------------------------------
+       VIDEO NOT FOUND
+    ---------------------------------------------- */
+
+    if(!video){
+
+      container.innerHTML = `
+
+        <div class="error">
+
+          This video is not available
+          on NIKHILVERSE.
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    /* ---------------------------------------------
+       RENDER
+    ---------------------------------------------- */
+
+    renderWatchPage(
+      video,
+      videos
+    );
+
+
+  }catch(error){
+
+    console.error(
+      'Watch page error:',
+      error
+    );
+
+
+    container.innerHTML = `
+
+      <div class="error">
+
+        Unable to load this video.
+        Please try again.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadWatchPage();
+
+</script>
+
+
+</body>
+
+</html>
