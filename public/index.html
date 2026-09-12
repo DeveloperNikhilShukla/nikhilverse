@@ -361,7 +361,7 @@
     >
 
       <img
-        src="/assets/nikhilverse-logo.png"
+        src="/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
       >
 
@@ -782,7 +782,7 @@
     <div class="footer-brand">
 
       <img
-        src="/assets/nikhilverse-logo.png"
+        src="/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
       >
 
@@ -920,10 +920,7 @@
               <div
                 class="hero-slide ${index === 0 ? "active" : ""}"
                 data-index="${index}"
-                onclick="window.open(
-                  'https://www.youtube.com/watch?v=${video.youtube_id}',
-                  '_blank'
-                )"
+                onclick="location.href='/watch.html?id=${encodeURIComponent(video.youtube_id)}'"
               >
 
                 <img
@@ -1168,7 +1165,7 @@
             const id = encodeURIComponent(playlist.id || '');
             const title = escapeHTML(playlist.title || 'Untitled Playlist');
             const channel = escapeHTML(playlist.channel || 'YouTube');
-            const thumbnail = playlist.thumbnail || '/assets/nikhilverse-logo.png';
+            const thumbnail = playlist.thumbnail || '/nikhilverse-logo.png';
             const count = Number(playlist.videoCount || 0);
 
             return `
@@ -1241,7 +1238,21 @@
 
 
   <!-- EXISTING APP.JS -->
-  <script src="/app.js"></script>
+  <script>
+/* NIKHILVERSE internal video navigation safety net */
+document.addEventListener('click', function(event){
+  const card = event.target.closest('.card, .hero-slide');
+  if (!card) return;
+  const onclick = card.getAttribute('onclick') || '';
+  const match = onclick.match(/[?&]v=([^&'"\s)]+)/i);
+  if (match && match[1]) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.href = '/watch.html?id=' + encodeURIComponent(match[1]);
+  }
+}, true);
+</script>
+<script src="/app.js"></script>
 
 </body>
 
