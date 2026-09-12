@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>NIKHILVERSE — Sci-Fi by Nikhil</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,9 +15,736 @@
   >
 
   <link rel="stylesheet" href="/style.css">
+
+
+  <!-- =====================================================
+       ANDROID APP PREMIUM STYLES
+       ===================================================== -->
+
+  <style>
+
+    /* =====================================================
+       HEADER ANDROID BUTTON
+       ===================================================== */
+
+    .android-header-btn {
+      position: relative;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      padding: 10px 15px;
+
+      border: 1px solid rgba(91, 169, 255, 0.45);
+      border-radius: 999px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(39, 103, 190, 0.25),
+          rgba(17, 35, 67, 0.65)
+        );
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      white-space: nowrap;
+
+      box-shadow:
+        0 0 0 1px rgba(70, 145, 255, 0.05),
+        0 0 18px rgba(55, 145, 255, 0.16);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+    }
+
+
+    .android-header-btn::before {
+      content: "";
+
+      position: absolute;
+      inset: -2px;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(95, 180, 255, 0.25),
+          transparent
+        );
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity 0.25s ease;
+    }
+
+
+    .android-header-btn:hover {
+
+      transform: translateY(-2px);
+
+      border-color: rgba(105, 190, 255, 0.8);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(45, 120, 220, 0.38),
+          rgba(20, 45, 85, 0.8)
+        );
+
+      box-shadow:
+        0 0 20px rgba(55, 155, 255, 0.35),
+        0 0 45px rgba(55, 130, 255, 0.16);
+    }
+
+
+    .android-header-btn:hover::before {
+      opacity: 1;
+    }
+
+
+    /* =====================================================
+       ANDROID APP SECTION
+       ===================================================== */
+
+    .app-section {
+
+      position: relative;
+
+      width: 100%;
+
+      padding: 100px 24px;
+
+      box-sizing: border-box;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 15% 50%,
+          rgba(33, 125, 255, 0.22),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 50%,
+          rgba(95, 55, 255, 0.18),
+          transparent 34%
+        ),
+        linear-gradient(
+          180deg,
+          #030814 0%,
+          #071326 50%,
+          #030814 100%
+        );
+
+      border-top:
+        1px solid rgba(83, 158, 255, 0.20);
+
+      border-bottom:
+        1px solid rgba(83, 158, 255, 0.20);
+    }
+
+
+    /* Top glow */
+
+    .app-section::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: -180px;
+      left: 50%;
+
+      width: 700px;
+      height: 350px;
+
+      transform: translateX(-50%);
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(64, 157, 255, 0.25),
+          transparent 68%
+        );
+
+      filter: blur(15px);
+
+      pointer-events: none;
+    }
+
+
+    /* Bottom glow */
+
+    .app-section::after {
+
+      content: "";
+
+      position: absolute;
+
+      bottom: -180px;
+      left: 50%;
+
+      width: 800px;
+      height: 300px;
+
+      transform: translateX(-50%);
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(69, 117, 255, 0.16),
+          transparent 70%
+        );
+
+      filter: blur(20px);
+
+      pointer-events: none;
+    }
+
+
+    /* =====================================================
+       MAIN APP CARD
+       ===================================================== */
+
+    .app-box {
+
+      position: relative;
+      z-index: 2;
+
+      max-width: 1150px;
+
+      min-height: 360px;
+
+      margin: 0 auto;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 55px;
+
+      padding: 55px;
+
+      box-sizing: border-box;
+
+      border:
+        1px solid rgba(105, 177, 255, 0.30);
+
+      border-radius: 32px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(16, 39, 72, 0.92),
+          rgba(5, 13, 29, 0.97)
+        );
+
+      box-shadow:
+        0 0 0 1px rgba(76, 150, 255, 0.05),
+        0 0 35px rgba(45, 130, 255, 0.12),
+        0 30px 90px rgba(0, 0, 0, 0.55);
+
+      overflow: hidden;
+    }
+
+
+    /* Card internal glow */
+
+    .app-box::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 500px;
+      height: 500px;
+
+      top: -280px;
+      right: -180px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(54, 143, 255, 0.20),
+          transparent 68%
+        );
+
+      filter: blur(8px);
+
+      pointer-events: none;
+    }
+
+
+    .app-box::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 350px;
+      height: 350px;
+
+      bottom: -220px;
+      left: -130px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(91, 74, 255, 0.16),
+          transparent 68%
+        );
+
+      filter: blur(12px);
+
+      pointer-events: none;
+    }
+
+
+    /* =====================================================
+       PHONE / APP ICON
+       ===================================================== */
+
+    .app-icon {
+
+      position: relative;
+      z-index: 2;
+
+      flex: 0 0 155px;
+
+      width: 155px;
+      height: 205px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 34px;
+
+      font-size: 72px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(54, 142, 255, 0.32),
+          rgba(44, 61, 150, 0.25)
+        );
+
+      border:
+        1px solid rgba(125, 193, 255, 0.42);
+
+      box-shadow:
+        inset 0 0 35px rgba(95, 177, 255, 0.10),
+        0 0 25px rgba(50, 145, 255, 0.20),
+        0 25px 60px rgba(0, 0, 0, 0.45);
+
+      animation:
+        appPhoneGlow 3s ease-in-out infinite;
+    }
+
+
+    /* Small screen effect */
+
+    .app-icon::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 17px;
+      left: 50%;
+
+      width: 42px;
+      height: 5px;
+
+      transform: translateX(-50%);
+
+      border-radius: 999px;
+
+      background:
+        rgba(255, 255, 255, 0.22);
+    }
+
+
+    .app-icon::after {
+
+      content: "";
+
+      position: absolute;
+
+      bottom: 14px;
+      left: 50%;
+
+      width: 42px;
+      height: 4px;
+
+      transform: translateX(-50%);
+
+      border-radius: 999px;
+
+      background:
+        rgba(255, 255, 255, 0.16);
+    }
+
+
+    @keyframes appPhoneGlow {
+
+      0%,
+      100% {
+
+        box-shadow:
+          inset 0 0 35px rgba(95, 177, 255, 0.10),
+          0 0 22px rgba(50, 145, 255, 0.18),
+          0 25px 60px rgba(0, 0, 0, 0.45);
+
+      }
+
+      50% {
+
+        box-shadow:
+          inset 0 0 45px rgba(95, 177, 255, 0.14),
+          0 0 42px rgba(50, 145, 255, 0.34),
+          0 25px 60px rgba(0, 0, 0, 0.45);
+
+      }
+
+    }
+
+
+    /* =====================================================
+       APP CONTENT
+       ===================================================== */
+
+    .app-content {
+
+      position: relative;
+      z-index: 2;
+
+      flex: 1;
+
+      min-width: 0;
+    }
+
+
+    .app-content small {
+
+      display: block;
+
+      margin-bottom: 12px;
+
+      color: #70b9ff;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: 2.5px;
+
+      text-transform: uppercase;
+    }
+
+
+    .app-content h2 {
+
+      margin: 0 0 18px;
+
+      color: #ffffff;
+
+      font-size: clamp(38px, 5vw, 64px);
+
+      line-height: 1.02;
+
+      letter-spacing: -1.5px;
+    }
+
+
+    .app-content h2 i {
+
+      color: #67afff;
+
+      font-style: italic;
+
+      text-shadow:
+        0 0 24px rgba(80, 165, 255, 0.25);
+    }
+
+
+    .app-content p {
+
+      max-width: 690px;
+
+      margin: 0 0 28px;
+
+      color: #b5c4da;
+
+      font-size: 16px;
+
+      line-height: 1.75;
+    }
+
+
+    /* =====================================================
+       DOWNLOAD BUTTON
+       ===================================================== */
+
+    .app-download-main {
+
+      position: relative;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 10px;
+
+      padding: 15px 27px;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #76bcff,
+          #4f9bf0
+        );
+
+      color: #03101f;
+
+      text-decoration: none;
+
+      font-size: 15px;
+
+      font-weight: 900;
+
+      letter-spacing: 0.1px;
+
+      box-shadow:
+        0 10px 30px rgba(45, 140, 255, 0.28),
+        0 0 25px rgba(55, 150, 255, 0.13);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+    }
+
+
+    .app-download-main::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: -3px;
+
+      border-radius: inherit;
+
+      border:
+        1px solid rgba(125, 199, 255, 0.45);
+
+      opacity: 0.7;
+
+      pointer-events: none;
+
+      animation:
+        downloadPulse 2.2s ease-in-out infinite;
+    }
+
+
+    .app-download-main:hover {
+
+      transform: translateY(-3px) scale(1.02);
+
+      filter: brightness(1.08);
+
+      box-shadow:
+        0 15px 40px rgba(45, 140, 255, 0.40),
+        0 0 45px rgba(55, 150, 255, 0.25);
+    }
+
+
+    @keyframes downloadPulse {
+
+      0%,
+      100% {
+        opacity: 0.25;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+
+    }
+
+
+    /* =====================================================
+       APP NOTE
+       ===================================================== */
+
+    .app-note {
+
+      display: block;
+
+      margin-top: 14px;
+
+      color: #71839d;
+
+      font-size: 12px;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 1000px) {
+
+      .android-header-btn {
+        padding: 9px 12px;
+
+        font-size: 12px;
+      }
+
+      .app-box {
+
+        gap: 35px;
+
+        padding: 42px;
+      }
+
+      .app-icon {
+
+        flex-basis: 125px;
+
+        width: 125px;
+        height: 175px;
+
+        font-size: 60px;
+      }
+
+    }
+
+
+    @media (max-width: 760px) {
+
+      .android-header-btn {
+
+        padding: 8px 11px;
+
+        font-size: 0;
+      }
+
+      .android-header-btn::after {
+
+        content: "📱";
+
+        font-size: 17px;
+      }
+
+
+      .app-section {
+
+        padding: 70px 18px;
+      }
+
+
+      .app-box {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 28px;
+
+        padding: 38px 24px;
+
+        border-radius: 26px;
+      }
+
+
+      .app-icon {
+
+        flex: 0 0 auto;
+
+        width: 105px;
+        height: 140px;
+
+        border-radius: 25px;
+
+        font-size: 48px;
+      }
+
+
+      .app-content p {
+
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+
+      .app-download-main {
+
+        width: 100%;
+
+        box-sizing: border-box;
+      }
+
+    }
+
+
+    @media (max-width: 480px) {
+
+      .app-section {
+
+        padding: 55px 14px;
+      }
+
+
+      .app-box {
+
+        padding: 32px 18px;
+      }
+
+
+      .app-content h2 {
+
+        font-size: 36px;
+
+        letter-spacing: -1px;
+      }
+
+
+      .app-content p {
+
+        font-size: 14px;
+
+        line-height: 1.65;
+      }
+
+    }
+
+  </style>
+
 </head>
 
+
 <body>
+
 
   <!-- =====================================================
        HEADER
@@ -29,6 +757,7 @@
       href="#home"
       aria-label="NIKHILVERSE Home"
     >
+
       <img
         src="/nikhilverse-logo.png"
         alt="NIKHILVERSE Logo"
@@ -39,6 +768,7 @@
         <b>NIKHILVERSE</b>
         <small>SCI-FI BY NIKHIL</small>
       </span>
+
     </a>
 
 
@@ -80,6 +810,7 @@
 
     <div class="header-actions">
 
+
       <label class="search">
 
         <span>⌕</span>
@@ -100,6 +831,20 @@
       >
         🤖 Nikhil AI
       </button>
+
+
+      <!-- =================================================
+           ANDROID APP HEADER BUTTON
+           ================================================= -->
+
+      <a
+        class="android-header-btn"
+        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+        download
+        title="Download NIKHILVERSE Android App"
+      >
+        📱 Android App
+      </a>
 
 
       <a
@@ -384,12 +1129,13 @@
 
     </section>
 
+
   </main>
 
 
-  <!-- ===================================================
-       ANDROID APP
-       =================================================== -->
+  <!-- =====================================================
+       ANDROID APP DOWNLOAD
+       ===================================================== -->
 
   <section
     id="download-app"
@@ -398,9 +1144,11 @@
 
     <div class="app-box">
 
+
       <div class="app-icon">
         📱
       </div>
+
 
       <div class="app-content">
 
@@ -408,19 +1156,19 @@
           NIKHILVERSE FOR ANDROID
         </small>
 
+
         <h2>
           Take NIKHILVERSE
           <br>
           <i>with you.</i>
         </h2>
 
+
         <p>
           Watch documentaries, explore stories, discover new episodes
           and enjoy NIKHILVERSE anytime on your Android device.
         </p>
 
-
-        <!-- DIRECT APK DOWNLOAD -->
 
         <a
           class="app-download-main"
@@ -432,10 +1180,11 @@
 
 
         <span class="app-note">
-          Official NIKHILVERSE Android App
+          Official NIKHILVERSE Android App · Version 1.0.0
         </span>
 
       </div>
+
 
     </div>
 
@@ -456,6 +1205,7 @@
         alt="NIKHILVERSE Logo"
         onerror="this.style.display='none'"
       >
+
 
       <div>
 
@@ -499,9 +1249,11 @@
           aria-label="YouTube"
         >
           ▶
+
           <span>
             YouTube
           </span>
+
         </a>
 
 
@@ -515,9 +1267,11 @@
           aria-label="Instagram"
         >
           ◎
+
           <span>
             Instagram
           </span>
+
         </a>
 
 
@@ -531,9 +1285,11 @@
           aria-label="Facebook"
         >
           f
+
           <span>
             Facebook
           </span>
+
         </a>
 
 
@@ -547,9 +1303,11 @@
           aria-label="X"
         >
           𝕏
+
           <span>
             X
           </span>
+
         </a>
 
 
@@ -563,9 +1321,11 @@
           aria-label="Telegram"
         >
           ✈
+
           <span>
             Telegram
           </span>
+
         </a>
 
 
@@ -580,6 +1340,7 @@
       Admin Panel
     </a>
 
+
   </footer>
 
 
@@ -593,11 +1354,13 @@
     hidden
   >
 
+
     <div class="ahead">
 
       <b>
         🤖 Nikhil AI
       </b>
+
 
       <button
         onclick="openAI()"
@@ -616,6 +1379,7 @@
 
     <div class="ainput">
 
+
       <input
         id="msg"
         type="text"
@@ -631,12 +1395,16 @@
         →
       </button>
 
+
     </div>
+
 
   </div>
 
 
-  <!-- AI FLOATING BUTTON -->
+  <!-- =====================================================
+       AI FLOATING BUTTON
+       ===================================================== -->
 
   <button
     class="aifab"
@@ -687,9 +1455,11 @@
 
 
         if (!response.ok) {
+
           throw new Error(
             "Could not load videos"
           );
+
         }
 
 
@@ -914,6 +1684,7 @@
 
         }
 
+
       } catch (error) {
 
         console.error(
@@ -928,9 +1699,12 @@
   </script>
 
 
-  <!-- Existing backend/frontend logic -->
+  <!-- =====================================================
+       EXISTING BACKEND / FRONTEND LOGIC
+       ===================================================== -->
 
   <script src="/app.js"></script>
+
 
 </body>
 </html>
