@@ -1,644 +1,3422 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NIKHILVERSE Admin</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  >
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#050b16;
+  --panel:#0b1424;
+  --panel2:#101c30;
+  --line:#1b2a43;
+  --text:#f4f7fb;
+  --muted:#8fa1ba;
+  --blue:#2196ff;
+  --blue2:#0d6efd;
+  --green:#20c997;
+  --red:#ff5c6c;
+  --yellow:#ffc107;
+}
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 
-  <title>NIKHILVERSE Admin</title>
+/* LOGIN */
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 0%,#123b68 0%,transparent 45%),
+    #030812;
+}
+.login-glow{
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:#1479ff;
+  filter:blur(180px);
+  opacity:.12;
+}
+.login-card{
+  position:relative;
+  width:100%;
+  max-width:440px;
+  padding:40px;
+  border:1px solid #203554;
+  border-radius:24px;
+  background:rgba(9,19,35,.94);
+  box-shadow:0 30px 100px #0008;
+}
+.login-logo{
+  text-align:center;
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.login-logo b{color:#2196ff}
+.login-subtitle{
+  text-align:center;
+  margin-top:7px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:#6e88a8;
+}
+.login-divider{
+  height:1px;
+  background:#1d2c43;
+  margin:30px 0;
+}
+.login-card h1{
+  margin:0 0 8px;
+  text-align:center;
+}
+.login-description{
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+.input-group{margin-top:20px}
+.input-group label{
+  display:block;
+  font-size:13px;
+  margin-bottom:8px;
+  color:#b7c7dc;
+}
+input,textarea,select{
+  width:100%;
+  color:#fff;
+  background:#071120;
+  border:1px solid #223653;
+  border-radius:10px;
+  padding:13px 14px;
+  outline:none;
+}
+input:focus,textarea:focus,select:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px #2196ff15;
+}
+textarea{
+  min-height:130px;
+  resize:vertical;
+}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:48px}
+.eye-btn{
+  position:absolute;
+  right:5px;
+  top:5px;
+  height:38px;
+  width:38px;
+  border:0;
+  background:transparent;
+  color:#9db0ca;
+}
+.login-btn{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:14px;
+  margin-top:25px;
+  color:#fff;
+  font-weight:800;
+  background:linear-gradient(135deg,#168cff,#075edc);
+}
+.login-btn:hover{filter:brightness(1.1)}
+.login-error{
+  min-height:20px;
+  color:#ff7380;
+  text-align:center;
+  font-size:13px;
+  margin-top:12px;
+}
+.login-footer{
+  text-align:center;
+  color:#61738d;
+  font-size:12px;
+  margin-top:25px;
+}
 
-  <link
-    rel="stylesheet"
-    href="/admin/admin.css"
-  >
+/* ADMIN */
+.admin-layout{
+  display:flex;
+  min-height:100vh;
+}
+.admin-layout[hidden]{display:none!important}
+
+aside{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:250px;
+  padding:25px 16px;
+  background:#07101e;
+  border-right:1px solid var(--line);
+  overflow-y:auto;
+  z-index:50;
+}
+.brand{
+  padding:5px 12px 25px;
+  border-bottom:1px solid var(--line);
+}
+.brand b{
+  font-size:24px;
+  letter-spacing:1px;
+}
+.brand b span{color:var(--blue)}
+.brand p{
+  color:#66809f;
+  font-size:10px;
+  letter-spacing:2px;
+  margin:6px 0 0;
+}
+nav{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  margin-top:22px;
+}
+nav button{
+  border:0;
+  text-align:left;
+  padding:12px 14px;
+  border-radius:9px;
+  color:#9cafc7;
+  background:transparent;
+}
+nav button:hover,
+nav button.active{
+  color:#fff;
+  background:#122642;
+}
+.logout-btn{
+  width:100%;
+  margin-top:25px;
+  border:1px solid #293a52;
+  border-radius:9px;
+  background:#0b1626;
+  color:#ff7380;
+  padding:11px;
+}
+
+main{
+  width:calc(100% - 250px);
+  margin-left:250px;
+  padding:28px;
+}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:25px;
+}
+header h1{
+  margin:0;
+  font-size:28px;
+}
+header small{color:var(--muted)}
+.admin-status{
+  color:#7f95b1;
+  font-size:11px;
+  letter-spacing:1px;
+}
+.status-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#20c997;
+  box-shadow:0 0 12px #20c997;
+  margin-right:6px;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+}
+.stat .label{
+  color:#8094ad;
+  font-size:12px;
+}
+.stat .num{
+  font-size:27px;
+  font-weight:900;
+  margin-top:7px;
+}
+
+.cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.panel h2{
+  margin:0;
+  font-size:19px;
+}
+.panel-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin:5px 0 20px;
+}
+.panel-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+.panel-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  background:#10233c;
+  border-radius:10px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.full{grid-column:1/-1}
+
+.publish-btn,
+.primary{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:13px;
+  background:linear-gradient(135deg,#168cff,#075edc);
+  color:white;
+  font-weight:800;
+}
+.secondary{
+  border:1px solid #29415f;
+  background:#0c192a;
+  color:#dce8f8;
+  border-radius:8px;
+  padding:9px 13px;
+}
+.danger{
+  border:1px solid #61313a;
+  background:#281119;
+  color:#ff8b96;
+  border-radius:8px;
+  padding:9px 13px;
+}
+.success{
+  border:1px solid #205a4d;
+  background:#0c2823;
+  color:#6ee7c2;
+  border-radius:8px;
+  padding:9px 13px;
+}
+
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:760px;
+}
+th,td{
+  padding:13px 12px;
+  text-align:left;
+  border-bottom:1px solid #17263b;
+  font-size:13px;
+}
+th{
+  color:#8498b3;
+  font-size:11px;
+  text-transform:uppercase;
+}
+td{color:#d8e2f0}
+.thumb{
+  width:75px;
+  height:43px;
+  object-fit:cover;
+  border-radius:6px;
+}
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.badge{
+  display:inline-block;
+  border-radius:20px;
+  padding:4px 8px;
+  font-size:10px;
+  background:#172940;
+}
+.badge.green{color:#64e6bd}
+.badge.red{color:#ff8290}
+.badge.yellow{color:#ffd76a}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+.toolbar input{max-width:350px}
+
+.integration-item{
+  display:flex;
+  gap:12px;
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+}
+.integration-item:last-child{border:0}
+.integration-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  margin-top:6px;
+}
+.green-dot{background:#20c997}
+.red-dot{background:#ff5969}
+.yellow-dot{background:#ffc107}
+.integration-item strong{display:block}
+.integration-item p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.empty{
+  padding:35px;
+  text-align:center;
+  color:#6f829c;
+}
+.loading{
+  padding:30px;
+  text-align:center;
+  color:#8297b3;
+}
+
+.toast{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:999;
+  padding:14px 18px;
+  border-radius:10px;
+  background:#14263d;
+  border:1px solid #2c4666;
+  box-shadow:0 15px 40px #0008;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.25s;
+}
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+.toast.error{border-color:#71323b;color:#ff9aa4}
+.toast.ok{border-color:#245d4e;color:#7aebca}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#000b;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:100%;
+  max-width:700px;
+  max-height:90vh;
+  overflow:auto;
+  background:#0a1525;
+  border:1px solid #263b58;
+  border-radius:16px;
+  padding:25px;
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.close{
+  border:0;
+  background:transparent;
+  color:#9fb0c8;
+  font-size:22px;
+}
+
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:800px){
+  aside{
+    position:relative;
+    width:100%;
+    height:auto;
+    bottom:auto;
+  }
+  .admin-layout{display:block}
+  main{
+    width:100%;
+    margin:0;
+    padding:18px;
+  }
+  .cols{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  header{align-items:flex-start}
+}
+@media(max-width:520px){
+  .login-card{padding:25px}
+  .stats{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+}
+</style>
 </head>
-
 
 <body>
 
+<!-- LOGIN -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-glow"></div>
 
-  <!-- =====================================================
-       LOGIN SCREEN
-  ====================================================== -->
+  <div class="login-card">
+    <div class="login-logo">
+      NIKHIL<b>VERSE</b>
+    </div>
 
-  <div
-    id="loginScreen"
-    class="login-screen"
-  >
+    <div class="login-subtitle">ADMIN CONTROL CENTER</div>
 
-    <div class="login-glow"></div>
+    <div class="login-divider"></div>
 
+    <h1>Welcome Back</h1>
+    <p class="login-description">
+      Sign in to manage your NIKHILVERSE platform.
+    </p>
 
-    <div class="login-card">
-
-
-      <!-- LOGO -->
-
-      <div class="login-logo">
-
-        <span>NIKHIL</span><b>VERSE</b>
-
+    <form id="loginForm">
+      <div class="input-group">
+        <label>Admin Email</label>
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="Enter admin email"
+          autocomplete="username"
+          required
+        >
       </div>
 
+      <div class="input-group">
+        <label>Password</label>
 
-      <div class="login-subtitle">
-        ADMIN CONTROL CENTER
-      </div>
-
-
-      <div class="login-divider"></div>
-
-
-      <h1>
-        Welcome Back
-      </h1>
-
-
-      <p class="login-description">
-        Sign in to manage your NIKHILVERSE platform.
-      </p>
-
-
-      <!-- LOGIN FORM -->
-
-      <form id="loginForm">
-
-
-        <!-- EMAIL -->
-
-        <div class="input-group">
-
-          <label>
-            Admin Email
-          </label>
-
+        <div class="password-wrap">
           <input
-            id="loginEmail"
-            type="email"
-            placeholder="Enter admin email"
-            autocomplete="username"
+            id="loginPassword"
+            type="password"
+            placeholder="Enter password"
+            autocomplete="current-password"
             required
           >
 
+          <button
+            type="button"
+            class="eye-btn"
+            id="togglePassword"
+          >👁</button>
         </div>
-
-
-        <!-- PASSWORD -->
-
-        <div class="input-group">
-
-          <label>
-            Password
-          </label>
-
-
-          <div class="password-wrap">
-
-            <input
-              id="loginPassword"
-              type="password"
-              placeholder="Enter password"
-              autocomplete="current-password"
-              required
-            >
-
-
-            <button
-              type="button"
-              id="togglePassword"
-              class="eye-btn"
-            >
-              👁
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- LOGIN BUTTON -->
-
-        <button
-          type="submit"
-          class="login-btn"
-        >
-
-          <span>
-            Sign In
-          </span>
-
-          <span>
-            →
-          </span>
-
-        </button>
-
-
-        <!-- ERROR -->
-
-        <div
-          id="loginError"
-          class="login-error"
-        ></div>
-
-
-      </form>
-
-
-      <div class="login-footer">
-        🔒 Authorized NIKHILVERSE administrators only
       </div>
 
-
-    </div>
-
-  </div>
-
-
-
-  <!-- =====================================================
-       ADMIN PANEL
-  ====================================================== -->
-
-  <div
-    id="adminPanel"
-    class="admin-layout"
-    hidden
-  >
-
-
-    <!-- ===================================================
-         SIDEBAR
-    ==================================================== -->
-
-    <aside>
-
-
-      <div class="brand">
-
-        <b>
-          NIKHIL<span>VERSE</span>
-        </b>
-
-        <p>
-          ADMIN CONTROL CENTER
-        </p>
-
-      </div>
-
-
-      <nav>
-
-
-        <a class="active">
-          Dashboard
-        </a>
-
-
-        <a>
-          Videos
-        </a>
-
-
-        <a>
-          Documentaries
-        </a>
-
-
-        <a>
-          Shows
-        </a>
-
-
-        <a>
-          Blog
-        </a>
-
-
-        <a>
-          Subscriptions
-        </a>
-
-
-        <a>
-          Users
-        </a>
-
-
-        <a>
-          Payments / UPI
-        </a>
-
-
-        <a>
-          YouTube Sync
-        </a>
-
-
-        <a>
-          AI Assistant
-        </a>
-
-
-        <a>
-          Settings
-        </a>
-
-
-      </nav>
-
-
-      <!-- LOGOUT -->
-
-      <button
-        id="logoutBtn"
-        class="logout-btn"
-      >
-        ↪ Logout
+      <button class="login-btn" type="submit">
+        Sign In →
       </button>
 
+      <div id="loginError" class="login-error"></div>
+    </form>
 
-    </aside>
-
-
-
-    <!-- ===================================================
-         MAIN CONTENT
-    ==================================================== -->
-
-    <main>
+    <div class="login-footer">
+      🔒 Authorized NIKHILVERSE administrators only
+    </div>
+  </div>
+</div>
 
 
-      <!-- HEADER -->
+<!-- ADMIN -->
+<div id="adminPanel" class="admin-layout" hidden>
 
-      <header>
+  <aside>
+    <div class="brand">
+      <b>NIKHIL<span>VERSE</span></b>
+      <p>ADMIN CONTROL CENTER</p>
+    </div>
+
+    <nav>
+      <button class="nav-btn active" data-page="dashboard">
+        📊 Dashboard
+      </button>
+
+      <button class="nav-btn" data-page="videos">
+        🎬 Videos
+      </button>
+
+      <button class="nav-btn" data-page="documentaries">
+        🎥 Documentaries
+      </button>
+
+      <button class="nav-btn" data-page="shows">
+        📺 Shows
+      </button>
+
+      <button class="nav-btn" data-page="blog">
+        📝 Blog
+      </button>
+
+      <button class="nav-btn" data-page="subscriptions">
+        💎 Subscriptions
+      </button>
+
+      <button class="nav-btn" data-page="users">
+        👥 Users
+      </button>
+
+      <button class="nav-btn" data-page="payments">
+        💳 Payments / UPI
+      </button>
+
+      <button class="nav-btn" data-page="youtube">
+        ▶️ YouTube Sync
+      </button>
+
+      <button class="nav-btn" data-page="ai">
+        🤖 AI Assistant
+      </button>
+
+      <button class="nav-btn" data-page="plans">
+        💰 Plans
+      </button>
+
+      <button class="nav-btn" data-page="settings">
+        ⚙️ Settings
+      </button>
+    </nav>
+
+    <button id="logoutBtn" class="logout-btn">
+      ↪ Logout
+    </button>
+  </aside>
 
 
-        <div>
+  <main>
 
-          <h1>
-            Dashboard
-          </h1>
+    <header>
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <small id="pageSubtitle">NIKHILVERSE Control Center</small>
+      </div>
 
-          <span>
-            Control Center
-          </span>
-
-        </div>
-
-
-        <div class="admin-status">
-
-          <span class="status-dot"></span>
-
-          ADMIN ONLINE
-
-        </div>
+      <div class="admin-status">
+        <span class="status-dot"></span>
+        ADMIN ONLINE
+      </div>
+    </header>
 
 
-      </header>
+    <!-- DASHBOARD -->
+    <section id="page-dashboard" class="page active">
 
-
-
-      <!-- =================================================
-           STATISTICS
-      ================================================== -->
-
-      <section
-        id="stats"
-        class="stats"
-      ></section>
-
-
-
-      <!-- =================================================
-           CONTENT CREATION
-      ================================================== -->
+      <div id="stats" class="stats"></div>
 
       <div class="cols">
 
-
-        <!-- ADD VIDEO -->
-
         <section class="panel">
-
-
           <div class="panel-title">
-
-
-            <span class="panel-icon">
-              🎬
-            </span>
-
-
+            <span class="panel-icon">🎬</span>
             <div>
-
-              <h2>
-                Add Video
-              </h2>
-
-              <p>
-                Publish a new video to NIKHILVERSE
-              </p>
-
+              <h2>Add Video</h2>
+              <div class="panel-sub">
+                Publish a video manually
+              </div>
             </div>
-
-
           </div>
 
+          <div class="form-grid">
+            <input id="vt" placeholder="Video title">
 
-          <input
-            id="vt"
-            placeholder="Title"
-          >
+            <input
+              id="vy"
+              placeholder="YouTube Video ID"
+            >
 
+            <input
+              id="vc"
+              placeholder="Channel"
+            >
 
-          <input
-            id="vy"
-            placeholder="YouTube Video ID"
-          >
+            <input
+              id="vg"
+              placeholder="Category"
+            >
 
+            <select id="va">
+              <option value="free">Free</option>
+              <option value="premium">Premium</option>
+              <option value="premium+">Premium+</option>
+            </select>
 
-          <input
-            id="vc"
-            placeholder="Channel: SIFI By Nikhil / TAH By Nikhil"
-          >
+            <select id="vs">
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
 
-
-          <input
-            id="vg"
-            placeholder="Category"
-          >
-
-
-          <select id="va">
-
-            <option value="free">
-              free
-            </option>
-
-            <option value="premium">
-              premium
-            </option>
-
-            <option value="premium+">
-              premium+
-            </option>
-
-          </select>
-
+          <br>
 
           <button
-            onclick="addVideo()"
             class="publish-btn"
+            onclick="addVideo()"
           >
             Publish Video
           </button>
-
-
         </section>
 
 
-
-        <!-- CREATE BLOG -->
-
         <section class="panel">
-
-
           <div class="panel-title">
-
-
-            <span class="panel-icon">
-              📝
-            </span>
-
-
+            <span class="panel-icon">📝</span>
             <div>
-
-              <h2>
-                Create Blog
-              </h2>
-
-              <p>
+              <h2>Create Blog</h2>
+              <div class="panel-sub">
                 Publish a new article
-              </p>
-
+              </div>
             </div>
-
-
           </div>
 
+          <input id="bt" placeholder="Article title">
+          <br><br>
 
-          <input
-            id="bt"
-            placeholder="Title"
-          >
-
-
-          <input
-            id="ba"
-            placeholder="Author"
-          >
-
+          <input id="ba" placeholder="Author">
+          <br><br>
 
           <input
             id="bi"
             placeholder="Featured image URL"
           >
-
+          <br><br>
 
           <textarea
             id="bc"
             placeholder="Article content"
           ></textarea>
 
+          <br>
 
           <select id="bx">
-
-            <option value="public">
-              public
-            </option>
-
-            <option value="premium">
-              premium
-            </option>
-
+            <option value="public">Public</option>
+            <option value="premium">Premium</option>
           </select>
 
+          <br><br>
 
           <button
-            onclick="addBlog()"
             class="publish-btn"
+            onclick="addBlog()"
           >
             Publish Article
           </button>
-
-
         </section>
-
 
       </div>
 
 
+      <section class="panel">
+        <div class="panel-title">
+          <span class="panel-icon">⚡</span>
+          <div>
+            <h2>Quick Overview</h2>
+            <div class="panel-sub">
+              Current NIKHILVERSE system status
+            </div>
+          </div>
+        </div>
 
-      <!-- =================================================
-           INTEGRATION CHECKLIST
-      ================================================== -->
+        <div id="overviewBox"></div>
+      </section>
 
-      <section class="panel integration">
+    </section>
 
+
+    <!-- VIDEOS -->
+    <section id="page-videos" class="page">
+
+      <section class="panel">
 
         <div class="panel-title">
-
-
-          <span class="panel-icon">
-            ⚙️
-          </span>
-
-
+          <span class="panel-icon">🎬</span>
           <div>
-
-            <h2>
-              Integration Checklist
-            </h2>
-
-            <p>
-              NIKHILVERSE system integrations
-            </p>
-
+            <h2>Videos</h2>
+            <div class="panel-sub">
+              Manage all NIKHILVERSE videos
+            </div>
           </div>
+        </div>
 
+        <div class="toolbar">
+          <input
+            id="videoSearch"
+            placeholder="Search videos..."
+            oninput="renderVideos()"
+          >
+        </div>
+
+        <div id="videosTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- DOCUMENTARIES -->
+    <section id="page-documentaries" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">🎥</span>
+          <div>
+            <h2>Documentaries</h2>
+            <div class="panel-sub">
+              Documentary content
+            </div>
+          </div>
+        </div>
+
+        <div id="documentariesTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- SHOWS -->
+    <section id="page-shows" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">📺</span>
+          <div>
+            <h2>Shows</h2>
+            <div class="panel-sub">
+              Shows and series
+            </div>
+          </div>
+        </div>
+
+        <div id="showsTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- BLOG -->
+    <section id="page-blog" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">📝</span>
+          <div>
+            <h2>Blog Management</h2>
+            <div class="panel-sub">
+              Create, edit and delete articles
+            </div>
+          </div>
+        </div>
+
+        <div id="blogsTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- USERS -->
+    <section id="page-users" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">👥</span>
+          <div>
+            <h2>Users</h2>
+            <div class="panel-sub">
+              Registered NIKHILVERSE users
+            </div>
+          </div>
+        </div>
+
+        <div id="usersTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- SUBSCRIPTIONS -->
+    <section id="page-subscriptions" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">💎</span>
+          <div>
+            <h2>Subscriptions</h2>
+            <div class="panel-sub">
+              Active premium members
+            </div>
+          </div>
+        </div>
+
+        <div id="subscriptionsTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- PAYMENTS -->
+    <section id="page-payments" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">💳</span>
+          <div>
+            <h2>Payments</h2>
+            <div class="panel-sub">
+              Razorpay payment history
+            </div>
+          </div>
+        </div>
+
+        <div id="paymentsTable"></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- YOUTUBE -->
+    <section id="page-youtube" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">▶️</span>
+          <div>
+            <h2>YouTube Sync</h2>
+            <div class="panel-sub">
+              Synchronize YouTube channels
+            </div>
+          </div>
+        </div>
+
+        <div id="youtubeStatus"></div>
+
+        <br>
+
+        <button
+          class="primary"
+          onclick="syncYouTube()"
+        >
+          🔄 SYNC YOUTUBE NOW
+        </button>
+
+      </section>
+
+    </section>
+
+
+    <!-- AI -->
+    <section id="page-ai" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">🤖</span>
+          <div>
+            <h2>Nikhil AI</h2>
+            <div class="panel-sub">
+              Test your AI integration
+            </div>
+          </div>
+        </div>
+
+        <div id="aiStatus"></div>
+
+        <br>
+
+        <textarea
+          id="aiQuestion"
+          placeholder="Ask Nikhil AI something..."
+        ></textarea>
+
+        <br><br>
+
+        <button
+          class="primary"
+          onclick="askAdminAI()"
+        >
+          Ask AI
+        </button>
+
+        <div
+          id="aiAnswer"
+          style="margin-top:20px"
+        ></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- PLANS -->
+    <section id="page-plans" class="page">
+
+      <section class="panel">
+
+        <div class="panel-title">
+          <span class="panel-icon">💰</span>
+          <div>
+            <h2>Premium Plans</h2>
+            <div class="panel-sub">
+              Manage subscription plans
+            </div>
+          </div>
+        </div>
+
+        <div id="plansTable"></div>
+
+      </section>
+
+      <section class="panel">
+
+        <h2>Add Plan</h2>
+        <div class="panel-sub">
+          Create a new premium plan
+        </div>
+
+        <div class="form-grid">
+
+          <input
+            id="planName"
+            placeholder="Plan name"
+          >
+
+          <input
+            id="planPrice"
+            type="number"
+            placeholder="Price"
+          >
+
+          <input
+            id="planPeriod"
+            placeholder="Period e.g. month"
+          >
+
+          <input
+            id="planFeatures"
+            placeholder="Features"
+          >
 
         </div>
 
+        <br>
+
+        <button
+          class="primary"
+          onclick="addPlan()"
+        >
+          Add Plan
+        </button>
+
+      </section>
+
+    </section>
 
 
-        <!-- YOUTUBE -->
+    <!-- SETTINGS -->
+    <section id="page-settings" class="page">
 
-        <div class="integration-item">
+      <section class="panel">
 
-          <span class="yellow">
-            ●
-          </span>
-
-
+        <div class="panel-title">
+          <span class="panel-icon">⚙️</span>
           <div>
-
-            <strong>
-              YouTube API
-            </strong>
-
-
-            <p>
-              Add YOUTUBE_API_KEY to environment variables.
-            </p>
-
+            <h2>Settings</h2>
+            <div class="panel-sub">
+              NIKHILVERSE configuration
+            </div>
           </div>
+        </div>
+
+        <div class="form-grid">
+
+          <input
+            id="setSiteName"
+            placeholder="Site name"
+          >
+
+          <select id="setYoutube">
+            <option value="on">YouTube Sync ON</option>
+            <option value="off">YouTube Sync OFF</option>
+          </select>
+
+          <select id="setAI">
+            <option value="on">AI ON</option>
+            <option value="off">AI OFF</option>
+          </select>
+
+          <select id="setRazorpay">
+            <option value="on">Razorpay ON</option>
+            <option value="off">Razorpay OFF</option>
+          </select>
 
         </div>
 
+        <br>
 
-
-        <!-- RAZORPAY -->
-
-        <div class="integration-item">
-
-          <span class="yellow">
-            ●
-          </span>
-
-
-          <div>
-
-            <strong>
-              Razorpay / UPI
-            </strong>
-
-
-            <p>
-              Add RAZORPAY keys and configure live
-              order/webhook credentials.
-            </p>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- OPENAI -->
-
-        <div class="integration-item">
-
-          <span class="yellow">
-            ●
-          </span>
-
-
-          <div>
-
-            <strong>
-              Nikhil AI
-            </strong>
-
-
-            <p>
-              Add OPENAI_API_KEY to environment variables.
-            </p>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- UPLOAD -->
-
-        <div class="integration-item">
-
-          <span class="green">
-            ●
-          </span>
-
-
-          <div>
-
-            <strong>
-              Blog Image Upload
-            </strong>
-
-
-            <p>
-              Endpoint available at
-              <code>
-                /api/admin/upload
-              </code>
-            </p>
-
-          </div>
-
-        </div>
-
+        <button
+          class="primary"
+          onclick="saveSettings()"
+        >
+          Save Settings
+        </button>
 
       </section>
 
 
-    </main>
+      <section class="panel">
 
+        <h2>System Integrations</h2>
+
+        <div id="integrationStatus"></div>
+
+      </section>
+
+    </section>
+
+  </main>
+</div>
+
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h2 id="modalTitle">Edit</h2>
+
+      <button
+        class="close"
+        onclick="closeModal()"
+      >
+        ×
+      </button>
+    </div>
+
+    <div id="modalContent"></div>
 
   </div>
 
+</div>
 
 
-  <!-- ADMIN JAVASCRIPT -->
+<div id="toast" class="toast"></div>
 
-  <script src="/admin/admin.js"></script>
 
+<script>
+/* =====================================================
+   NIKHILVERSE ADMIN
+   SELF-CONTAINED JAVASCRIPT
+===================================================== */
+
+let videos = [];
+let blogs = [];
+let users = [];
+let subscriptions = [];
+let payments = [];
+let plans = [];
+
+const $ = id => document.getElementById(id);
+
+
+/* =====================================================
+   API
+===================================================== */
+
+async function api(url, options = {}) {
+
+  options.credentials = 'same-origin';
+
+  options.headers = {
+    ...(options.headers || {})
+  };
+
+  if (
+    options.body &&
+    typeof options.body !== 'string'
+  ) {
+    options.headers['Content-Type'] =
+      'application/json';
+
+    options.body =
+      JSON.stringify(options.body);
+  }
+
+  const r = await fetch(url, options);
+
+  let data = {};
+
+  try {
+    data = await r.json();
+  } catch(e) {}
+
+  if (!r.ok) {
+    throw new Error(
+      data.error ||
+      `Request failed (${r.status})`
+    );
+  }
+
+  return data;
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(message, type='ok') {
+
+  const el = $('toast');
+
+  el.textContent = message;
+
+  el.className =
+    'toast show ' + type;
+
+  setTimeout(() => {
+    el.className = 'toast';
+  }, 3000);
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+$('togglePassword').onclick = () => {
+
+  const input = $('loginPassword');
+
+  input.type =
+    input.type === 'password'
+      ? 'text'
+      : 'password';
+};
+
+
+$('loginForm').addEventListener(
+  'submit',
+  async e => {
+
+    e.preventDefault();
+
+    $('loginError').textContent =
+      'Signing in...';
+
+    try {
+
+      await api(
+        '/api/admin/login',
+        {
+          method:'POST',
+          body:{
+            email:
+              $('loginEmail').value.trim(),
+
+            password:
+              $('loginPassword').value
+          }
+        }
+      );
+
+      await api(
+        '/api/admin/session'
+      );
+
+      $('loginScreen').style.display =
+        'none';
+
+      $('adminPanel').hidden = false;
+
+      await loadDashboard();
+
+    } catch(err) {
+
+      $('loginError').textContent =
+        err.message ||
+        'Login failed';
+    }
+  }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+$('logoutBtn').onclick = async () => {
+
+  try {
+    await api(
+      '/api/admin/logout',
+      {method:'POST'}
+    );
+  } catch(e) {}
+
+  location.reload();
+};
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document
+  .querySelectorAll('.nav-btn')
+  .forEach(btn => {
+
+    btn.addEventListener(
+      'click',
+      async () => {
+
+        document
+          .querySelectorAll('.nav-btn')
+          .forEach(x =>
+            x.classList.remove('active')
+          );
+
+        btn.classList.add('active');
+
+        document
+          .querySelectorAll('.page')
+          .forEach(x =>
+            x.classList.remove('active')
+          );
+
+        const page =
+          $('page-' + btn.dataset.page);
+
+        if (page) {
+          page.classList.add('active');
+        }
+
+        const titles = {
+
+          dashboard:[
+            'Dashboard',
+            'NIKHILVERSE Control Center'
+          ],
+
+          videos:[
+            'Videos',
+            'Manage all videos'
+          ],
+
+          documentaries:[
+            'Documentaries',
+            'Manage documentary content'
+          ],
+
+          shows:[
+            'Shows',
+            'Manage shows and series'
+          ],
+
+          blog:[
+            'Blog',
+            'Manage articles'
+          ],
+
+          subscriptions:[
+            'Subscriptions',
+            'Premium members'
+          ],
+
+          users:[
+            'Users',
+            'Registered users'
+          ],
+
+          payments:[
+            'Payments / UPI',
+            'Payment history'
+          ],
+
+          youtube:[
+            'YouTube Sync',
+            'Channel synchronization'
+          ],
+
+          ai:[
+            'AI Assistant',
+            'Nikhil AI'
+          ],
+
+          plans:[
+            'Plans',
+            'Premium plans'
+          ],
+
+          settings:[
+            'Settings',
+            'System configuration'
+          ]
+        };
+
+        const t =
+          titles[btn.dataset.page];
+
+        if(t){
+          $('pageTitle').textContent = t[0];
+          $('pageSubtitle').textContent = t[1];
+        }
+
+        try {
+
+          switch(btn.dataset.page){
+
+            case 'dashboard':
+              await loadDashboard();
+              break;
+
+            case 'videos':
+              await loadVideos();
+              break;
+
+            case 'documentaries':
+              await loadVideos();
+              renderDocumentaries();
+              break;
+
+            case 'shows':
+              await loadVideos();
+              renderShows();
+              break;
+
+            case 'blog':
+              await loadBlogs();
+              break;
+
+            case 'users':
+              await loadUsers();
+              break;
+
+            case 'subscriptions':
+              await loadSubscriptions();
+              break;
+
+            case 'payments':
+              await loadPayments();
+              break;
+
+            case 'youtube':
+              await loadYoutubeStatus();
+              break;
+
+            case 'ai':
+              await loadAIStatus();
+              break;
+
+            case 'plans':
+              await loadPlans();
+              break;
+
+            case 'settings':
+              await loadSettings();
+              break;
+          }
+
+        } catch(err) {
+          toast(err.message,'error');
+        }
+      }
+    );
+  });
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+async function loadDashboard(){
+
+  try {
+
+    const data =
+      await api('/api/admin/overview');
+
+    $('stats').innerHTML = [
+
+      ['Users',data.users || 0],
+
+      ['Videos',data.videos || 0],
+
+      ['Blogs',data.blogs || 0],
+
+      ['Premium',data.premium || 0],
+
+      [
+        'Revenue',
+        '₹' + Number(
+          data.revenue || 0
+        ).toLocaleString('en-IN')
+      ]
+
+    ].map(x => `
+
+      <div class="stat">
+        <div class="label">${x[0]}</div>
+        <div class="num">${x[1]}</div>
+      </div>
+
+    `).join('');
+
+    $('overviewBox').innerHTML = `
+
+      <div class="integration-item">
+
+        <span class="integration-dot ${
+          data.youtubeConfigured
+            ? 'green-dot'
+            : 'red-dot'
+        }"></span>
+
+        <div>
+          <strong>YouTube API</strong>
+          <p>
+            ${
+              data.youtubeConfigured
+                ? 'Connected'
+                : 'Not configured'
+            }
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="integration-item">
+
+        <span class="integration-dot ${
+          data.aiConfigured
+            ? 'green-dot'
+            : 'red-dot'
+        }"></span>
+
+        <div>
+          <strong>Nikhil AI</strong>
+          <p>
+            ${
+              data.aiConfigured
+                ? 'Connected'
+                : 'Not configured'
+            }
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="integration-item">
+
+        <span class="integration-dot ${
+          data.razorpayConfigured
+            ? 'green-dot'
+            : 'yellow-dot'
+        }"></span>
+
+        <div>
+          <strong>Razorpay</strong>
+          <p>
+            ${
+              data.razorpayConfigured
+                ? 'Configured'
+                : 'Not configured'
+            }
+          </p>
+        </div>
+
+      </div>
+
+    `;
+
+  } catch(err) {
+
+    /*
+      Fallback to old stats API
+      if overview API is not added yet.
+    */
+
+    const data =
+      await api('/api/admin/stats');
+
+    $('stats').innerHTML = [
+
+      ['Users',data.users || 0],
+
+      ['Videos',data.videos || 0],
+
+      ['Blogs',data.blogs || 0],
+
+      ['Premium',data.premium || 0],
+
+      [
+        'Revenue',
+        '₹' + Number(
+          data.payments || 0
+        ).toLocaleString('en-IN')
+      ]
+
+    ].map(x => `
+
+      <div class="stat">
+        <div class="label">${x[0]}</div>
+        <div class="num">${x[1]}</div>
+      </div>
+
+    `).join('');
+  }
+}
+
+
+/* =====================================================
+   ADD VIDEO
+===================================================== */
+
+async function addVideo(){
+
+  const title =
+    $('vt').value.trim();
+
+  const youtube_id =
+    $('vy').value.trim();
+
+  if(!title){
+    return toast(
+      'Video title required',
+      'error'
+    );
+  }
+
+  try {
+
+    await api(
+      '/api/admin/videos',
+      {
+        method:'POST',
+
+        body:{
+
+          title,
+
+          youtube_id,
+
+          channel:
+            $('vc').value.trim(),
+
+          category:
+            $('vg').value.trim(),
+
+          access:
+            $('va').value,
+
+          status:
+            $('vs').value,
+
+          thumbnail:
+            youtube_id
+              ? `https://i.ytimg.com/vi/${youtube_id}/hqdefault.jpg`
+              : ''
+        }
+      }
+    );
+
+    $('vt').value='';
+    $('vy').value='';
+    $('vc').value='';
+    $('vg').value='';
+
+    toast(
+      'Video published successfully'
+    );
+
+    await loadDashboard();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   VIDEOS
+===================================================== */
+
+async function loadVideos(){
+
+  videos =
+    await api('/api/admin/videos');
+
+  renderVideos();
+}
+
+
+function videoRows(list){
+
+  if(!list.length){
+    return '<div class="empty">No videos found.</div>';
+  }
+
+  return `
+
+  <div class="table-wrap">
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Video</th>
+        <th>Title</th>
+        <th>Channel</th>
+        <th>Category</th>
+        <th>Access</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      ${list.map(v => `
+
+        <tr>
+
+          <td>
+            ${
+              v.thumbnail
+                ? `<img class="thumb"
+                    src="${escapeHtml(v.thumbnail)}">`
+                : '—'
+            }
+          </td>
+
+          <td>
+            ${escapeHtml(v.title || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(v.channel || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(v.category || '')}
+          </td>
+
+          <td>
+            <span class="badge ${
+              v.access === 'free'
+                ? 'green'
+                : 'yellow'
+            }">
+              ${escapeHtml(v.access || 'free')}
+            </span>
+          </td>
+
+          <td>
+            <span class="badge ${
+              v.status === 'published'
+                ? 'green'
+                : 'red'
+            }">
+              ${escapeHtml(v.status || '')}
+            </span>
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="secondary"
+                onclick="editVideo(${Number(v.id)})"
+              >
+                Edit
+              </button>
+
+              <button
+                class="danger"
+                onclick="deleteVideo(${Number(v.id)})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join('')}
+
+    </tbody>
+
+  </table>
+
+  </div>
+  `;
+}
+
+
+function renderVideos(){
+
+  const q =
+    ($('videoSearch')?.value || '')
+      .toLowerCase()
+      .trim();
+
+  const filtered =
+    videos.filter(v => {
+
+      const text =
+        `${v.title || ''}
+         ${v.channel || ''}
+         ${v.category || ''}`
+          .toLowerCase();
+
+      return !q || text.includes(q);
+    });
+
+  $('videosTable').innerHTML =
+    videoRows(filtered);
+}
+
+
+function renderDocumentaries(){
+
+  const list =
+    videos.filter(v =>
+      String(v.category || '')
+        .toLowerCase()
+        .includes('document')
+    );
+
+  $('documentariesTable').innerHTML =
+    videoRows(list);
+}
+
+
+function renderShows(){
+
+  const list =
+    videos.filter(v =>
+      String(v.category || '')
+        .toLowerCase()
+        .includes('show')
+    );
+
+  $('showsTable').innerHTML =
+    videoRows(list);
+}
+
+
+/* =====================================================
+   EDIT VIDEO
+===================================================== */
+
+function editVideo(id){
+
+  const v =
+    videos.find(x => Number(x.id) === id);
+
+  if(!v){
+    return toast(
+      'Video not found',
+      'error'
+    );
+  }
+
+  $('modalTitle').textContent =
+    'Edit Video';
+
+  $('modalContent').innerHTML = `
+
+    <div class="form-grid">
+
+      <input
+        id="editTitle"
+        class="full"
+        value="${escapeAttr(v.title || '')}"
+        placeholder="Title"
+      >
+
+      <input
+        id="editYoutube"
+        value="${escapeAttr(v.youtube_id || '')}"
+        placeholder="YouTube ID"
+      >
+
+      <input
+        id="editChannel"
+        value="${escapeAttr(v.channel || '')}"
+        placeholder="Channel"
+      >
+
+      <input
+        id="editCategory"
+        value="${escapeAttr(v.category || '')}"
+        placeholder="Category"
+      >
+
+      <select id="editAccess">
+
+        <option value="free"
+          ${v.access === 'free' ? 'selected':''}>
+          Free
+        </option>
+
+        <option value="premium"
+          ${v.access === 'premium' ? 'selected':''}>
+          Premium
+        </option>
+
+        <option value="premium+"
+          ${v.access === 'premium+' ? 'selected':''}>
+          Premium+
+        </option>
+
+      </select>
+
+      <select id="editStatus">
+
+        <option value="published"
+          ${v.status === 'published' ? 'selected':''}>
+          Published
+        </option>
+
+        <option value="draft"
+          ${v.status === 'draft' ? 'selected':''}>
+          Draft
+        </option>
+
+      </select>
+
+      <textarea
+        id="editDescription"
+        class="full"
+        placeholder="Description"
+      >${escapeHtml(v.description || '')}</textarea>
+
+    </div>
+
+    <br>
+
+    <button
+      class="primary"
+      onclick="saveVideoEdit(${id})"
+    >
+      Save Changes
+    </button>
+  `;
+
+  $('editModal').classList.add('show');
+}
+
+
+async function saveVideoEdit(id){
+
+  try {
+
+    await api(
+      `/api/admin/videos/${id}`,
+      {
+        method:'PUT',
+
+        body:{
+
+          title:
+            $('editTitle').value,
+
+          youtube_id:
+            $('editYoutube').value,
+
+          channel:
+            $('editChannel').value,
+
+          category:
+            $('editCategory').value,
+
+          access:
+            $('editAccess').value,
+
+          status:
+            $('editStatus').value,
+
+          description:
+            $('editDescription').value
+        }
+      }
+    );
+
+    closeModal();
+
+    toast(
+      'Video updated'
+    );
+
+    await loadVideos();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+async function deleteVideo(id){
+
+  if(!confirm(
+    'Delete this video permanently?'
+  )) return;
+
+  try {
+
+    await api(
+      `/api/admin/videos/${id}`,
+      {method:'DELETE'}
+    );
+
+    toast(
+      'Video deleted'
+    );
+
+    await loadVideos();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   BLOG
+===================================================== */
+
+async function addBlog(){
+
+  const title =
+    $('bt').value.trim();
+
+  if(!title){
+    return toast(
+      'Blog title required',
+      'error'
+    );
+  }
+
+  try {
+
+    await api(
+      '/api/admin/blogs',
+      {
+        method:'POST',
+
+        body:{
+
+          title,
+
+          author:
+            $('ba').value.trim(),
+
+          featured_image:
+            $('bi').value.trim(),
+
+          content:
+            $('bc').value,
+
+          access:
+            $('bx').value
+        }
+      }
+    );
+
+    $('bt').value='';
+    $('ba').value='';
+    $('bi').value='';
+    $('bc').value='';
+
+    toast(
+      'Article published'
+    );
+
+    await loadDashboard();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+async function loadBlogs(){
+
+  blogs =
+    await api('/api/admin/blogs');
+
+  renderBlogs();
+}
+
+
+function renderBlogs(){
+
+  if(!blogs.length){
+
+    $('blogsTable').innerHTML =
+      '<div class="empty">No blogs found.</div>';
+
+    return;
+  }
+
+  $('blogsTable').innerHTML = `
+
+    <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Access</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      ${blogs.map(b => `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(b.title || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(b.author || '')}
+          </td>
+
+          <td>
+            <span class="badge">
+              ${escapeHtml(b.access || '')}
+            </span>
+          </td>
+
+          <td>
+            ${formatDate(b.created_at)}
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="secondary"
+                onclick="editBlog(${Number(b.id)})"
+              >
+                Edit
+              </button>
+
+              <button
+                class="danger"
+                onclick="deleteBlog(${Number(b.id)})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join('')}
+
+      </tbody>
+
+    </table>
+
+    </div>
+  `;
+}
+
+
+function editBlog(id){
+
+  const b =
+    blogs.find(x => Number(x.id) === id);
+
+  if(!b) return;
+
+  $('modalTitle').textContent =
+    'Edit Blog';
+
+  $('modalContent').innerHTML = `
+
+    <input
+      id="editBlogTitle"
+      value="${escapeAttr(b.title || '')}"
+      placeholder="Title"
+    >
+
+    <br><br>
+
+    <input
+      id="editBlogAuthor"
+      value="${escapeAttr(b.author || '')}"
+      placeholder="Author"
+    >
+
+    <br><br>
+
+    <input
+      id="editBlogImage"
+      value="${escapeAttr(b.featured_image || '')}"
+      placeholder="Featured image URL"
+    >
+
+    <br><br>
+
+    <textarea
+      id="editBlogExcerpt"
+      placeholder="Excerpt"
+    >${escapeHtml(b.excerpt || '')}</textarea>
+
+    <br><br>
+
+    <textarea
+      id="editBlogContent"
+      placeholder="Content"
+    >${escapeHtml(b.content || '')}</textarea>
+
+    <br><br>
+
+    <select id="editBlogAccess">
+
+      <option value="public"
+        ${b.access === 'public' ? 'selected':''}>
+        Public
+      </option>
+
+      <option value="premium"
+        ${b.access === 'premium' ? 'selected':''}>
+        Premium
+      </option>
+
+    </select>
+
+    <br><br>
+
+    <button
+      class="primary"
+      onclick="saveBlogEdit(${id})"
+    >
+      Save Changes
+    </button>
+  `;
+
+  $('editModal').classList.add('show');
+}
+
+
+async function saveBlogEdit(id){
+
+  try {
+
+    await api(
+      `/api/admin/blogs/${id}`,
+      {
+        method:'PUT',
+
+        body:{
+
+          title:
+            $('editBlogTitle').value,
+
+          author:
+            $('editBlogAuthor').value,
+
+          featured_image:
+            $('editBlogImage').value,
+
+          excerpt:
+            $('editBlogExcerpt').value,
+
+          content:
+            $('editBlogContent').value,
+
+          access:
+            $('editBlogAccess').value
+        }
+      }
+    );
+
+    closeModal();
+
+    toast(
+      'Blog updated'
+    );
+
+    await loadBlogs();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+async function deleteBlog(id){
+
+  if(!confirm(
+    'Delete this article permanently?'
+  )) return;
+
+  try {
+
+    await api(
+      `/api/admin/blogs/${id}`,
+      {method:'DELETE'}
+    );
+
+    toast(
+      'Blog deleted'
+    );
+
+    await loadBlogs();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   USERS
+===================================================== */
+
+async function loadUsers(){
+
+  users =
+    await api('/api/admin/users');
+
+  renderUsers();
+}
+
+
+function renderUsers(){
+
+  if(!users.length){
+
+    $('usersTable').innerHTML =
+      '<div class="empty">No users registered.</div>';
+
+    return;
+  }
+
+  $('usersTable').innerHTML = `
+
+    <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Plan</th>
+          <th>Joined</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      ${users.map(u => `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(u.name || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(u.email || '')}
+          </td>
+
+          <td>
+            <span class="badge ${
+              u.plan !== 'free'
+                ? 'green'
+                : ''
+            }">
+              ${escapeHtml(u.plan || 'free')}
+            </span>
+          </td>
+
+          <td>
+            ${formatDate(u.created_at)}
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="secondary"
+                onclick="changeUserPlan(${Number(u.id)})"
+              >
+                Plan
+              </button>
+
+              <button
+                class="danger"
+                onclick="deleteUser(${Number(u.id)})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join('')}
+
+      </tbody>
+
+    </table>
+
+    </div>
+  `;
+}
+
+
+async function changeUserPlan(id){
+
+  const user =
+    users.find(x => Number(x.id) === id);
+
+  if(!user) return;
+
+  const plan =
+    prompt(
+      'Enter plan: free, Premium or Premium+',
+      user.plan || 'free'
+    );
+
+  if(plan === null) return;
+
+  try {
+
+    await api(
+      `/api/admin/users/${id}`,
+      {
+        method:'PATCH',
+        body:{
+          plan:plan
+        }
+      }
+    );
+
+    toast(
+      'User plan updated'
+    );
+
+    await loadUsers();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+async function deleteUser(id){
+
+  if(!confirm(
+    'Delete this user permanently?'
+  )) return;
+
+  try {
+
+    await api(
+      `/api/admin/users/${id}`,
+      {method:'DELETE'}
+    );
+
+    toast(
+      'User deleted'
+    );
+
+    await loadUsers();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   SUBSCRIPTIONS
+===================================================== */
+
+async function loadSubscriptions(){
+
+  subscriptions =
+    await api(
+      '/api/admin/subscriptions'
+    );
+
+  if(!subscriptions.length){
+
+    $('subscriptionsTable').innerHTML =
+      '<div class="empty">No active premium subscriptions.</div>';
+
+    return;
+  }
+
+  $('subscriptionsTable').innerHTML = `
+
+    <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Plan</th>
+          <th>Period</th>
+          <th>Started</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      ${subscriptions.map(s => `
+
+        <tr>
+
+          <td>${escapeHtml(s.name || '')}</td>
+
+          <td>${escapeHtml(s.email || '')}</td>
+
+          <td>
+            <span class="badge green">
+              ${escapeHtml(s.plan || '')}
+            </span>
+          </td>
+
+          <td>${escapeHtml(s.period || '')}</td>
+
+          <td>${formatDate(s.started_at)}</td>
+
+        </tr>
+
+      `).join('')}
+
+      </tbody>
+
+    </table>
+
+    </div>
+  `;
+}
+
+
+/* =====================================================
+   PAYMENTS
+===================================================== */
+
+async function loadPayments(){
+
+  payments =
+    await api(
+      '/api/admin/payments'
+    );
+
+  if(!payments.length){
+
+    $('paymentsTable').innerHTML =
+      '<div class="empty">No payments found.</div>';
+
+    return;
+  }
+
+  $('paymentsTable').innerHTML = `
+
+    <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Payment ID</th>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Plan</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      ${payments.map(p => `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(p.payment_id || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(p.order_id || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(p.user_email || 'Guest')}
+          </td>
+
+          <td>
+            ${escapeHtml(p.plan_name || '')}
+          </td>
+
+          <td>
+            ₹${Number(p.amount || 0).toLocaleString('en-IN')}
+          </td>
+
+          <td>
+            <span class="badge green">
+              ${escapeHtml(p.status || '')}
+            </span>
+          </td>
+
+          <td>
+            ${formatDate(p.created_at)}
+          </td>
+
+        </tr>
+
+      `).join('')}
+
+      </tbody>
+
+    </table>
+
+    </div>
+  `;
+}
+
+
+/* =====================================================
+   YOUTUBE
+===================================================== */
+
+async function loadYoutubeStatus(){
+
+  const data =
+    await api(
+      '/api/admin/youtube-status'
+    );
+
+  $('youtubeStatus').innerHTML = `
+
+    <div class="integration-item">
+
+      <span class="integration-dot ${
+        data.configured
+          ? 'green-dot'
+          : 'red-dot'
+      }"></span>
+
+      <div>
+        <strong>
+          API:
+          ${
+            data.configured
+              ? 'Connected'
+              : 'Not configured'
+          }
+        </strong>
+
+        <p>
+          Videos: ${Number(data.videos || 0)}
+        </p>
+
+        <p>
+          Last Sync:
+          ${formatDate(data.lastSync)}
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+async function syncYouTube(){
+
+  if(!confirm(
+    'Start YouTube synchronization now?'
+  )) return;
+
+  try {
+
+    toast(
+      'YouTube sync started...'
+    );
+
+    const data =
+      await api(
+        '/api/admin/youtube-sync',
+        {method:'POST'}
+      );
+
+    toast(
+      `Sync complete: ${data.total || 0} videos`
+    );
+
+    await loadYoutubeStatus();
+
+    await loadDashboard();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   AI
+===================================================== */
+
+async function loadAIStatus(){
+
+  try {
+
+    const data =
+      await api(
+        '/api/admin/ai-status'
+      );
+
+    $('aiStatus').innerHTML = `
+
+      <div class="integration-item">
+
+        <span class="integration-dot ${
+          data.configured
+            ? 'green-dot'
+            : 'red-dot'
+        }"></span>
+
+        <div>
+
+          <strong>
+            ${
+              data.configured
+                ? 'AI Connected'
+                : 'AI Not Configured'
+            }
+          </strong>
+
+          <p>
+            Model:
+            ${escapeHtml(data.model || '')}
+          </p>
+
+        </div>
+
+      </div>
+    `;
+
+  } catch(err){
+
+    $('aiStatus').innerHTML =
+      `<div class="empty">
+        ${escapeHtml(err.message)}
+      </div>`;
+  }
+}
+
+
+async function askAdminAI(){
+
+  const q =
+    $('aiQuestion').value.trim();
+
+  if(!q){
+    return toast(
+      'Enter a question',
+      'error'
+    );
+  }
+
+  $('aiAnswer').innerHTML =
+    '<div class="loading">Thinking...</div>';
+
+  try {
+
+    const data =
+      await api(
+        '/api/ai',
+        {
+          method:'POST',
+          body:{
+            message:q
+          }
+        }
+      );
+
+    $('aiAnswer').innerHTML = `
+
+      <div class="panel"
+        style="margin:0">
+
+        <strong>Nikhil AI</strong>
+
+        <p style="
+          color:#cbd8e8;
+          line-height:1.7;
+          white-space:pre-wrap;
+        ">
+          ${escapeHtml(data.answer || '')}
+        </p>
+
+      </div>
+    `;
+
+  } catch(err){
+
+    $('aiAnswer').innerHTML =
+      `<div class="empty">
+        ${escapeHtml(err.message)}
+      </div>`;
+  }
+}
+
+
+/* =====================================================
+   PLANS
+===================================================== */
+
+async function loadPlans(){
+
+  plans =
+    await api(
+      '/api/admin/plans'
+    );
+
+  if(!plans.length){
+
+    $('plansTable').innerHTML =
+      '<div class="empty">No plans found.</div>';
+
+    return;
+  }
+
+  $('plansTable').innerHTML = `
+
+    <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Period</th>
+          <th>Features</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      ${plans.map(p => `
+
+        <tr>
+
+          <td>
+            <strong>
+              ${escapeHtml(p.name || '')}
+            </strong>
+          </td>
+
+          <td>
+            ₹${Number(p.price || 0)}
+          </td>
+
+          <td>
+            ${escapeHtml(p.period || '')}
+          </td>
+
+          <td>
+            ${escapeHtml(p.features || '')}
+          </td>
+
+          <td>
+            <span class="badge ${
+              p.active !== 0
+                ? 'green'
+                : 'red'
+            }">
+              ${
+                p.active !== 0
+                  ? 'Active'
+                  : 'Disabled'
+              }
+            </span>
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="secondary"
+                onclick="editPlan(${Number(p.id)})"
+              >
+                Edit
+              </button>
+
+              ${
+                p.active !== 0
+                ? `
+                  <button
+                    class="danger"
+                    onclick="disablePlan(${Number(p.id)})"
+                  >
+                    Disable
+                  </button>
+                `
+                : ''
+              }
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join('')}
+
+      </tbody>
+
+    </table>
+
+    </div>
+  `;
+}
+
+
+async function addPlan(){
+
+  const name =
+    $('planName').value.trim();
+
+  const price =
+    Number($('planPrice').value);
+
+  if(!name){
+    return toast(
+      'Plan name required',
+      'error'
+    );
+  }
+
+  try {
+
+    await api(
+      '/api/admin/plans',
+      {
+        method:'POST',
+
+        body:{
+          name,
+
+          price,
+
+          period:
+            $('planPeriod').value.trim()
+              || 'month',
+
+          features:
+            $('planFeatures').value.trim()
+        }
+      }
+    );
+
+    $('planName').value='';
+    $('planPrice').value='';
+    $('planPeriod').value='';
+    $('planFeatures').value='';
+
+    toast(
+      'Plan added'
+    );
+
+    await loadPlans();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+function editPlan(id){
+
+  const p =
+    plans.find(x => Number(x.id) === id);
+
+  if(!p) return;
+
+  $('modalTitle').textContent =
+    'Edit Plan';
+
+  $('modalContent').innerHTML = `
+
+    <input
+      id="editPlanName"
+      value="${escapeAttr(p.name || '')}"
+      placeholder="Plan name"
+    >
+
+    <br><br>
+
+    <input
+      id="editPlanPrice"
+      type="number"
+      value="${Number(p.price || 0)}"
+      placeholder="Price"
+    >
+
+    <br><br>
+
+    <input
+      id="editPlanPeriod"
+      value="${escapeAttr(p.period || '')}"
+      placeholder="Period"
+    >
+
+    <br><br>
+
+    <textarea
+      id="editPlanFeatures"
+      placeholder="Features"
+    >${escapeHtml(p.features || '')}</textarea>
+
+    <br><br>
+
+    <button
+      class="primary"
+      onclick="savePlanEdit(${id})"
+    >
+      Save Changes
+    </button>
+  `;
+
+  $('editModal').classList.add('show');
+}
+
+
+async function savePlanEdit(id){
+
+  try {
+
+    await api(
+      `/api/admin/plans/${id}`,
+      {
+        method:'PUT',
+
+        body:{
+
+          name:
+            $('editPlanName').value,
+
+          price:
+            Number($('editPlanPrice').value),
+
+          period:
+            $('editPlanPeriod').value,
+
+          features:
+            $('editPlanFeatures').value
+        }
+      }
+    );
+
+    closeModal();
+
+    toast(
+      'Plan updated'
+    );
+
+    await loadPlans();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+async function disablePlan(id){
+
+  if(!confirm(
+    'Disable this plan?'
+  )) return;
+
+  try {
+
+    await api(
+      `/api/admin/plans/${id}`,
+      {method:'DELETE'}
+    );
+
+    toast(
+      'Plan disabled'
+    );
+
+    await loadPlans();
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+async function loadSettings(){
+
+  const s =
+    await api(
+      '/api/admin/settings'
+    );
+
+  $('setSiteName').value =
+    s.site_name || '';
+
+  $('setYoutube').value =
+    s.youtube_sync || 'off';
+
+  $('setAI').value =
+    s.ai_enabled || 'on';
+
+  $('setRazorpay').value =
+    s.razorpay_enabled || 'off';
+
+  renderIntegrationStatus(s);
+}
+
+
+function renderIntegrationStatus(s){
+
+  $('integrationStatus').innerHTML = `
+
+    <div class="integration-item">
+
+      <span class="integration-dot green-dot"></span>
+
+      <div>
+        <strong>YouTube API</strong>
+        <p>
+          ${
+            s.youtube_sync === 'on'
+              ? 'Enabled'
+              : 'Disabled'
+          }
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="integration-item">
+
+      <span class="integration-dot green-dot"></span>
+
+      <div>
+        <strong>Nikhil AI</strong>
+        <p>
+          ${
+            s.ai_enabled === 'on'
+              ? 'Enabled'
+              : 'Disabled'
+          }
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="integration-item">
+
+      <span class="integration-dot yellow-dot"></span>
+
+      <div>
+        <strong>Razorpay</strong>
+        <p>
+          ${
+            s.razorpay_enabled === 'on'
+              ? 'Enabled'
+              : 'Disabled'
+          }
+        </p>
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+async function saveSettings(){
+
+  try {
+
+    const data =
+      await api(
+        '/api/admin/settings',
+        {
+          method:'POST',
+
+          body:{
+
+            site_name:
+              $('setSiteName').value,
+
+            youtube_sync:
+              $('setYoutube').value,
+
+            ai_enabled:
+              $('setAI').value,
+
+            razorpay_enabled:
+              $('setRazorpay').value
+          }
+        }
+      );
+
+    renderIntegrationStatus(data);
+
+    toast(
+      'Settings saved'
+    );
+
+  } catch(err){
+
+    toast(
+      err.message,
+      'error'
+    );
+  }
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function closeModal(){
+
+  $('editModal')
+    .classList
+    .remove('show');
+}
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHtml(value){
+
+  return String(value ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
+
+
+function escapeAttr(value){
+  return escapeHtml(value);
+}
+
+
+function formatDate(value){
+
+  if(!value) return '—';
+
+  try{
+
+    return new Date(value)
+      .toLocaleString('en-IN');
+
+  }catch(e){
+
+    return String(value);
+  }
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+(async function(){
+
+  try {
+
+    await api(
+      '/api/admin/session'
+    );
+
+    $('loginScreen').style.display =
+      'none';
+
+    $('adminPanel').hidden = false;
+
+    await loadDashboard();
+
+  } catch(e){
+
+    $('loginScreen').style.display =
+      'flex';
+
+    $('adminPanel').hidden = true;
+  }
+
+})();
+</script>
 
 </body>
-
 </html>
