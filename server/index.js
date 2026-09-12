@@ -28,64 +28,180 @@ async function youtubeGet(endpoint, params){
   return data;
 }
 
-async function syncYouTube(){
-  if(!process.env.YOUTUBE_API_KEY) return {skipped:true,reason:'YOUTUBE_API_KEY missing'};
-  let added=0, updated=0, channels=0;
-  for(const channel of youtubeChannels){
-    const ch=await youtubeGet('channels',{
-      part:'contentDetails,snippet',
-      forHandle:channel.handle
-    });
-    const item=ch.items?.[0];
-    if(!item) throw new Error(`YouTube channel not found: ${channel.handle}`);
-    channels++;
-    const uploadsId=item.contentDetails?.relatedPlaylists?.uploads;
-    if(!uploadsId) continue;
-
-    // Pull the newest 50 uploads. playlistItems.list costs 1 quota unit per call.
-    const pl=await youtubeGet('playlistItems',{
-      part:'snippet,contentDetails,status',
-      playlistId:uploadsId,
-      maxResults:'50'
-    });
-
-    for(const x of (pl.items||[])){
-      const videoId=x.contentDetails?.videoId || x.snippet?.resourceId?.videoId;
-      if(!videoId || x.status?.privacyStatus==='private') continue;
-      const published=x.contentDetails?.videoPublishedAt || x.snippet?.publishedAt || new Date().toISOString();
-      const thumb=x.snippet?.thumbnails?.maxres?.url ||
-                  x.snippet?.thumbnails?.high?.url ||
-                  x.snippet?.thumbnails?.medium?.url ||
-                  `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-      const existing=db.videos.find(v=>v.youtube_id===videoId);
-      const itemData={
-        id: existing?.id || idOf(db.videos),
-        title:x.snippet?.title || '',
-        description:x.snippet?.description || '',
-        thumbnail:thumb,
-        youtube_id:videoId,
-        channel:channel.name,
-        category:/documentary|documentary|docu/i.test((x.snippet?.title||'')+' '+(x.snippet?.description||''))?'Documentaries':'Videos',
-        access:existing?.access || 'free',
-        published_at:published,
-        status:existing?.status || 'published',
-        source:'youtube',
-        youtube_url:`https://www.youtube.com/watch?v=${videoId}`
-      };
-      if(existing){
-        Object.assign(existing,itemData);
-        updated++;
-      }else{
-        db.videos.push(itemData);
-        added++;
-      }
-    }
+async function syncYouTube() {
+  if (!process.env.YOUTUBE_API_KEY) {
+    return { skipped: true, reason: 'YOUTUBE_API_KEY missing' };
   }
+
+  let added = 0;
+  let updated = 0;
+  let channels = 0;
+  let skippedShorts = 0;
+
+  for (const channel of youtubeChannels) {
+    const ch = await youtubeGet('channels', {
+      part: 'contentDetails,snippet',
+      forHandle: channel.handle
+    });
+
+    const channelItem = ch.items?.[0];
+
+    if (!channelItem) {
+      throw new Error(`YouTube channel not found: ${channel.handle}`);
+    }
+
+    channels++;
+
+    const uploadsId =
+      channelItem.contentDetails.relatedPlaylists.uploads;
+
+    let pageToken = '';
+
+    // Fetch ALL pages, not only first 50 videos
+    do {
+      const params = {
+        part: 'snippet,contentDetails,status',
+        playlistId: uploadsId,
+        maxResults: '50'
+      };
+
+      if (pageToken) {
+        params.pageToken = pageToken;
+      }
+
+      const playlistResponse = await youtubeGet(
+        'playlistItems',
+        params
+      );
+
+      const items = playlistResponse.items || [];
+
+      for (const x of items) {
+        const videoId =
+          x.contentDetails?.videoId ||
+          x.snippet?.resourceId?.videoId;
+
+        if (!videoId) continue;
+
+        // Skip private/deleted videos
+        if (x.status?.privacyStatus === 'private') continue;
+
+        const title = x.snippet?.title || '';
+        const description = x.snippet?.description || '';
+
+        /*
+         * Get actual video duration.
+         * YouTube returns ISO-8601 duration such as:
+         * PT2M30S = 2 minutes 30 seconds
+         */
+        const videoResponse = await youtubeGet('videos', {
+          part: 'contentDetails',
+          id: videoId
+        });
+
+        const video = videoResponse.items?.[0];
+
+        if (!video) continue;
+
+        const durationISO =
+          video.contentDetails?.duration || 'PT0S';
+
+        // Convert ISO duration to seconds
+        const durationMatch = durationISO.match(
+          /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/
+        );
+
+        const hours = Number(durationMatch?.[1] || 0);
+        const minutes = Number(durationMatch?.[2] || 0);
+        const seconds = Number(durationMatch?.[3] || 0);
+
+        const totalSeconds =
+          hours * 3600 +
+          minutes * 60 +
+          seconds;
+
+        /*
+         * Shorts filter:
+         * 1. #shorts in title/description
+         * 2. Videos <= 3 minutes
+         */
+        const isShort =
+          /(^|\s)#shorts\b/i.test(title) ||
+          /(^|\s)#shorts\b/i.test(description) ||
+          totalSeconds <= 180;
+
+        if (isShort) {
+          skippedShorts++;
+          continue;
+        }
+
+        const publishedAt =
+          x.contentDetails?.videoPublishedAt ||
+          x.snippet?.publishedAt ||
+          new Date().toISOString();
+
+        const thumbs =
+          x.snippet?.thumbnails || {};
+
+        const thumb =
+          thumbs.maxres?.url ||
+          thumbs.standard?.url ||
+          thumbs.high?.url ||
+          thumbs.medium?.url ||
+          thumbs.default?.url ||
+          `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+        const existing = db.videos.find(
+          v => v.youtube_id === videoId
+        );
+
+        const itemData = {
+          id: existing?.id || nextId(db.videos),
+          title: title,
+          description: description,
+          thumbnail: thumb,
+          youtube_id: videoId,
+          channel: channel.name,
+          category:
+            'Documentaries',
+          access: existing?.access || 'free',
+          published_at: publishedAt,
+          status: existing?.status || 'published',
+          source: 'youtube',
+          youtube_url:
+            `https://www.youtube.com/watch?v=${videoId}`
+        };
+
+        if (existing) {
+          Object.assign(existing, itemData);
+          updated++;
+        } else {
+          db.videos.push(itemData);
+          added++;
+        }
+      }
+
+      // Move to next page
+      pageToken =
+        playlistResponse.nextPageToken || '';
+
+    } while (pageToken);
+  }
+
+  db.settings.youtube_last_sync =
+    new Date().toISOString();
+
   save();
-  db.settings.youtube_sync='on';
-  db.settings.youtube_last_sync=new Date().toISOString();
-  save();
-  return {ok:true,channels,added,updated,total:db.videos.length,lastSync:db.settings.youtube_last_sync};
+
+  return {
+    ok: true,
+    channels,
+    added,
+    updated,
+    skippedShorts,
+    total: db.videos.length,
+    lastSync: db.settings.youtube_last_sync
+  };
 }
 
 app.get('/api/youtube/status',(req,res)=>res.json({
