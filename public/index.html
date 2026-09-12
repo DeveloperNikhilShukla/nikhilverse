@@ -133,9 +133,125 @@
 }
 </style>
 
+
+<style>
+/* =====================================================
+   NIKHILVERSE — GLOWING APP DOWNLOAD BUTTON
+===================================================== */
+
+.app-nav-link{
+  color:#65b5ff !important;
+  font-weight:800 !important;
+  white-space:nowrap !important;
+}
+
+.app-nav-link:hover{
+  color:#ffffff !important;
+  text-shadow:0 0 12px rgba(80,170,255,.9);
+}
+
+.app-header-btn{
+  position:relative;
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  height:40px;
+  padding:0 16px;
+  border-radius:22px;
+  border:1px solid rgba(83,178,255,.75);
+  background:linear-gradient(135deg,#0d5fc0,#168cff,#4bb2ff);
+  color:#fff !important;
+  text-decoration:none !important;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+  box-shadow:
+    0 0 8px rgba(40,156,255,.85),
+    0 0 20px rgba(40,156,255,.55),
+    0 0 38px rgba(40,156,255,.28);
+  animation:nvAppGlow 1.8s ease-in-out infinite alternate;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.app-header-btn::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:25px;
+  border:1px solid rgba(91,190,255,.35);
+  pointer-events:none;
+}
+
+.app-header-btn:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:
+    0 0 10px rgba(40,156,255,1),
+    0 0 28px rgba(40,156,255,.8),
+    0 0 52px rgba(40,156,255,.45);
+}
+
+@keyframes nvAppGlow{
+  from{
+    box-shadow:
+      0 0 7px rgba(40,156,255,.7),
+      0 0 16px rgba(40,156,255,.4),
+      0 0 30px rgba(40,156,255,.2);
+  }
+
+  to{
+    box-shadow:
+      0 0 10px rgba(40,156,255,1),
+      0 0 24px rgba(40,156,255,.7),
+      0 0 45px rgba(40,156,255,.35);
+  }
+}
+
+@media(max-width:700px){
+
+  .app-header-btn{
+    display:none !important;
+  }
+
+  .app-nav-link{
+    display:inline-block !important;
+  }
+
+}
+</style>
+
+
+<style>
+
+.app-download-button-glow{
+  position:relative;
+  background:linear-gradient(
+    135deg,
+    #168cff,
+    #5eb8ff
+  ) !important;
+
+  color:#07111f !important;
+
+  box-shadow:
+    0 0 12px rgba(40,156,255,.65),
+    0 0 28px rgba(40,156,255,.3);
+
+  font-weight:900 !important;
+}
+
+.app-download-button-glow:hover{
+  box-shadow:
+    0 0 16px rgba(40,156,255,.95),
+    0 0 38px rgba(40,156,255,.5);
+}
+
+</style>
+
 </head>
 
+
 <body>
+
 
   <!-- =========================
        HEADER
@@ -155,8 +271,15 @@
       >
 
       <span>
-        <b>NIKHILVERSE</b>
-        <small>SCI-FI BY NIKHIL</small>
+
+        <b>
+          NIKHILVERSE
+        </b>
+
+        <small>
+          SCI-FI BY NIKHIL
+        </small>
+
       </span>
 
     </a>
@@ -195,6 +318,16 @@
         My List
       </a>
 
+      <!-- APP -->
+      <a
+        class="app-nav-link"
+        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+        target="_blank"
+        rel="noopener"
+      >
+        📱 App
+      </a>
+
     </nav>
 
 
@@ -202,7 +335,9 @@
 
       <label class="search">
 
-        <span>⌕</span>
+        <span>
+          ⌕
+        </span>
 
         <input
           id="siteSearch"
@@ -216,6 +351,7 @@
       <button
         class="ai-btn"
         onclick="openAI()"
+        type="button"
       >
         🤖 Nikhil AI
       </button>
@@ -226,6 +362,17 @@
         href="#premium"
       >
         👑 Premium
+      </a>
+
+
+      <!-- GLOWING APP BUTTON -->
+      <a
+        class="app-header-btn"
+        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+        target="_blank"
+        rel="noopener"
+      >
+        📱 Download App
       </a>
 
 
@@ -242,6 +389,7 @@
   </header>
 
 
+
   <!-- =========================
        HERO
        ========================= -->
@@ -251,14 +399,12 @@
     class="hero"
   >
 
-    <!-- Carousel background -->
     <div
       id="heroCarousel"
       class="hero-carousel"
     ></div>
 
 
-    <!-- Dark overlay -->
     <div class="hero-overlay"></div>
 
 
@@ -269,9 +415,15 @@
       </small>
 
       <h1>
+
         Discover stories
+
         <br>
-        <i>worth watching.</i>
+
+        <i>
+          worth watching.
+        </i>
+
       </h1>
 
       <p>
@@ -289,8 +441,6 @@
     </div>
 
 
-    <!-- Carousel controls -->
-
     <button
       id="heroPrev"
       class="hero-arrow hero-prev"
@@ -299,6 +449,7 @@
     >
       ‹
     </button>
+
 
     <button
       id="heroNext"
@@ -316,6 +467,7 @@
     ></div>
 
   </section>
+
 
 
   <!-- =========================
@@ -343,6 +495,7 @@
   </section>
 
 
+
   <!-- =========================
        DOCUMENTARIES
        ========================= -->
@@ -366,6 +519,7 @@
     ></div>
 
   </section>
+
 
 
   <!-- =========================
@@ -393,6 +547,7 @@
   </section>
 
 
+
   <!-- =========================
        TV SHOWS
        ========================= -->
@@ -418,6 +573,7 @@
   </section>
 
 
+
   <!-- =========================
        BLOG
        ========================= -->
@@ -441,6 +597,7 @@
     ></div>
 
   </section>
+
 
 
   <!-- =========================
@@ -481,15 +638,21 @@
   <section class="app-download-section">
 
     <div>
-      <h2>📱 NIKHILVERSE Android App</h2>
+
+      <h2>
+        📱 NIKHILVERSE Android App
+      </h2>
+
       <p>
         Watch NIKHILVERSE documentaries, sci-fi stories and
         exclusive content directly from your Android device.
       </p>
+
     </div>
 
+
     <a
-      class="app-download-button"
+      class="app-download-button app-download-button-glow"
       href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
       target="_blank"
       rel="noopener"
@@ -498,6 +661,8 @@
     </a>
 
   </section>
+
+
 
   <!-- =========================
        FOOTER
@@ -526,11 +691,13 @@
 
     </div>
 
+
     <a href="/admin/">
       Admin Panel
     </a>
 
   </footer>
+
 
 
   <!-- =========================
@@ -585,7 +752,8 @@
   </div>
 
 
-  <!-- AI floating button -->
+
+  <!-- AI FLOATING BUTTON -->
 
   <button
     class="aifab"
@@ -597,9 +765,9 @@
   </button>
 
 
+
   <!-- =====================================================
        HERO CAROUSEL
-       Uses first 5 videos from existing /api/videos
        ===================================================== -->
 
   <script>
@@ -620,6 +788,7 @@
 
       if (!carousel) return;
 
+
       try {
 
         const response =
@@ -628,64 +797,82 @@
         const videos =
           await response.json();
 
+
         const latest =
           videos
-            .filter(v => v.thumbnail && v.youtube_id)
+            .filter(
+              v =>
+                v.thumbnail &&
+                v.youtube_id
+            )
             .slice(0, 5);
+
 
         if (!latest.length) {
           return;
         }
 
+
         let current = 0;
 
+
         carousel.innerHTML =
-          latest.map((video, index) => {
+          latest.map(
+            (video, index) => {
 
-            return `
-              <div
-                class="hero-slide ${index === 0 ? "active" : ""}"
-                data-index="${index}"
-                onclick="window.open(
-                  'https://www.youtube.com/watch?v=${video.youtube_id}',
-                  '_blank'
-                )"
-              >
+              return `
 
-                <img
-                  src="${video.thumbnail}"
-                  alt=""
+                <div
+                  class="hero-slide ${index === 0 ? "active" : ""}"
+                  data-index="${index}"
+                  data-video-id="${video.youtube_id}"
                 >
 
-              </div>
-            `;
+                  <img
+                    src="${video.thumbnail}"
+                    alt=""
+                  >
 
-          }).join("");
+                </div>
+
+              `;
+
+            }
+          ).join("");
 
 
         dots.innerHTML =
-          latest.map((video, index) => {
+          latest.map(
+            (video, index) => {
 
-            return `
-              <button
-                class="hero-dot ${index === 0 ? "active" : ""}"
-                data-index="${index}"
-                type="button"
-                aria-label="Slide ${index + 1}"
-              ></button>
-            `;
+              return `
 
-          }).join("");
+                <button
+                  class="hero-dot ${index === 0 ? "active" : ""}"
+                  data-index="${index}"
+                  type="button"
+                  aria-label="Slide ${index + 1}"
+                ></button>
+
+              `;
+
+            }
+          ).join("");
 
 
         const slides =
           Array.from(
-            document.querySelectorAll(".hero-slide")
+            document.querySelectorAll(
+              ".hero-slide"
+            )
           );
+
 
         const dotButtons =
           Array.from(
-            document.querySelectorAll(".hero-dot")
+            document.querySelectorAll(
+              ".hero-dot"
+            )
           );
 
 
@@ -695,23 +882,29 @@
             (index + slides.length) %
             slides.length;
 
-          slides.forEach((slide, i) => {
 
-            slide.classList.toggle(
-              "active",
-              i === current
-            );
+          slides.forEach(
+            (slide, i) => {
 
-          });
+              slide.classList.toggle(
+                "active",
+                i === current
+              );
 
-          dotButtons.forEach((dot, i) => {
+            }
+          );
 
-            dot.classList.toggle(
-              "active",
-              i === current
-            );
 
-          });
+          dotButtons.forEach(
+            (dot, i) => {
+
+              dot.classList.toggle(
+                "active",
+                i === current
+              );
+
+            }
+          );
 
         }
 
@@ -722,7 +915,9 @@
 
             event.stopPropagation();
 
-            showSlide(current + 1);
+            showSlide(
+              current + 1
+            );
 
           }
         );
@@ -734,7 +929,9 @@
 
             event.stopPropagation();
 
-            showSlide(current - 1);
+            showSlide(
+              current - 1
+            );
 
           }
         );
@@ -761,7 +958,9 @@
         setInterval(
           function () {
 
-            showSlide(current + 1);
+            showSlide(
+              current + 1
+            );
 
           },
           5000
@@ -782,8 +981,132 @@
   </script>
 
 
+
+  <!-- =====================================================
+       INTERNAL WATCH PAGE CLICK HANDLER
+       Thumbnail click → /watch.html?id=VIDEO_ID
+       ===================================================== -->
+
+  <script>
+
+    document.addEventListener(
+      "click",
+      function (event) {
+
+        const target =
+          event.target.closest(
+            ".hero-slide, .card, [data-video-id]"
+          );
+
+
+        if (!target) {
+          return;
+        }
+
+
+        let id =
+          target.dataset.videoId ||
+          target.getAttribute(
+            "data-video-id"
+          ) ||
+          "";
+
+
+        /*
+          If card doesn't have data-video-id,
+          read the old inline YouTube onclick.
+        */
+
+        if (!id) {
+
+          const onclick =
+            target.getAttribute(
+              "onclick"
+            ) || "";
+
+
+          const match =
+            onclick.match(
+              /[?&]v=([^'"& )]+)/i
+            );
+
+
+          if (match) {
+            id = match[1];
+          }
+
+        }
+
+
+        /*
+          Also check YouTube links.
+        */
+
+        if (!id) {
+
+          const link =
+            target.closest("a") ||
+            target.querySelector(
+              'a[href*="youtube.com/watch"]'
+            );
+
+
+          if (link) {
+
+            const match =
+              (
+                link.href || ""
+              ).match(
+                /[?&]v=([^&]+)/i
+              );
+
+
+            if (match) {
+              id = match[1];
+            }
+
+          }
+
+        }
+
+
+        if (!id) {
+          return;
+        }
+
+
+        /*
+          IMPORTANT:
+          Stop old YouTube click.
+        */
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        event.stopImmediatePropagation();
+
+
+        /*
+          Open NIKHILVERSE internal watch page.
+        */
+
+        window.location.href =
+          "/watch.html?id=" +
+          encodeURIComponent(id);
+
+      },
+      true
+    );
+
+  </script>
+
+
+
   <!-- EXISTING APP.JS -->
+
   <script src="/app.js"></script>
+
 
 </body>
 
