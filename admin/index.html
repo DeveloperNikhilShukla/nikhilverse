@@ -1,1 +1,287 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>NIKHILVERSE Admin</title><link rel=stylesheet href=/admin/admin.css></head><body><aside><b>NIKHIL<span>VERSE</span></b><p>ADMIN</p><a>Dashboard</a><a>Videos</a><a>Documentaries</a><a>Shows</a><a>Blog</a><a>Subscriptions</a><a>Users</a><a>Payments / UPI</a><a>YouTube Sync</a><a>AI Assistant</a><a>Settings</a></aside><main><header><h1>Dashboard</h1><span>Control Center</span></header><section id=stats class=stats></section><div class=cols><section class=panel><h2>Add Video</h2><input id=vt placeholder='Title'><input id=vy placeholder='YouTube Video ID'><input id=vc placeholder='Channel: SIFI By Nikhil / TAH By Nikhil'><input id=vg placeholder='Category'><select id=va><option>free</option><option>premium</option><option>premium+</option></select><button onclick=addVideo()>Publish Video</button></section><section class=panel><h2>Create Blog</h2><input id=bt placeholder='Title'><input id=ba placeholder='Author'><input id=bi placeholder='Featured image URL'><textarea id=bc placeholder='Article content'></textarea><select id=bx><option>public</option><option>premium</option></select><button onclick=addBlog()>Publish Article</button></section></div><section class=panel><h2>Integration Checklist</h2><p>🟡 YouTube API: add YOUTUBE_API_KEY to .env</p><p>🟡 Razorpay/UPI: add RAZORPAY keys and implement live order/webhook credentials</p><p>🟡 Nikhil AI: add OPENAI_API_KEY to .env</p><p>🟢 Blog image upload endpoint is available at <code>/api/admin/upload</code></p></section></main><script src=/admin/admin.js></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NIKHILVERSE Admin</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+
+<body>
+
+  <!-- ================= LOGIN SCREEN ================= -->
+  <div id="loginScreen" class="login-screen">
+
+    <div class="login-glow"></div>
+
+    <div class="login-card">
+
+      <div class="login-logo">
+        <span>NIKHIL</span><b>VERSE</b>
+      </div>
+
+      <div class="login-subtitle">
+        ADMIN CONTROL CENTER
+      </div>
+
+      <div class="login-divider"></div>
+
+      <h1>Welcome Back</h1>
+      <p class="login-description">
+        Sign in to manage your NIKHILVERSE platform.
+      </p>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label>Admin Email</label>
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="Enter admin email"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+
+          <div class="password-wrap">
+            <input
+              id="loginPassword"
+              type="password"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              id="togglePassword"
+              class="eye-btn"
+            >
+              👁
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          <span>Sign In</span>
+          <span>→</span>
+        </button>
+
+        <div id="loginError" class="login-error"></div>
+
+      </form>
+
+      <div class="login-footer">
+        🔒 Authorized NIKHILVERSE administrators only
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= ADMIN PANEL ================= -->
+
+  <div id="adminPanel" class="admin-layout" hidden>
+
+    <aside>
+
+      <div class="brand">
+        <b>NIKHIL<span>VERSE</span></b>
+        <p>ADMIN CONTROL CENTER</p>
+      </div>
+
+      <nav>
+
+        <a class="active">Dashboard</a>
+        <a>Videos</a>
+        <a>Documentaries</a>
+        <a>Shows</a>
+        <a>Blog</a>
+        <a>Subscriptions</a>
+        <a>Users</a>
+        <a>Payments / UPI</a>
+        <a>YouTube Sync</a>
+        <a>AI Assistant</a>
+        <a>Settings</a>
+
+      </nav>
+
+      <button id="logoutBtn" class="logout-btn">
+        ↪ Logout
+      </button>
+
+    </aside>
+
+
+    <main>
+
+      <header>
+        <div>
+          <h1>Dashboard</h1>
+          <span>Control Center</span>
+        </div>
+
+        <div class="admin-status">
+          <span class="status-dot"></span>
+          ADMIN ONLINE
+        </div>
+      </header>
+
+
+      <!-- STATS -->
+
+      <section id="stats" class="stats"></section>
+
+
+      <!-- ADD CONTENT -->
+
+      <div class="cols">
+
+        <section class="panel">
+
+          <div class="panel-title">
+            <span class="panel-icon">🎬</span>
+
+            <div>
+              <h2>Add Video</h2>
+              <p>Publish a new video to NIKHILVERSE</p>
+            </div>
+          </div>
+
+          <input id="vt" placeholder="Title">
+
+          <input
+            id="vy"
+            placeholder="YouTube Video ID"
+          >
+
+          <input
+            id="vc"
+            placeholder="Channel: SIFI By Nikhil / TAH By Nikhil"
+          >
+
+          <input
+            id="vg"
+            placeholder="Category"
+          >
+
+          <select id="va">
+            <option value="free">free</option>
+            <option value="premium">premium</option>
+            <option value="premium+">premium+</option>
+          </select>
+
+          <button onclick="addVideo()" class="publish-btn">
+            Publish Video
+          </button>
+
+        </section>
+
+
+        <section class="panel">
+
+          <div class="panel-title">
+            <span class="panel-icon">📝</span>
+
+            <div>
+              <h2>Create Blog</h2>
+              <p>Publish a new article</p>
+            </div>
+          </div>
+
+          <input
+            id="bt"
+            placeholder="Title"
+          >
+
+          <input
+            id="ba"
+            placeholder="Author"
+          >
+
+          <input
+            id="bi"
+            placeholder="Featured image URL"
+          >
+
+          <textarea
+            id="bc"
+            placeholder="Article content"
+          ></textarea>
+
+          <select id="bx">
+            <option value="public">public</option>
+            <option value="premium">premium</option>
+          </select>
+
+          <button onclick="addBlog()" class="publish-btn">
+            Publish Article
+          </button>
+
+        </section>
+
+      </div>
+
+
+      <!-- INTEGRATION -->
+
+      <section class="panel integration">
+
+        <div class="panel-title">
+
+          <span class="panel-icon">⚙️</span>
+
+          <div>
+            <h2>Integration Checklist</h2>
+            <p>NIKHILVERSE system integrations</p>
+          </div>
+
+        </div>
+
+        <div class="integration-item">
+          <span class="yellow">●</span>
+          <div>
+            <strong>YouTube API</strong>
+            <p>Add YOUTUBE_API_KEY to environment variables.</p>
+          </div>
+        </div>
+
+        <div class="integration-item">
+          <span class="yellow">●</span>
+          <div>
+            <strong>Razorpay / UPI</strong>
+            <p>Add RAZORPAY keys and configure live order/webhook credentials.</p>
+          </div>
+        </div>
+
+        <div class="integration-item">
+          <span class="yellow">●</span>
+          <div>
+            <strong>Nikhil AI</strong>
+            <p>Add OPENAI_API_KEY to environment variables.</p>
+          </div>
+        </div>
+
+        <div class="integration-item">
+          <span class="green">●</span>
+          <div>
+            <strong>Blog Image Upload</strong>
+            <p>Endpoint available at <code>/api/admin/upload</code></p>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <script src="/admin/admin.js"></script>
+
+</body>
+</html>
