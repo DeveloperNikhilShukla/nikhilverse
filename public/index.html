@@ -1,1 +1,163 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>NIKHILVERSE — Stories • Documentaries • Films</title><link rel=stylesheet href=/styles.css></head><body><header><b class=logo>NIKHIL<span>VERSE</span></b><nav><a href=#home>Home</a><a href=#videos>Explore</a><a href=#docs>Documentaries</a><a href=#shows>Shows</a><a href=#blog>Blog</a><a class=pill href=#premium>Premium</a></nav><button onclick='openAI()'>Nikhil AI ✦</button></header><main><section id=home class=hero><div><small>THE HOME OF YOUR STORIES</small><h1>Discover stories<br><i>worth watching.</i></h1><p>Cinematic documentaries, shows and original storytelling from Nikhil.</p><a class=cta href=#videos>Explore Videos →</a></div></section><section id=videos><div class=sectionhead><h2>Latest Videos</h2><span>SIFI By Nikhil • TAH By Nikhil</span></div><div id=videoGrid class=grid></div></section><section id=docs><div class=sectionhead><h2>Documentaries</h2><span>Deep stories. Real subjects.</span></div><div id=docGrid class=grid></div></section><section id=blog><div class=sectionhead><h2>From the Journal</h2><span>Stories behind the stories</span></div><div id=blogGrid class=bloggrid></div></section><section id=premium class=pricing><small>MEMBERSHIP</small><h2>Go deeper with NIKHILVERSE Premium.</h2><div id=plans class=plans></div></section></main><footer><b>NIKHILVERSE</b><p>Stories • Documentaries • Films • Ideas</p><a href=/admin/>Admin Panel</a></footer><div id=ai class=ai hidden><div class=ahead><b>Nikhil AI</b><button onclick='openAI()'>×</button></div><div id=chat>Hi 👋 Ask me anything or ask me to find NIKHILVERSE content.</div><div class=ainput><input id=msg placeholder='Ask Nikhil…'><button onclick=askAI()>→</button></div></div><button class=aifab onclick=openAI()>✦</button><script src=/app.js></script></body></html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NIKHILVERSE — Stories • Documentaries • Films</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+<header>
+  <b class="logo">NIKHIL<span>VERSE</span></b>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#videos">Explore</a>
+    <a href="#docs">Documentaries</a>
+    <a href="#shows">Shows</a>
+    <a href="#blog">Blog</a>
+    <a class="pill" href="#premium">Premium</a>
+  </nav>
+
+  <button onclick="openAI()">Nikhil AI ✦</button>
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div>
+      <small>THE HOME OF YOUR STORIES</small>
+
+      <h1>
+        Discover stories<br>
+        <i>worth watching.</i>
+      </h1>
+
+      <p>
+        Cinematic documentaries, shows and original storytelling from Nikhil.
+      </p>
+
+      <a class="cta" href="#videos">
+        Explore Videos →
+      </a>
+    </div>
+  </section>
+
+
+  <!-- LATEST VIDEOS -->
+  <section id="videos">
+
+    <div class="sectionhead">
+      <h2>Latest Videos</h2>
+      <span>SIFI By Nikhil • TAH By Nikhil</span>
+    </div>
+
+    <div id="videoGrid" class="grid"></div>
+
+  </section>
+
+
+  <!-- DOCUMENTARIES -->
+  <section id="docs">
+
+    <div class="sectionhead">
+      <h2>Documentaries</h2>
+      <span>Deep stories. Real subjects.</span>
+    </div>
+
+    <div id="docGrid" class="grid"></div>
+
+  </section>
+
+
+  <!-- BLOG -->
+  <section id="blog">
+
+    <div class="sectionhead">
+      <h2>From the Journal</h2>
+      <span>Stories behind the stories</span>
+    </div>
+
+    <div id="blogGrid" class="bloggrid"></div>
+
+  </section>
+
+
+  <!-- PREMIUM -->
+  <section id="premium" class="pricing">
+
+    <small>MEMBERSHIP</small>
+
+    <h2>
+      Go deeper with NIKHILVERSE Premium.
+    </h2>
+
+    <div id="plans" class="plans"></div>
+
+  </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+  <b>NIKHILVERSE</b>
+
+  <p>
+    Stories • Documentaries • Films • Ideas
+  </p>
+
+  <a href="/admin/">
+    Admin Panel
+  </a>
+</footer>
+
+
+<!-- AI PANEL -->
+<div id="ai" class="ai" hidden>
+
+  <div class="ahead">
+    <b>Nikhil AI</b>
+
+    <button onclick="openAI()">
+      ×
+    </button>
+  </div>
+
+  <div id="chat">
+    Hi 👋 Ask me anything or ask me to find NIKHILVERSE content.
+  </div>
+
+  <div class="ainput">
+
+    <input
+      id="msg"
+      placeholder="Ask Nikhil…"
+    >
+
+    <button onclick="askAI()">
+      →
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- AI FLOATING BUTTON -->
+<button
+  class="aifab"
+  onclick="openAI()"
+>
+  ✦
+</button>
+
+
+<script src="/app.js"></script>
+
+</body>
+</html>
