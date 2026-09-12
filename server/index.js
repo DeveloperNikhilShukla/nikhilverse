@@ -759,6 +759,112 @@ app.get(
 
 
 // ======================================================
+// INTERNAL PLAYLIST PAGE DATA
+// ======================================================
+
+app.get(['/api/playlist', '/api/playlist-data'], async (req, res) => {
+  try {
+    const playlistId = String(req.query.id || '').trim();
+
+    if (!playlistId) {
+      return res.status(400).json({
+        ok: false,
+        error: 'Playlist id is required'
+      });
+    }
+
+    const playlistResponse = await youtubeGet('playlists', {
+      part: 'snippet,contentDetails',
+      id: playlistId
+    });
+
+    const playlist = playlistResponse.items?.[0];
+
+    if (!playlist) {
+      return res.status(404).json({
+        ok: false,
+        error: 'Playlist not found or not public'
+      });
+    }
+
+    const snippet = playlist.snippet || {};
+    const thumbnails = snippet.thumbnails || {};
+    const thumbnail =
+      thumbnails.maxres?.url ||
+      thumbnails.standard?.url ||
+      thumbnails.high?.url ||
+      thumbnails.medium?.url ||
+      thumbnails.default?.url || '';
+
+    const videos = [];
+    let pageToken = '';
+
+    do {
+      const params = {
+        part: 'snippet,contentDetails',
+        playlistId,
+        maxResults: '50'
+      };
+
+      if (pageToken) params.pageToken = pageToken;
+
+      const response = await youtubeGet('playlistItems', params);
+
+      for (const item of response.items || []) {
+        const itemSnippet = item.snippet || {};
+        const videoId = item.contentDetails?.videoId || '';
+
+        if (!videoId) continue;
+
+        const videoThumbnails = itemSnippet.thumbnails || {};
+        const videoThumbnail =
+          videoThumbnails.maxres?.url ||
+          videoThumbnails.standard?.url ||
+          videoThumbnails.high?.url ||
+          videoThumbnails.medium?.url ||
+          videoThumbnails.default?.url ||
+          `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+        videos.push({
+          id: videoId,
+          title: itemSnippet.title || 'Untitled video',
+          description: itemSnippet.description || '',
+          thumbnail: videoThumbnail,
+          position: Number(itemSnippet.position ?? videos.length),
+          publishedAt: itemSnippet.publishedAt || '',
+          channelTitle: itemSnippet.videoOwnerChannelTitle || ''
+        });
+      }
+
+      pageToken = response.nextPageToken || '';
+    } while (pageToken);
+
+    videos.sort((a, b) => a.position - b.position);
+
+    res.json({
+      ok: true,
+      playlist: {
+        id: playlist.id,
+        title: snippet.title || 'Untitled Playlist',
+        description: snippet.description || '',
+        thumbnail,
+        channelTitle: snippet.channelTitle || '',
+        videoCount: videos.length
+      },
+      videos
+    });
+  } catch (error) {
+    console.error('YouTube playlist details error:', error);
+
+    res.status(500).json({
+      ok: false,
+      error: error.message || 'Unable to load playlist'
+    });
+  }
+});
+
+
+// ======================================================
 // BLOGS
 // ======================================================
 
