@@ -1,906 +1,427 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  >
+<title>NIKHILVERSE — Sci-Fi by Nikhil</title>
 
-  <title>NIKHILVERSE — Sci-Fi by Nikhil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/style.css"
-  >
-
-<style>
-/* =========================
-   NIKHILVERSE APP BUTTON
-========================= */
-
-.app-nav-link{
-  color:#69b4ff !important;
-  font-weight:700 !important;
-}
-
-.app-nav-link:hover{
-  color:#fff !important;
-}
-
-.app-header-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:38px;
-  padding:0 13px;
-  border-radius:20px;
-  border:1px solid #2a4565;
-  background:#0b1728;
-  color:#dce8f7;
-  text-decoration:none;
-  font-size:12px;
-  font-weight:700;
-  white-space:nowrap;
-}
-
-.app-header-btn:hover{
-  border-color:#5aaeff;
-  color:#fff;
-}
-
-.app-download-section{
-  width:min(1250px,90%);
-  margin:55px auto 30px;
-  padding:30px 34px;
-  border:1px solid #1b3553;
-  border-radius:16px;
-  background:linear-gradient(135deg,#081524,#0b1728);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:28px;
-}
-
-.app-download-section h2{
-  margin:0 0 8px;
-  font-size:24px;
-}
-
-.app-download-section p{
-  margin:0;
-  color:#91a5bd;
-  font-size:13px;
-  line-height:1.65;
-}
-
-.app-download-button{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 20px;
-  border-radius:10px;
-  background:#fff;
-  color:#101820;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.app-download-button:hover{
-  transform:translateY(-2px);
-}
-
-@media(max-width:900px){
-  .app-download-section{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-}
-
-@media(max-width:700px){
-  .app-header-btn{
-    display:none;
-  }
-
-  .app-download-section{
-    width:94%;
-    padding:22px;
-  }
-
-  .app-download-section h2{
-    font-size:20px;
-  }
-}
-</style>
-
-
-<style>
-/* =====================================================
-   NIKHILVERSE — GLOWING APP DOWNLOAD BUTTON
-===================================================== */
-
-.app-nav-link{
-  color:#65b5ff !important;
-  font-weight:800 !important;
-  white-space:nowrap !important;
-}
-
-.app-nav-link:hover{
-  color:#ffffff !important;
-  text-shadow:0 0 12px rgba(80,170,255,.9);
-}
-
-.app-header-btn{
-  position:relative;
-  display:inline-flex !important;
-  align-items:center;
-  justify-content:center;
-  height:40px;
-  padding:0 16px;
-  border-radius:22px;
-  border:1px solid rgba(83,178,255,.75);
-  background:linear-gradient(135deg,#0d5fc0,#168cff,#4bb2ff);
-  color:#fff !important;
-  text-decoration:none !important;
-  font-size:12px;
-  font-weight:900;
-  white-space:nowrap;
-  box-shadow:
-    0 0 8px rgba(40,156,255,.85),
-    0 0 20px rgba(40,156,255,.55),
-    0 0 38px rgba(40,156,255,.28);
-  animation:nvAppGlow 1.8s ease-in-out infinite alternate;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-
-.app-header-btn::before{
-  content:"";
-  position:absolute;
-  inset:-3px;
-  border-radius:25px;
-  border:1px solid rgba(91,190,255,.35);
-  pointer-events:none;
-}
-
-.app-header-btn:hover{
-  transform:translateY(-2px) scale(1.03);
-  box-shadow:
-    0 0 10px rgba(40,156,255,1),
-    0 0 28px rgba(40,156,255,.8),
-    0 0 52px rgba(40,156,255,.45);
-}
-
-@keyframes nvAppGlow{
-  from{
-    box-shadow:
-      0 0 7px rgba(40,156,255,.7),
-      0 0 16px rgba(40,156,255,.4),
-      0 0 30px rgba(40,156,255,.2);
-  }
-  to{
-    box-shadow:
-      0 0 10px rgba(40,156,255,1),
-      0 0 24px rgba(40,156,255,.7),
-      0 0 45px rgba(40,156,255,.35);
-  }
-}
-
-/* Mobile: keep App in the nav, hide duplicate action button */
-@media(max-width:700px){
-  .app-header-btn{
-    display:none !important;
-  }
-
-  .app-nav-link{
-    display:inline-block !important;
-  }
-}
-</style>
-
-
-<style>
-.app-download-button-glow{
-  position:relative;
-  background:linear-gradient(135deg,#168cff,#5eb8ff) !important;
-  color:#07111f !important;
-  box-shadow:0 0 12px rgba(40,156,255,.65),0 0 28px rgba(40,156,255,.3);
-  font-weight:900 !important;
-}
-.app-download-button-glow:hover{
-  box-shadow:0 0 16px rgba(40,156,255,.95),0 0 38px rgba(40,156,255,.5);
-}
-</style>
-
+<link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-       ========================= -->
+<!-- ================= HEADER ================= -->
 
-  <header>
+<header>
+
+  <a class="brand" href="#home">
+    <img src="/nikhilverse-logo.png" alt="NIKHILVERSE">
+    <span>
+      <b>NIKHILVERSE</b>
+      <small>SCI-FI BY NIKHIL</small>
+    </span>
+  </a>
+
+  <nav>
+    <a class="active" href="#home">Home</a>
+    <a href="#videos">Movies</a>
+    <a href="#shows">TV Shows</a>
+    <a href="#documentaries">Documentaries</a>
+    <a href="#scifi">Sci-Fi</a>
+    <a href="#videos">New &amp; Popular</a>
+    <a href="#videos">My List</a>
 
     <a
-      class="brand"
-      href="#home"
-      aria-label="NIKHILVERSE Home"
-    >
+      class="app-nav-link"
+      href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+      target="_blank"
+      rel="noopener"
+    >📱 App</a>
+  </nav>
 
-      <img
-        src="/nikhilverse-logo.png"
-        alt="NIKHILVERSE Logo"
+  <div class="header-actions">
+
+    <label class="search">
+      <span>⌕</span>
+      <input
+        id="siteSearch"
+        type="search"
+        placeholder="Search movies, shows, documentaries..."
       >
+    </label>
 
-      <span>
-        <b>NIKHILVERSE</b>
-        <small>SCI-FI BY NIKHIL</small>
-      </span>
+    <button class="ai-btn" onclick="openAI()">
+      🤖 Nikhil AI
+    </button>
 
+    <a class="premium-btn" href="#premium">
+      👑 Premium
     </a>
 
-
-    <nav>
-
-      <a
-        class="active"
-        href="#home"
-      >
-        Home
-      </a>
-
-      <a href="#videos">
-        Movies
-      </a>
-
-      <a href="#shows">
-        TV Shows
-      </a>
-
-      <a href="#documentaries">
-        Documentaries
-      </a>
-
-      <a href="#scifi">
-        Sci-Fi
-      </a>
-
-      <a href="#videos">
-        New & Popular
-      </a>
-
-      <a href="#videos">
-        My List
-      </a>
-
-      <a
-        class="app-nav-link"
-        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-        target="_blank"
-        rel="noopener"
-      >
-        📱 App
-      </a>
-
-    </nav>
-
-
-    <div class="header-actions">
-
-      <label class="search">
-
-        <span>⌕</span>
-
-        <input
-          id="siteSearch"
-          type="search"
-          placeholder="Search movies, shows, documentaries..."
-        >
-
-      </label>
-
-
-      <button
-        class="ai-btn"
-        onclick="openAI()"
-      >
-        🤖 Nikhil AI
-      </button>
-
-
-      <a
-        class="premium-btn"
-        href="#premium"
-      >
-        👑 Premium
-      </a>
-
-      <a
-        class="app-header-btn"
-        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-        target="_blank"
-        rel="noopener"
-      >
-        📱 Download App
-      </a>
-
-
-      <a
-        class="profile-btn"
-        href="/admin/"
-        title="Profile / Admin"
-      >
-        ●
-      </a>
-
-    </div>
-
-  </header>
-
-
-  <!-- =========================
-       HERO
-       ========================= -->
-
-  <section
-    id="home"
-    class="hero"
-  >
-
-    <!-- Carousel background -->
-    <div
-      id="heroCarousel"
-      class="hero-carousel"
-    ></div>
-
-
-    <!-- Dark overlay -->
-    <div class="hero-overlay"></div>
-
-
-    <div class="hero-content">
-
-      <small>
-        THE HOME OF YOUR STORIES
-      </small>
-
-      <h1>
-        Discover stories
-        <br>
-        <i>worth watching.</i>
-      </h1>
-
-      <p>
-        Cinematic documentaries, shows and original
-        storytelling from Nikhil.
-      </p>
-
-      <a
-        class="cta"
-        href="#videos"
-      >
-        Explore Videos →
-      </a>
-
-    </div>
-
-
-    <!-- Carousel controls -->
-
-    <button
-      id="heroPrev"
-      class="hero-arrow hero-prev"
-      type="button"
-      aria-label="Previous"
-    >
-      ‹
-    </button>
-
-    <button
-      id="heroNext"
-      class="hero-arrow hero-next"
-      type="button"
-      aria-label="Next"
-    >
-      ›
-    </button>
-
-
-    <div
-      id="heroDots"
-      class="hero-dots"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       LATEST VIDEOS
-       ========================= -->
-
-  <section
-    id="videos"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Latest Videos
-      </h2>
-
-    </div>
-
-    <div
-      id="videoGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       DOCUMENTARIES
-       ========================= -->
-
-  <section
-    id="documentaries"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Documentaries
-      </h2>
-
-    </div>
-
-    <div
-      id="docGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       SCI-FI
-       ========================= -->
-
-  <section
-    id="scifi"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Sci-Fi
-      </h2>
-
-    </div>
-
-    <div
-      id="scifiGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       TV SHOWS
-       ========================= -->
-
-  <section
-    id="shows"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        Latest Episodes
-      </h2>
-
-    </div>
-
-    <div
-      id="showGrid"
-      class="video-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       BLOG
-       ========================= -->
-
-  <section
-    id="blog"
-    class="content-section"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        From the NIKHILVERSE Blog
-      </h2>
-
-    </div>
-
-    <div
-      id="blogGrid"
-      class="blog-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- =========================
-       PREMIUM
-       ========================= -->
-
-  <section
-    id="premium"
-    class="pricing"
-  >
-
-    <small>
-      NIKHILVERSE PREMIUM
-    </small>
-
-    <h2>
-      More stories. More mysteries. More to explore.
-    </h2>
-
-    <p>
-      Unlock premium documentaries, exclusive series,
-      early access and bonus content.
-    </p>
-
-    <div
-      id="plans"
-      class="plans"
-    ></div>
-
-  </section>
-
-
-
-  <!-- =========================
-       ANDROID APP
-       ========================= -->
-
-  <section class="app-download-section">
-
-    <div>
-      <h2>📱 NIKHILVERSE Android App</h2>
-      <p>
-        Watch NIKHILVERSE documentaries, sci-fi stories and
-        exclusive content directly from your Android device.
-      </p>
-    </div>
-
     <a
-      class="app-download-button app-download-button-glow"
+      class="app-header-btn"
       href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
       target="_blank"
       rel="noopener"
     >
-      📲 Download APK
+      📱 Download App
     </a>
 
-  </section>
+    <a class="profile-btn" href="/admin/">●</a>
 
-  <!-- =========================
-       FOOTER
-       ========================= -->
+  </div>
 
-  <footer>
+</header>
 
-    <div class="footer-brand">
 
-      <img
-        src="/nikhilverse-logo.png"
-        alt="NIKHILVERSE Logo"
-      >
+<!-- ================= HERO ================= -->
 
-      <div>
+<section id="home" class="hero">
 
-        <b>
-          NIKHILVERSE
-        </b>
+  <div id="heroCarousel" class="hero-carousel"></div>
 
-        <p>
-          © 2026 NIKHILVERSE · SCI-FI BY NIKHIL
-        </p>
+  <div class="hero-overlay"></div>
 
-      </div>
+  <div class="hero-content">
 
-    </div>
+    <small>THE HOME OF YOUR STORIES</small>
 
-    <a href="/admin/">
-      Admin Panel
+    <h1>
+      Discover stories
+      <br>
+      <i>worth watching.</i>
+    </h1>
+
+    <p>
+      Cinematic documentaries, shows and original
+      storytelling from Nikhil.
+    </p>
+
+    <a class="cta" href="#videos">
+      Explore Videos →
     </a>
 
-  </footer>
+  </div>
+
+  <button
+    id="heroPrev"
+    class="hero-arrow hero-prev"
+    type="button"
+  >‹</button>
+
+  <button
+    id="heroNext"
+    class="hero-arrow hero-next"
+    type="button"
+  >›</button>
+
+  <div id="heroDots" class="hero-dots"></div>
+
+</section>
 
 
-  <!-- =========================
-       NIKHIL AI
-       ========================= -->
+<!-- ================= LATEST VIDEOS ================= -->
 
-  <div
-    id="ai"
-    class="ai"
-    hidden
+<section id="videos" class="content-section">
+
+  <div class="section-title">
+    <h2>Latest Videos</h2>
+  </div>
+
+  <div id="videoGrid" class="video-grid"></div>
+
+</section>
+
+
+<!-- ================= DOCUMENTARIES ================= -->
+
+<section id="documentaries" class="content-section">
+
+  <div class="section-title">
+    <h2>Documentaries</h2>
+  </div>
+
+  <div id="docGrid" class="video-grid"></div>
+
+</section>
+
+
+<!-- ================= SCI-FI ================= -->
+
+<section id="scifi" class="content-section">
+
+  <div class="section-title">
+    <h2>Sci-Fi</h2>
+  </div>
+
+  <div id="scifiGrid" class="video-grid"></div>
+
+</section>
+
+
+<!-- ================= TV SHOWS ================= -->
+
+<section id="shows" class="content-section">
+
+  <div class="section-title">
+    <h2>Latest Episodes</h2>
+  </div>
+
+  <div id="showGrid" class="video-grid"></div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<section id="blog" class="content-section">
+
+  <div class="section-title">
+    <h2>From the NIKHILVERSE Blog</h2>
+  </div>
+
+  <div id="blogGrid" class="blog-grid"></div>
+
+</section>
+
+
+<!-- ================= PREMIUM ================= -->
+
+<section id="premium" class="pricing">
+
+  <small>NIKHILVERSE PREMIUM</small>
+
+  <h2>
+    More stories. More mysteries. More to explore.
+  </h2>
+
+  <p>
+    Unlock premium documentaries, exclusive series,
+    early access and bonus content.
+  </p>
+
+  <div id="plans" class="plans"></div>
+
+</section>
+
+
+<!-- ================= APP DOWNLOAD ================= -->
+
+<section class="app-download-section">
+
+  <div>
+    <h2>📱 NIKHILVERSE Android App</h2>
+
+    <p>
+      Watch NIKHILVERSE documentaries, sci-fi stories
+      and exclusive content directly from your Android device.
+    </p>
+  </div>
+
+  <a
+    class="app-download-button"
+    href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
+    target="_blank"
+    rel="noopener"
   >
+    📲 Download APK
+  </a>
 
-    <div class="ahead">
-
-      <b>
-        🤖 Nikhil AI
-      </b>
-
-      <button
-        onclick="openAI()"
-        type="button"
-      >
-        ×
-      </button>
-
-    </div>
+</section>
 
 
-    <div id="chat">
-      Ask Nikhil AI anything...
-    </div>
+<!-- ================= FOOTER ================= -->
 
+<footer>
 
-    <div class="ainput">
+  <div class="footer-brand">
 
-      <input
-        id="msg"
-        type="text"
-        placeholder="Ask Nikhil..."
-        autocomplete="off"
-      >
+    <img src="/nikhilverse-logo.png" alt="NIKHILVERSE">
 
-      <button
-        onclick="askAI()"
-        type="button"
-      >
-        →
-      </button>
+    <div>
+      <b>NIKHILVERSE</b>
 
+      <p>
+        © 2026 NIKHILVERSE · SCI-FI BY NIKHIL
+      </p>
     </div>
 
   </div>
 
+  <div class="footer-links">
 
-  <!-- AI floating button -->
+    <a href="#home">Home</a>
+    <a href="#videos">Movies</a>
+    <a href="#shows">TV Shows</a>
+    <a href="#documentaries">Documentaries</a>
+    <a href="#scifi">Sci-Fi</a>
+    <a href="#blog">Blog</a>
+    <a href="#premium">Premium</a>
+    <a href="/admin/">Admin Panel</a>
 
-  <button
-    class="aifab"
-    onclick="openAI()"
-    type="button"
-    aria-label="Open Nikhil AI"
-  >
-    ✦
-  </button>
+  </div>
 
-
-  <!-- =====================================================
-       HERO CAROUSEL
-       Uses first 5 videos from existing /api/videos
-       ===================================================== -->
-
-  <script>
-
-    (async function () {
-
-      const carousel =
-        document.getElementById("heroCarousel");
-
-      const dots =
-        document.getElementById("heroDots");
-
-      const prev =
-        document.getElementById("heroPrev");
-
-      const next =
-        document.getElementById("heroNext");
-
-      if (!carousel) return;
-
-      try {
-
-        const response =
-          await fetch("/api/videos");
-
-        const videos =
-          await response.json();
-
-        const latest =
-          videos
-            .filter(v => v.thumbnail && v.youtube_id)
-            .slice(0, 5);
-
-        if (!latest.length) {
-          return;
-        }
-
-        let current = 0;
-
-        carousel.innerHTML =
-          latest.map((video, index) => {
-
-            return `
-              <div
-                class="hero-slide ${index === 0 ? "active" : ""}"
-                data-index="${index}"
-                onclick="window.open(
-                  'https://www.youtube.com/watch?v=${video.youtube_id}',
-                  '_blank'
-                )"
-              >
-
-                <img
-                  src="${video.thumbnail}"
-                  alt=""
-                >
-
-              </div>
-            `;
-
-          }).join("");
+</footer>
 
 
-        dots.innerHTML =
-          latest.map((video, index) => {
+<!-- ================= NIKHIL AI ================= -->
 
-            return `
-              <button
-                class="hero-dot ${index === 0 ? "active" : ""}"
-                data-index="${index}"
-                type="button"
-                aria-label="Slide ${index + 1}"
-              ></button>
-            `;
+<div id="ai" class="ai" hidden>
 
-          }).join("");
+  <div class="ahead">
+    <b>🤖 Nikhil AI</b>
 
+    <button onclick="openAI()" type="button">
+      ×
+    </button>
+  </div>
 
-        const slides =
-          Array.from(
-            document.querySelectorAll(".hero-slide")
-          );
+  <div id="chat">
+    Ask Nikhil AI anything...
+  </div>
 
-        const dotButtons =
-          Array.from(
-            document.querySelectorAll(".hero-dot")
-          );
+  <div class="ainput">
 
+    <input
+      id="msg"
+      type="text"
+      placeholder="Ask Nikhil..."
+    >
 
-        function showSlide(index) {
+    <button onclick="askAI()" type="button">
+      →
+    </button>
 
-          current =
-            (index + slides.length) %
-            slides.length;
+  </div>
 
-          slides.forEach((slide, i) => {
+</div>
 
-            slide.classList.toggle(
-              "active",
-              i === current
-            );
-
-          });
-
-          dotButtons.forEach((dot, i) => {
-
-            dot.classList.toggle(
-              "active",
-              i === current
-            );
-
-          });
-
-        }
+<button
+  class="aifab"
+  onclick="openAI()"
+  type="button"
+>
+  ✦
+</button>
 
 
-        next.addEventListener(
-          "click",
-          function (event) {
+<!-- ================= HERO SCRIPT ================= -->
 
-            event.stopPropagation();
+<script>
 
-            showSlide(current + 1);
+(async function(){
 
-          }
+  const carousel = document.getElementById("heroCarousel");
+  const dots = document.getElementById("heroDots");
+  const prev = document.getElementById("heroPrev");
+  const next = document.getElementById("heroNext");
+
+  try{
+
+    const response = await fetch("/api/videos");
+
+    if(!response.ok) return;
+
+    const videos = await response.json();
+
+    const latest = videos
+      .filter(v => v.thumbnail && v.youtube_id)
+      .slice(0,5);
+
+    if(!latest.length) return;
+
+    let current = 0;
+
+    carousel.innerHTML = latest.map((v,i)=>`
+
+      <div
+        class="hero-slide ${i===0 ? "active" : ""}"
+        data-index="${i}"
+        onclick="openVideo('${v.youtube_id}')"
+      >
+        <img
+          src="${v.thumbnail}"
+          alt=""
+        >
+      </div>
+
+    `).join("");
+
+    dots.innerHTML = latest.map((v,i)=>`
+
+      <button
+        class="hero-dot ${i===0 ? "active" : ""}"
+        data-index="${i}"
+        type="button"
+      ></button>
+
+    `).join("");
+
+    const slides =
+      [...document.querySelectorAll(".hero-slide")];
+
+    const dotButtons =
+      [...document.querySelectorAll(".hero-dot")];
+
+    function showSlide(index){
+
+      current =
+        (index + slides.length) %
+        slides.length;
+
+      slides.forEach((slide,i)=>{
+        slide.classList.toggle(
+          "active",
+          i === current
         );
+      });
 
-
-        prev.addEventListener(
-          "click",
-          function (event) {
-
-            event.stopPropagation();
-
-            showSlide(current - 1);
-
-          }
+      dotButtons.forEach((dot,i)=>{
+        dot.classList.toggle(
+          "active",
+          i === current
         );
+      });
 
+    }
 
-        dotButtons.forEach(
-          (dot, index) => {
+    next.onclick = e => {
+      e.stopPropagation();
+      showSlide(current + 1);
+    };
 
-            dot.addEventListener(
-              "click",
-              function (event) {
+    prev.onclick = e => {
+      e.stopPropagation();
+      showSlide(current - 1);
+    };
 
-                event.stopPropagation();
+    dotButtons.forEach((dot,i)=>{
+      dot.onclick = e => {
+        e.stopPropagation();
+        showSlide(i);
+      };
+    });
 
-                showSlide(index);
+    setInterval(()=>{
+      showSlide(current + 1);
+    },5000);
 
-              }
-            );
+  }catch(error){
 
-          }
-        );
+    console.error("Hero error:",error);
 
+  }
 
-        setInterval(
-          function () {
+})();
 
-            showSlide(current + 1);
+</script>
 
-          },
-          5000
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Hero carousel error:",
-          error
-        );
-
-      }
-
-    })();
-
-  </script>
-
-
-  <!-- EXISTING APP.JS -->
-  <script src="/app.js"></script>
+<script src="/app.js"></script>
 
 </body>
-
 </html>
