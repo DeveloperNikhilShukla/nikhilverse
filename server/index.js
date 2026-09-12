@@ -6,7 +6,6 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
-const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -586,49 +585,24 @@ const upload = multer({
 // AUTH
 // ======================================================
 
-function getAuthToken(req) {
-  const headerToken =
-    (req.headers.authorization || '').replace(/^Bearer\s+/i, '').trim();
-
-  if (headerToken) return headerToken;
-
-  const cookieHeader = req.headers.cookie || '';
-  const cookies = Object.fromEntries(
-    cookieHeader
-      .split(';')
-      .map(part => part.trim())
-      .filter(Boolean)
-      .map(part => {
-        const i = part.indexOf('=');
-        if (i === -1) return [part, ''];
-        return [
-          decodeURIComponent(part.slice(0, i)),
-          decodeURIComponent(part.slice(i + 1))
-        ];
-      })
-  );
-
-  return cookies.nv_admin || '';
-}
-
 function auth(req, res, next) {
-  try {
-    const token = getAuthToken(req);
 
-    if (!token) {
-      return res.status(401).json({
-        error: 'Unauthorized'
-      });
-    }
+  try {
+
+    const token =
+      (req.headers.authorization || '')
+        .replace('Bearer ', '');
 
     req.user = jwt.verify(
       token,
-      process.env.JWT_SECRET || 'dev-secret'
+      process.env.JWT_SECRET ||
+        'dev-secret'
     );
 
     next();
 
   } catch (e) {
+
     res.status(401).json({
       error: 'Unauthorized'
     });
@@ -679,6 +653,107 @@ app.get(
             )
         )
     );
+  }
+);
+
+
+
+// ======================================================
+// YOUTUBE PLAYLISTS
+// ======================================================
+
+app.get(
+  '/api/playlists',
+  async (req, res) => {
+    try {
+      const playlists = [];
+
+      for (const channel of youtubeChannels) {
+        const channelResponse = await youtubeGet('channels', {
+          part: 'id,snippet',
+          forHandle: channel.handle
+        });
+
+        const channelItem = channelResponse.items?.[0];
+
+        if (!channelItem) {
+          console.warn(
+            `Playlist channel not found: ${channel.handle}`
+          );
+          continue;
+        }
+
+        let pageToken = '';
+
+        do {
+          const params = {
+            part: 'snippet,contentDetails',
+            channelId: channelItem.id,
+            maxResults: '50'
+          };
+
+          if (pageToken) {
+            params.pageToken = pageToken;
+          }
+
+          const response = await youtubeGet(
+            'playlists',
+            params
+          );
+
+          for (const playlist of response.items || []) {
+            const snippet = playlist.snippet || {};
+            const thumbnails = snippet.thumbnails || {};
+
+            const thumbnail =
+              thumbnails.maxres?.url ||
+              thumbnails.standard?.url ||
+              thumbnails.high?.url ||
+              thumbnails.medium?.url ||
+              thumbnails.default?.url ||
+              `https://i.ytimg.com/vi/${playlist.id}/hqdefault.jpg`;
+
+            playlists.push({
+              id: playlist.id,
+              title: snippet.title || 'Untitled Playlist',
+              description: snippet.description || '',
+              thumbnail,
+              channel: channel.name,
+              channelHandle: channel.handle,
+              videoCount: Number(
+                playlist.contentDetails?.itemCount || 0
+              )
+            });
+          }
+
+          pageToken = response.nextPageToken || '';
+        } while (pageToken);
+      }
+
+      const uniquePlaylists = Array.from(
+        new Map(
+          playlists.map(playlist => [playlist.id, playlist])
+        ).values()
+      );
+
+      res.json({
+        ok: true,
+        count: uniquePlaylists.length,
+        playlists: uniquePlaylists
+      });
+    } catch (error) {
+      console.error(
+        'YouTube playlists error:',
+        error
+      );
+
+      res.status(500).json({
+        ok: false,
+        error:
+          error.message ||
+          'Unable to load YouTube playlists'
+      });
+    }
   }
 );
 
@@ -839,73 +914,32 @@ app.post(
       process.env.ADMIN_PASSWORD ||
       'change-me';
 
-    const suppliedEmail = String(req.body?.email || '').trim();
-    const suppliedPassword = String(req.body?.password || '');
-
     if (
-      suppliedEmail !== email ||
-      suppliedPassword !== password
+      req.body.email !== email ||
+      req.body.password !== password
     ) {
+
       return res.status(401).json({
-        error: 'Invalid admin credentials'
+        error:
+          'Invalid admin credentials'
       });
     }
 
-    const token = jwt.sign(
-      {
-        role: 'admin',
-        email
-      },
-      process.env.JWT_SECRET || 'dev-secret',
-      {
-        expiresIn: '8h'
-      }
-    );
-
-    const isProduction = process.env.NODE_ENV === 'production';
-
-    res.setHeader(
-      'Set-Cookie',
-      [
-        `nv_admin=${encodeURIComponent(token)}`,
-        'HttpOnly',
-        'Path=/',
-        'SameSite=Lax',
-        'Max-Age=28800',
-        isProduction ? 'Secure' : ''
-      ].filter(Boolean).join('; ')
-    );
-
     res.json({
-      ok: true,
-      token
+
+      token:
+        jwt.sign(
+          {
+            role: 'admin',
+            email
+          },
+
+          process.env.JWT_SECRET ||
+            'dev-secret'
+        )
     });
   }
 );
-
-app.post('/api/admin/logout', (req, res) => {
-  res.setHeader(
-    'Set-Cookie',
-    [
-      'nv_admin=',
-      'HttpOnly',
-      'Path=/',
-      'SameSite=Lax',
-      'Max-Age=0',
-      process.env.NODE_ENV === 'production' ? 'Secure' : ''
-    ].filter(Boolean).join('; ')
-  );
-
-  res.json({ ok: true });
-});
-
-app.get('/api/admin/session', auth, admin, (req, res) => {
-  res.json({
-    authenticated: true,
-    email: req.user.email,
-    role: req.user.role
-  });
-});
 
 
 // ======================================================
@@ -1245,329 +1279,84 @@ app.post(
 
 
 // ======================================================
-// RAZORPAY PAYMENT INTEGRATION
+// RAZORPAY PLACEHOLDER
 // ======================================================
 
-function getOptionalUser(req) {
-  try {
-    const token = getAuthToken(req);
-    if (!token) return null;
-    return jwt.verify(
-      token,
-      process.env.JWT_SECRET || 'dev-secret'
-    );
-  } catch (e) {
-    return null;
-  }
-}
+app.post(
+  '/api/payment/create',
+  (req, res) => {
 
-app.get('/api/payment/config', (req, res) => {
-  if (!process.env.RAZORPAY_KEY_ID) {
-    return res.status(503).json({
-      error: 'Razorpay is not configured on the server.'
-    });
-  }
+    if (
+      !process.env.RAZORPAY_KEY_ID
+    ) {
 
-  res.json({
-    configured: true,
-    key_id: process.env.RAZORPAY_KEY_ID,
-    currency: 'INR'
-  });
-});
-
-app.post('/api/payment/create', async (req, res) => {
-  try {
-    const keyId = process.env.RAZORPAY_KEY_ID;
-    const keySecret = process.env.RAZORPAY_KEY_SECRET;
-
-    if (!keyId || !keySecret) {
       return res.status(503).json({
-        error: 'Razorpay is not configured. Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Render Environment.'
-      });
-    }
-
-    const planId = Number(req.body?.planId);
-    const plan = db.plans.find(p => Number(p.id) === planId && p.active !== 0);
-
-    if (!plan) {
-      return res.status(404).json({
-        error: 'Premium plan not found.'
-      });
-    }
-
-    const amount = Math.round(Number(plan.price) * 100);
-
-    if (!Number.isFinite(amount) || amount <= 0) {
-      return res.status(400).json({
-        error: 'Invalid plan amount.'
-      });
-    }
-
-    const user = getOptionalUser(req);
-    const receipt = `nv_${Date.now()}`.slice(0, 40);
-
-    const razorpayResponse = await fetch('https://api.razorpay.com/v1/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + Buffer.from(`${keyId}:${keySecret}`).toString('base64')
-      },
-      body: JSON.stringify({
-        amount,
-        currency: 'INR',
-        receipt,
-        notes: {
-          plan_id: String(plan.id),
-          plan_name: String(plan.name),
-          user_id: user?.id ? String(user.id) : '',
-          user_email: user?.email || ''
-        }
-      })
-    });
-
-    const order = await razorpayResponse.json();
-
-    if (!razorpayResponse.ok) {
-      console.error('Razorpay order error:', JSON.stringify(order));
-      return res.status(502).json({
-        error: order?.error?.description || 'Razorpay order creation failed.'
+        error:
+          'Razorpay is not configured. Add RAZORPAY_KEY_ID/SECRET and webhook settings to .env.'
       });
     }
 
     res.json({
-      key_id: keyId,
-      order_id: order.id,
-      amount: order.amount,
-      currency: order.currency,
-      plan: {
-        id: plan.id,
-        name: plan.name,
-        price: plan.price,
-        period: plan.period
-      }
-    });
-  } catch (error) {
-    console.error('Razorpay create order error:', error);
-    res.status(500).json({
-      error: error.message || 'Unable to create Razorpay order.'
+
+      configured: true,
+
+      message:
+        'Razorpay order endpoint placeholder ready for gateway SDK integration.'
     });
   }
-});
+);
 
-app.post('/api/payment/verify', (req, res) => {
-  try {
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
-      planId
-    } = req.body || {};
 
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-      return res.status(400).json({
-        error: 'Missing Razorpay payment verification fields.'
-      });
-    }
+// ======================================================
+// NIKHIL AI
+// ======================================================
 
-    const secret = process.env.RAZORPAY_KEY_SECRET;
+app.post(
+  '/api/ai',
+  (req, res) => {
 
-    if (!secret) {
-      return res.status(503).json({
-        error: 'Razorpay secret is not configured.'
-      });
-    }
+    const q =
+      String(
+        req.body.message || ''
+      ).trim();
 
-    const expectedSignature = crypto
-      .createHmac('sha256', secret)
-      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-      .digest('hex');
+    const terms =
+      q
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(
+          x => x.length > 2
+        );
 
-    const received = String(razorpay_signature);
-    const valid = received.length === expectedSignature.length &&
-      crypto.timingSafeEqual(
-        Buffer.from(expectedSignature),
-        Buffer.from(received)
-      );
-
-    if (!valid) {
-      return res.status(400).json({
-        success: false,
-        error: 'Invalid Razorpay payment signature.'
-      });
-    }
-
-    const plan = db.plans.find(p => Number(p.id) === Number(planId) && p.active !== 0);
-    const user = getOptionalUser(req);
-
-    const payment = {
-      id: idOf(db.payments),
-      amount: plan ? Number(plan.price) : 0,
-      currency: 'INR',
-      plan_id: plan ? plan.id : Number(planId) || null,
-      plan_name: plan ? plan.name : '',
-      order_id: razorpay_order_id,
-      payment_id: razorpay_payment_id,
-      signature: razorpay_signature,
-      user_id: user?.id || null,
-      user_email: user?.email || '',
-      status: 'paid',
-      created_at: new Date().toISOString()
-    };
-
-    db.payments.push(payment);
-
-    if (user?.id && plan) {
-      const dbUser = db.users.find(u => Number(u.id) === Number(user.id));
-      if (dbUser) {
-        dbUser.plan = plan.name;
-        dbUser.plan_id = plan.id;
-        dbUser.plan_period = plan.period;
-        dbUser.plan_started_at = new Date().toISOString();
-      }
-    }
-
-    save();
+    const matches =
+      db.videos
+        .filter(v =>
+          terms.some(t =>
+            String(
+              v.title +
+              ' ' +
+              v.description +
+              ' ' +
+              v.category
+            )
+              .toLowerCase()
+              .includes(t)
+          )
+        )
+        .slice(0, 5);
 
     res.json({
-      success: true,
-      message: `Payment successful. ${plan?.name || 'Premium'} activated.`,
-      payment_id: razorpay_payment_id,
-      plan: plan || null
-    });
-  } catch (error) {
-    console.error('Razorpay verify error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Payment verification failed.'
+
+      answer:
+        process.env.OPENAI_API_KEY
+          ? 'Nikhil AI is configured for API integration; connect your OpenAI Responses API call in this endpoint.'
+          : 'Hi! Main Nikhil AI hoon. Main general questions mein help kar sakta hoon aur NIKHILVERSE ke available content ko search kar sakta hoon. Live AI replies ke liye OPENAI_API_KEY add karein.',
+
+      results:
+        matches
     });
   }
-});
-
-
-// ======================================================
-// NIKHIL AI - OPENAI
-// ======================================================
-
-app.post('/api/ai', async (req, res) => {
-  try {
-    const q = String(req.body?.message || '').trim();
-
-    if (!q) {
-      return res.status(400).json({
-        error: 'Please enter a question.'
-      });
-    }
-
-    if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({
-        error: 'OPENAI_API_KEY is not configured on the server.'
-      });
-    }
-
-    // Find relevant NIKHILVERSE videos
-    const allVideos = Array.isArray(db.videos) ? db.videos : [];
-
-    const words = q
-      .toLowerCase()
-      .split(/\s+/)
-      .filter(Boolean);
-
-    const results = allVideos
-      .map(v => {
-        const text = `${v.title || ''} ${v.description || ''} ${v.category || ''} ${v.channel || ''}`.toLowerCase();
-        let score = 0;
-
-        for (const word of words) {
-          if (word.length > 2 && text.includes(word)) {
-            score++;
-          }
-        }
-
-        return { ...v, score };
-      })
-      .filter(v => v.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 8);
-
-    const videoContext = results.length
-      ? results.map(v =>
-          `Title: ${v.title || ''}\nCategory: ${v.category || ''}\nChannel: ${v.channel || ''}\nDescription: ${v.description || ''}\nYouTube: ${v.youtube_id ? `https://www.youtube.com/watch?v=${v.youtube_id}` : ''}`
-        ).join('\n\n')
-      : 'No directly matching videos found in the NIKHILVERSE database.';
-
-    const systemInstructions = `
-You are Nikhil AI, the official AI assistant for NIKHILVERSE.
-
-Answer the user's question naturally and helpfully.
-
-If the user asks about NIKHILVERSE videos, documentaries, shows or content, use the supplied video information when relevant.
-
-If matching videos are available, mention their titles clearly.
-
-You can answer in Hindi, Hinglish or English depending on the user's question.
-
-Do not invent NIKHILVERSE videos that are not present in the supplied context.
-
-For general questions, answer normally and helpfully.
-
-NIKHILVERSE VIDEO CONTEXT:
-${videoContext}
-`;
-
-    const response = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-5',
-        instructions: systemInstructions,
-        input: q,
-        store: false
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error('OpenAI API error:', JSON.stringify(data));
-
-      return res.status(response.status).json({
-        error: data?.error?.message || `OpenAI API request failed (${response.status}).`
-      });
-    }
-
-    // Raw Responses API: extract text from output -> message -> content.
-    const answer = (data.output || [])
-      .filter(item => item.type === 'message')
-      .flatMap(item => item.content || [])
-      .filter(part => part.type === 'output_text')
-      .map(part => part.text || '')
-      .join('\n')
-      .trim();
-
-    if (!answer) {
-      console.error('OpenAI returned no text:', JSON.stringify(data));
-
-      return res.status(502).json({
-        error: 'OpenAI returned no text response.'
-      });
-    }
-
-    return res.json({
-      answer,
-      results: results.map(({ score, ...video }) => video)
-    });
-
-  } catch (err) {
-    console.error('Nikhil AI error:', err);
-
-    return res.status(500).json({
-      error: 'Nikhil AI server error: ' + (err.message || 'Unknown error')
-    });
-  }
-});
+);
 
 
 // ======================================================
