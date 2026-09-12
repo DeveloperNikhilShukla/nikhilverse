@@ -588,7 +588,7 @@ const upload = multer({
 
 function getAuthToken(req) {
   const headerToken =
-    (req.headers.authorization || '').replace(/^Bearer\\s+/i, '').trim();
+    (req.headers.authorization || '').replace(/^Bearer\s+/i, '').trim();
 
   if (headerToken) return headerToken;
 
