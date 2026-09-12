@@ -1,26 +1,48 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NIKHILVERSE — Sci-Fi by Nikhil</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>
+    NIKHILVERSE — Sci-Fi by Nikhil
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="/style.css">
+  <link
+    rel="stylesheet"
+    href="/style.css"
+  >
+
 </head>
+
 
 <body>
 
-  <!-- =========================
+
+  <!-- =====================================================
        HEADER
-       ========================= -->
+       ===================================================== -->
 
   <header>
 
@@ -37,8 +59,15 @@
       >
 
       <span>
-        <b>NIKHILVERSE</b>
-        <small>SCI-FI BY NIKHIL</small>
+
+        <b>
+          NIKHILVERSE
+        </b>
+
+        <small>
+          SCI-FI BY NIKHIL
+        </small>
+
       </span>
 
     </a>
@@ -46,7 +75,10 @@
 
     <nav>
 
-      <a class="active" href="#home">
+      <a
+        class="active"
+        href="#home"
+      >
         Home
       </a>
 
@@ -79,9 +111,14 @@
 
     <div class="header-actions">
 
+
+      <!-- SEARCH -->
+
       <label class="search">
 
-        <span>⌕</span>
+        <span>
+          ⌕
+        </span>
 
         <input
           id="siteSearch"
@@ -92,6 +129,8 @@
       </label>
 
 
+      <!-- AI -->
+
       <button
         class="ai-btn"
         onclick="openAI()"
@@ -101,6 +140,8 @@
       </button>
 
 
+      <!-- PREMIUM -->
+
       <a
         class="premium-btn"
         href="#premium"
@@ -108,6 +149,18 @@
         👑 Premium
       </a>
 
+
+      <!-- ANDROID APP -->
+
+      <a
+        class="app-download-btn"
+        href="#download-app"
+      >
+        📱 Download App
+      </a>
+
+
+      <!-- ADMIN -->
 
       <a
         class="profile-btn"
@@ -122,18 +175,22 @@
   </header>
 
 
+
   <main>
 
-    <!-- =========================
-         HERO + CAROUSEL
-         ========================= -->
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
 
     <section
       id="home"
       class="hero"
     >
 
-      <!-- First 5 latest video thumbnails -->
+
+      <!-- CAROUSEL BACKGROUND -->
+
       <div
         id="heroCarousel"
         class="hero-carousel"
@@ -141,27 +198,40 @@
       ></div>
 
 
-      <!-- Dark overlay -->
-      <div class="hero-overlay"></div>
+      <!-- DARK OVERLAY -->
+
+      <div
+        class="hero-overlay"
+      ></div>
 
 
-      <!-- Hero text -->
+      <!-- HERO CONTENT -->
+
       <div class="hero-content">
 
         <small>
           THE HOME OF YOUR STORIES
         </small>
 
+
         <h1>
+
           Discover stories
+
           <br>
-          <i>worth watching.</i>
+
+          <i>
+            worth watching.
+          </i>
+
         </h1>
+
 
         <p>
           Cinematic documentaries, shows and original
           storytelling from Nikhil.
         </p>
+
 
         <a
           class="cta"
@@ -173,7 +243,7 @@
       </div>
 
 
-      <!-- Carousel buttons -->
+      <!-- PREVIOUS -->
 
       <button
         id="heroPrev"
@@ -185,6 +255,8 @@
       </button>
 
 
+      <!-- NEXT -->
+
       <button
         id="heroNext"
         class="hero-arrow hero-next"
@@ -195,19 +267,21 @@
       </button>
 
 
-      <!-- Carousel dots -->
+      <!-- DOTS -->
 
       <div
         id="heroDots"
         class="hero-dots"
       ></div>
 
+
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          LATEST VIDEOS
-         ========================= -->
+         ===================================================== -->
 
     <section
       id="videos"
@@ -235,9 +309,10 @@
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          DOCUMENTARIES
-         ========================= -->
+         ===================================================== -->
 
     <section
       id="documentaries"
@@ -265,9 +340,10 @@
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          SCI-FI
-         ========================= -->
+         ===================================================== -->
 
     <section
       id="scifi"
@@ -295,9 +371,10 @@
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          TV SHOWS
-         ========================= -->
+         ===================================================== -->
 
     <section
       id="shows"
@@ -325,9 +402,10 @@
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          BLOG
-         ========================= -->
+         ===================================================== -->
 
     <section
       id="blog"
@@ -355,9 +433,10 @@
     </section>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          PREMIUM
-         ========================= -->
+         ===================================================== -->
 
     <section
       id="premium"
@@ -368,9 +447,11 @@
         NIKHILVERSE PREMIUM
       </small>
 
+
       <h2>
         More stories. More mysteries. More to explore.
       </h2>
+
 
       <p>
         Unlock premium documentaries, exclusive series,
@@ -385,14 +466,86 @@
 
     </section>
 
+
+
+    <!-- =====================================================
+         ANDROID APP
+         ===================================================== -->
+
+    <section
+      id="download-app"
+      class="app-section"
+    >
+
+      <div class="app-box">
+
+
+        <!-- APP ICON -->
+
+        <div class="app-icon">
+          📱
+        </div>
+
+
+        <!-- APP CONTENT -->
+
+        <div class="app-content">
+
+          <small>
+            NIKHILVERSE FOR ANDROID
+          </small>
+
+
+          <h2>
+
+            Take NIKHILVERSE
+
+            <br>
+
+            <i>
+              with you.
+            </i>
+
+          </h2>
+
+
+          <p>
+            Watch documentaries, explore stories,
+            discover new episodes and enjoy NIKHILVERSE
+            anytime on your Android device.
+          </p>
+
+
+          <button
+            class="app-download-main"
+            type="button"
+            onclick="showAppMessage()"
+          >
+            📱 Download Android App
+          </button>
+
+
+          <span class="app-note">
+            Android app coming soon
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
   </main>
 
 
-  <!-- =========================
+
+  <!-- =====================================================
        FOOTER
-       ========================= -->
+       ===================================================== -->
 
   <footer>
+
 
     <div class="footer-brand">
 
@@ -402,11 +555,13 @@
         onerror="this.style.display='none'"
       >
 
+
       <div>
 
         <b>
           NIKHILVERSE
         </b>
+
 
         <p>
           © 2026 NIKHILVERSE · SCI-FI BY NIKHIL
@@ -424,9 +579,10 @@
   </footer>
 
 
-  <!-- =========================
+
+  <!-- =====================================================
        NIKHIL AI
-       ========================= -->
+       ===================================================== -->
 
   <div
     id="ai"
@@ -439,6 +595,7 @@
       <b>
         🤖 Nikhil AI
       </b>
+
 
       <button
         onclick="openAI()"
@@ -464,6 +621,7 @@
         autocomplete="off"
       >
 
+
       <button
         onclick="askAI()"
         type="button"
@@ -476,7 +634,10 @@
   </div>
 
 
-  <!-- AI floating button -->
+
+  <!-- =====================================================
+       AI FLOATING BUTTON
+       ===================================================== -->
 
   <button
     class="aifab"
@@ -488,26 +649,39 @@
   </button>
 
 
+
   <!-- =====================================================
        HERO CAROUSEL
-       First 5 latest videos from /api/videos
+       FIRST 5 LATEST VIDEOS
        ===================================================== -->
 
   <script>
 
     (async function () {
 
+
       const carousel =
-        document.getElementById("heroCarousel");
+        document.getElementById(
+          "heroCarousel"
+        );
+
 
       const dots =
-        document.getElementById("heroDots");
+        document.getElementById(
+          "heroDots"
+        );
+
 
       const prev =
-        document.getElementById("heroPrev");
+        document.getElementById(
+          "heroPrev"
+        );
+
 
       const next =
-        document.getElementById("heroNext");
+        document.getElementById(
+          "heroNext"
+        );
 
 
       if (
@@ -522,14 +696,19 @@
 
       try {
 
+
         const response =
-          await fetch("/api/videos");
+          await fetch(
+            "/api/videos"
+          );
 
 
         if (!response.ok) {
+
           throw new Error(
             "Could not load videos"
           );
+
         }
 
 
@@ -539,6 +718,7 @@
 
         const latest =
           Array.isArray(videos)
+
             ? videos
                 .filter(
                   v =>
@@ -546,11 +726,17 @@
                     v.thumbnail &&
                     v.youtube_id
                 )
-                .slice(0, 5)
+                .slice(
+                  0,
+                  5
+                )
+
             : [];
 
 
-        if (!latest.length) {
+        if (
+          !latest.length
+        ) {
 
           carousel.innerHTML = "";
 
@@ -561,6 +747,7 @@
           dots.innerHTML = "";
 
           return;
+
         }
 
 
@@ -570,7 +757,10 @@
         carousel.innerHTML =
           latest
             .map(
-              (video, index) => `
+              (
+                video,
+                index
+              ) => `
 
                 <button
                   class="hero-slide ${
@@ -578,8 +768,11 @@
                       ? "active"
                       : ""
                   }"
+
                   type="button"
+
                   data-index="${index}"
+
                   aria-label="Open ${
                     String(
                       video.title ||
@@ -589,6 +782,7 @@
                       "&quot;"
                     )
                   }"
+
                   onclick="
                     window.open(
                       'https://www.youtube.com/watch?v=${encodeURIComponent(
@@ -620,7 +814,10 @@
         dots.innerHTML =
           latest
             .map(
-              (_, index) => `
+              (
+                _,
+                index
+              ) => `
 
                 <button
                   class="hero-dot ${
@@ -628,8 +825,11 @@
                       ? "active"
                       : ""
                   }"
+
                   type="button"
+
                   data-index="${index}"
+
                   aria-label="Show slide ${
                     index + 1
                   }"
@@ -656,15 +856,24 @@
           );
 
 
-        function showSlide(index) {
+        function showSlide(
+          index
+        ) {
+
 
           current =
-            (index + slides.length) %
+            (
+              index +
+              slides.length
+            ) %
             slides.length;
 
 
           slides.forEach(
-            (slide, i) => {
+            (
+              slide,
+              i
+            ) => {
 
               slide.classList.toggle(
                 "active",
@@ -676,7 +885,10 @@
 
 
           dotButtons.forEach(
-            (dot, i) => {
+            (
+              dot,
+              i
+            ) => {
 
               dot.classList.toggle(
                 "active",
@@ -718,7 +930,10 @@
 
 
         dotButtons.forEach(
-          (dot, index) => {
+          (
+            dot,
+            index
+          ) => {
 
             dot.addEventListener(
               "click",
@@ -726,7 +941,9 @@
 
                 event.stopPropagation();
 
-                showSlide(index);
+                showSlide(
+                  index
+                );
 
               }
             );
@@ -735,7 +952,9 @@
         );
 
 
-        if (slides.length > 1) {
+        if (
+          slides.length > 1
+        ) {
 
           setInterval(
             () => {
@@ -748,7 +967,9 @@
             5000
           );
 
-        } else {
+        }
+
+        else {
 
           prev.hidden = true;
 
@@ -758,7 +979,10 @@
 
         }
 
-      } catch (error) {
+
+      }
+
+      catch (error) {
 
         console.error(
           "Hero carousel error:",
@@ -767,13 +991,42 @@
 
       }
 
+
     })();
 
   </script>
 
 
-  <!-- EXISTING APP.JS -->
-  <script src="/app.js"></script>
+
+  <!-- =====================================================
+       ANDROID APP MESSAGE
+       ===================================================== -->
+
+  <script>
+
+    function showAppMessage() {
+
+      alert(
+        "📱 NIKHILVERSE Android App\n\n" +
+        "The Android app is coming soon!\n\n" +
+        "Stay tuned for the official release."
+      );
+
+    }
+
+  </script>
+
+
+
+  <!-- =====================================================
+       EXISTING APP.JS
+       DO NOT CHANGE
+       ===================================================== -->
+
+  <script
+    src="/app.js"
+  ></script>
+
 
 </body>
 </html>
