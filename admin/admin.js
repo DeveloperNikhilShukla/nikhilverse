@@ -1,4 +1,4 @@
-let token = localStorage.getItem('nv_admin_token');
+let token = null;
 
 const loginScreen = document.getElementById('loginScreen');
 const adminPanel = document.getElementById('adminPanel');
@@ -10,9 +10,9 @@ const togglePassword = document.getElementById('togglePassword');
 const logoutBtn = document.getElementById('logoutBtn');
 
 async function api(url, options = {}) {
+  options.credentials = 'same-origin';
   options.headers = {
-    ...(options.headers || {}),
-    ...(token ? { Authorization: 'Bearer ' + token } : {})
+    ...(options.headers || {})
   };
   return fetch(url, options);
 }
@@ -61,11 +61,6 @@ loginForm?.addEventListener('submit', async function (e) {
       );
     }
 
-    if (data.token) {
-      token = data.token;
-      localStorage.setItem('nv_admin_token', data.token);
-    }
-
     location.reload();
 
   } catch (error) {
@@ -95,8 +90,6 @@ async function load() {
     });
 
     if (response.status === 401 || response.status === 403) {
-      localStorage.removeItem('nv_admin_token');
-      token = null;
       showLogin();
       return;
     }
@@ -108,8 +101,6 @@ async function load() {
     const session = await response.json();
 
     if (!session.authenticated) {
-      localStorage.removeItem('nv_admin_token');
-      token = null;
       showLogin();
       return;
     }
@@ -119,8 +110,6 @@ async function load() {
     });
 
     if (statsResponse.status === 401 || statsResponse.status === 403) {
-      localStorage.removeItem('nv_admin_token');
-      token = null;
       showLogin();
       return;
     }
@@ -148,8 +137,6 @@ async function load() {
 
   } catch (error) {
     console.error(error);
-    localStorage.removeItem('nv_admin_token');
-    token = null;
     showLogin();
   }
 }
@@ -169,8 +156,6 @@ async function addVideo() {
   });
 
   if (response.status === 401 || response.status === 403) {
-    localStorage.removeItem('nv_admin_token');
-    token = null;
     location.reload();
     return;
   }
@@ -199,8 +184,6 @@ async function addBlog() {
   });
 
   if (response.status === 401 || response.status === 403) {
-    localStorage.removeItem('nv_admin_token');
-    token = null;
     location.reload();
     return;
   }
@@ -224,8 +207,6 @@ logoutBtn?.addEventListener('click', async function () {
     console.log(e);
   }
 
-  localStorage.removeItem('nv_admin_token');
-  token = null;
   location.reload();
 });
 
