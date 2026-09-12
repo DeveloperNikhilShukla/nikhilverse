@@ -586,24 +586,49 @@ const upload = multer({
 // AUTH
 // ======================================================
 
+function getAuthToken(req) {
+  const headerToken =
+    (req.headers.authorization || '').replace(/^Bearer\\s+/i, '').trim();
+
+  if (headerToken) return headerToken;
+
+  const cookieHeader = req.headers.cookie || '';
+  const cookies = Object.fromEntries(
+    cookieHeader
+      .split(';')
+      .map(part => part.trim())
+      .filter(Boolean)
+      .map(part => {
+        const i = part.indexOf('=');
+        if (i === -1) return [part, ''];
+        return [
+          decodeURIComponent(part.slice(0, i)),
+          decodeURIComponent(part.slice(i + 1))
+        ];
+      })
+  );
+
+  return cookies.nv_admin || '';
+}
+
 function auth(req, res, next) {
-
   try {
+    const token = getAuthToken(req);
 
-    const token =
-      (req.headers.authorization || '')
-        .replace('Bearer ', '');
+    if (!token) {
+      return res.status(401).json({
+        error: 'Unauthorized'
+      });
+    }
 
     req.user = jwt.verify(
       token,
-      process.env.JWT_SECRET ||
-        'dev-secret'
+      process.env.JWT_SECRET || 'dev-secret'
     );
 
     next();
 
   } catch (e) {
-
     res.status(401).json({
       error: 'Unauthorized'
     });
@@ -814,32 +839,73 @@ app.post(
       process.env.ADMIN_PASSWORD ||
       'change-me';
 
-    if (
-      req.body.email !== email ||
-      req.body.password !== password
-    ) {
+    const suppliedEmail = String(req.body?.email || '').trim();
+    const suppliedPassword = String(req.body?.password || '');
 
+    if (
+      suppliedEmail !== email ||
+      suppliedPassword !== password
+    ) {
       return res.status(401).json({
-        error:
-          'Invalid admin credentials'
+        error: 'Invalid admin credentials'
       });
     }
 
+    const token = jwt.sign(
+      {
+        role: 'admin',
+        email
+      },
+      process.env.JWT_SECRET || 'dev-secret',
+      {
+        expiresIn: '8h'
+      }
+    );
+
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    res.setHeader(
+      'Set-Cookie',
+      [
+        `nv_admin=${encodeURIComponent(token)}`,
+        'HttpOnly',
+        'Path=/',
+        'SameSite=Lax',
+        'Max-Age=28800',
+        isProduction ? 'Secure' : ''
+      ].filter(Boolean).join('; ')
+    );
+
     res.json({
-
-      token:
-        jwt.sign(
-          {
-            role: 'admin',
-            email
-          },
-
-          process.env.JWT_SECRET ||
-            'dev-secret'
-        )
+      ok: true,
+      token
     });
   }
 );
+
+app.post('/api/admin/logout', (req, res) => {
+  res.setHeader(
+    'Set-Cookie',
+    [
+      'nv_admin=',
+      'HttpOnly',
+      'Path=/',
+      'SameSite=Lax',
+      'Max-Age=0',
+      process.env.NODE_ENV === 'production' ? 'Secure' : ''
+    ].filter(Boolean).join('; ')
+  );
+
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/session', auth, admin, (req, res) => {
+  res.json({
+    authenticated: true,
+    email: req.user.email,
+    role: req.user.role
+  });
+});
 
 
 // ======================================================
@@ -1184,9 +1250,12 @@ app.post(
 
 function getOptionalUser(req) {
   try {
-    const token = (req.headers.authorization || '').replace('Bearer ', '');
+    const token = getAuthToken(req);
     if (!token) return null;
-    return jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
+    return jwt.verify(
+      token,
+      process.env.JWT_SECRET || 'dev-secret'
+    );
   } catch (e) {
     return null;
   }
