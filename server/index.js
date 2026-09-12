@@ -6,6 +6,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -1178,32 +1179,200 @@ app.post(
 
 
 // ======================================================
-// RAZORPAY PLACEHOLDER
+// RAZORPAY PAYMENT INTEGRATION
 // ======================================================
 
-app.post(
-  '/api/payment/create',
-  (req, res) => {
+function getOptionalUser(req) {
+  try {
+    const token = (req.headers.authorization || '').replace('Bearer ', '');
+    if (!token) return null;
+    return jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
+  } catch (e) {
+    return null;
+  }
+}
 
-    if (
-      !process.env.RAZORPAY_KEY_ID
-    ) {
+app.get('/api/payment/config', (req, res) => {
+  if (!process.env.RAZORPAY_KEY_ID) {
+    return res.status(503).json({
+      error: 'Razorpay is not configured on the server.'
+    });
+  }
 
+  res.json({
+    configured: true,
+    key_id: process.env.RAZORPAY_KEY_ID,
+    currency: 'INR'
+  });
+});
+
+app.post('/api/payment/create', async (req, res) => {
+  try {
+    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || !keySecret) {
       return res.status(503).json({
-        error:
-          'Razorpay is not configured. Add RAZORPAY_KEY_ID/SECRET and webhook settings to .env.'
+        error: 'Razorpay is not configured. Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Render Environment.'
+      });
+    }
+
+    const planId = Number(req.body?.planId);
+    const plan = db.plans.find(p => Number(p.id) === planId && p.active !== 0);
+
+    if (!plan) {
+      return res.status(404).json({
+        error: 'Premium plan not found.'
+      });
+    }
+
+    const amount = Math.round(Number(plan.price) * 100);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      return res.status(400).json({
+        error: 'Invalid plan amount.'
+      });
+    }
+
+    const user = getOptionalUser(req);
+    const receipt = `nv_${Date.now()}`.slice(0, 40);
+
+    const razorpayResponse = await fetch('https://api.razorpay.com/v1/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + Buffer.from(`${keyId}:${keySecret}`).toString('base64')
+      },
+      body: JSON.stringify({
+        amount,
+        currency: 'INR',
+        receipt,
+        notes: {
+          plan_id: String(plan.id),
+          plan_name: String(plan.name),
+          user_id: user?.id ? String(user.id) : '',
+          user_email: user?.email || ''
+        }
+      })
+    });
+
+    const order = await razorpayResponse.json();
+
+    if (!razorpayResponse.ok) {
+      console.error('Razorpay order error:', JSON.stringify(order));
+      return res.status(502).json({
+        error: order?.error?.description || 'Razorpay order creation failed.'
       });
     }
 
     res.json({
-
-      configured: true,
-
-      message:
-        'Razorpay order endpoint placeholder ready for gateway SDK integration.'
+      key_id: keyId,
+      order_id: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      plan: {
+        id: plan.id,
+        name: plan.name,
+        price: plan.price,
+        period: plan.period
+      }
+    });
+  } catch (error) {
+    console.error('Razorpay create order error:', error);
+    res.status(500).json({
+      error: error.message || 'Unable to create Razorpay order.'
     });
   }
-);
+});
+
+app.post('/api/payment/verify', (req, res) => {
+  try {
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      planId
+    } = req.body || {};
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return res.status(400).json({
+        error: 'Missing Razorpay payment verification fields.'
+      });
+    }
+
+    const secret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!secret) {
+      return res.status(503).json({
+        error: 'Razorpay secret is not configured.'
+      });
+    }
+
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+      .digest('hex');
+
+    const received = String(razorpay_signature);
+    const valid = received.length === expectedSignature.length &&
+      crypto.timingSafeEqual(
+        Buffer.from(expectedSignature),
+        Buffer.from(received)
+      );
+
+    if (!valid) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid Razorpay payment signature.'
+      });
+    }
+
+    const plan = db.plans.find(p => Number(p.id) === Number(planId) && p.active !== 0);
+    const user = getOptionalUser(req);
+
+    const payment = {
+      id: idOf(db.payments),
+      amount: plan ? Number(plan.price) : 0,
+      currency: 'INR',
+      plan_id: plan ? plan.id : Number(planId) || null,
+      plan_name: plan ? plan.name : '',
+      order_id: razorpay_order_id,
+      payment_id: razorpay_payment_id,
+      signature: razorpay_signature,
+      user_id: user?.id || null,
+      user_email: user?.email || '',
+      status: 'paid',
+      created_at: new Date().toISOString()
+    };
+
+    db.payments.push(payment);
+
+    if (user?.id && plan) {
+      const dbUser = db.users.find(u => Number(u.id) === Number(user.id));
+      if (dbUser) {
+        dbUser.plan = plan.name;
+        dbUser.plan_id = plan.id;
+        dbUser.plan_period = plan.period;
+        dbUser.plan_started_at = new Date().toISOString();
+      }
+    }
+
+    save();
+
+    res.json({
+      success: true,
+      message: `Payment successful. ${plan?.name || 'Premium'} activated.`,
+      payment_id: razorpay_payment_id,
+      plan: plan || null
+    });
+  } catch (error) {
+    console.error('Razorpay verify error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Payment verification failed.'
+    });
+  }
+});
 
 
 // ======================================================
