@@ -22,7 +22,6 @@ html,
 body{
   margin:0;
   padding:0;
-  min-height:100%;
   background:#050912;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
@@ -33,9 +32,7 @@ body{
 }
 
 
-/* =====================================================
-   HEADER
-===================================================== */
+/* HEADER */
 
 .watch-header{
 
@@ -67,6 +64,8 @@ body{
 
   align-items:center;
 
+  gap:10px;
+
   text-decoration:none;
 
   color:#fff;
@@ -87,8 +86,6 @@ body{
 
 .back-btn{
 
-  display:inline-block;
-
   text-decoration:none;
 
   color:#dce8f7;
@@ -103,22 +100,10 @@ body{
 
   font-size:14px;
 
-  transition:.2s;
-
-}
-
-.back-btn:hover{
-
-  background:#132842;
-
-  border-color:#347fc2;
-
 }
 
 
-/* =====================================================
-   MAIN
-===================================================== */
+/* MAIN */
 
 .watch-page{
 
@@ -129,9 +114,7 @@ body{
 }
 
 
-/* =====================================================
-   VIDEO PLAYER
-===================================================== */
+/* PLAYER */
 
 .player-box{
 
@@ -177,9 +160,7 @@ body{
 }
 
 
-/* =====================================================
-   VIDEO INFORMATION
-===================================================== */
+/* INFO */
 
 .video-info{
 
@@ -228,9 +209,7 @@ body{
 }
 
 
-/* =====================================================
-   CHANNEL SECTION
-===================================================== */
+/* CHANNEL VIDEOS */
 
 .channel-section{
 
@@ -267,10 +246,6 @@ body{
 }
 
 
-/* =====================================================
-   VIDEO GRID
-===================================================== */
-
 .video-grid{
 
   display:grid;
@@ -294,10 +269,7 @@ body{
 
   cursor:pointer;
 
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease;
+  transition:.2s ease;
 
 }
 
@@ -306,9 +278,6 @@ body{
   transform:translateY(-4px);
 
   border-color:#2c6da9;
-
-  box-shadow:
-    0 15px 35px rgba(0,0,0,.55);
 
 }
 
@@ -370,11 +339,6 @@ body{
 
 }
 
-
-/* =====================================================
-   LOADING / ERROR
-===================================================== */
-
 .loading{
 
   padding:70px 20px;
@@ -396,9 +360,7 @@ body{
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* MOBILE */
 
 @media(max-width:1000px){
 
@@ -476,16 +438,6 @@ body{
 
   }
 
-  .section-title{
-
-    align-items:flex-start;
-
-    flex-direction:column;
-
-    gap:6px;
-
-  }
-
 }
 
 </style>
@@ -495,10 +447,6 @@ body{
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
 
 <header class="watch-header">
 
@@ -521,10 +469,6 @@ body{
 
 
 
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
 <main class="watch-page">
 
   <div id="watchContent">
@@ -541,32 +485,24 @@ body{
 
 <script>
 
-/* =====================================================
-   GET VIDEO ID
-===================================================== */
-
 const params =
   new URLSearchParams(
     window.location.search
   );
 
 const videoId =
-  params.get('id');
+  params.get("id");
 
-
-/* =====================================================
-   API
-===================================================== */
 
 async function getVideos(){
 
   const response =
-    await fetch('/api/videos');
+    await fetch("/api/videos");
 
   if(!response.ok){
 
     throw new Error(
-      'Unable to load videos'
+      "Unable to load videos"
     );
 
   }
@@ -576,88 +512,33 @@ async function getVideos(){
 }
 
 
-/* =====================================================
-   HTML ESCAPE
-===================================================== */
-
 function escapeHTML(value){
 
-  return String(value ?? '')
+  return String(value ?? "")
 
-    .replaceAll(
-      '&',
-      '&amp;'
-    )
+    .replaceAll("&","&amp;")
 
-    .replaceAll(
-      '<',
-      '&lt;'
-    )
+    .replaceAll("<","&lt;")
 
-    .replaceAll(
-      '>',
-      '&gt;'
-    )
+    .replaceAll(">","&gt;")
 
-    .replaceAll(
-      '"',
-      '&quot;'
-    )
+    .replaceAll('"',"&quot;")
 
-    .replaceAll(
-      "'",
-      '&#039;'
-    );
+    .replaceAll("'","&#039;");
 
 }
 
-
-/* =====================================================
-   OPEN ANOTHER VIDEO
-===================================================== */
 
 function openVideo(id){
 
   if(!id) return;
 
   window.location.href =
-    `/watch.html?id=${encodeURIComponent(id)}`;
+    "/watch.html?id=" +
+    encodeURIComponent(id);
 
 }
 
-
-/* =====================================================
-   DATE
-===================================================== */
-
-function formatDate(date){
-
-  if(!date) return '';
-
-  try{
-
-    return new Date(date)
-      .toLocaleDateString(
-        'en-IN',
-        {
-          day:'numeric',
-          month:'short',
-          year:'numeric'
-        }
-      );
-
-  }catch(e){
-
-    return '';
-
-  }
-
-}
-
-
-/* =====================================================
-   RENDER WATCH PAGE
-===================================================== */
 
 function renderWatchPage(
   video,
@@ -666,61 +547,50 @@ function renderWatchPage(
 
   const channel =
     video.channel ||
-    'NIKHILVERSE';
+    "NIKHILVERSE";
 
 
-  /* -----------------------------------------------
-     SAME CHANNEL VIDEOS
-  ------------------------------------------------ */
+  const sameChannel =
+    allVideos.filter(v =>
 
-  const channelVideos =
-    allVideos.filter(v => {
-
-      return String(
-        v.channel || ''
+      String(
+        v.channel || ""
       ).toLowerCase()
+
       ===
-      String(channel).toLowerCase();
 
-    });
+      String(
+        channel
+      ).toLowerCase()
 
+    );
 
-  /* -----------------------------------------------
-     REMOVE CURRENT VIDEO
-  ------------------------------------------------ */
 
   const otherVideos =
-    channelVideos.filter(v => {
+    sameChannel.filter(v =>
 
-      return String(
-        v.youtube_id || ''
-      )
-      !==
       String(
-        video.youtube_id || ''
-      );
+        v.youtube_id || ""
+      )
 
-    });
+      !==
 
+      String(
+        video.youtube_id || ""
+      )
 
-  /* -----------------------------------------------
-     PAGE TITLE
-  ------------------------------------------------ */
+    );
+
 
   document.title =
-    `${video.title || 'Watch'} - NIKHILVERSE`;
+    (video.title || "Watch") +
+    " - NIKHILVERSE";
 
-
-  /* -----------------------------------------------
-     PAGE
-  ------------------------------------------------ */
 
   document.getElementById(
-    'watchContent'
+    "watchContent"
   ).innerHTML = `
 
-
-    <!-- PLAYER -->
 
     <div class="player-box">
 
@@ -732,7 +602,7 @@ function renderWatchPage(
 
           title="${escapeHTML(
             video.title ||
-            'NIKHILVERSE Video'
+            "NIKHILVERSE Video"
           )}"
 
           allow="
@@ -755,13 +625,11 @@ function renderWatchPage(
 
 
 
-    <!-- VIDEO INFO -->
-
     <section class="video-info">
 
       <h1>
         ${escapeHTML(
-          video.title || ''
+          video.title || ""
         )}
       </h1>
 
@@ -770,40 +638,25 @@ function renderWatchPage(
 
         ${escapeHTML(
           video.channel ||
-          'NIKHILVERSE'
+          "NIKHILVERSE"
         )}
 
         ${
           video.category
-          ? `
-            ·
-            ${escapeHTML(
+          ? " · " +
+            escapeHTML(
               video.category
-            )}
-          `
-          : ''
+            )
+          : ""
         }
 
         ${
           video.access
-          ? `
-            ·
-            ${escapeHTML(
+          ? " · " +
+            escapeHTML(
               video.access
-            ).toUpperCase()}
-          `
-          : ''
-        }
-
-        ${
-          video.published_at
-          ? `
-            ·
-            ${formatDate(
-              video.published_at
-            )}
-          `
-          : ''
+            ).toUpperCase()
+          : ""
         }
 
       </div>
@@ -822,17 +675,16 @@ function renderWatchPage(
           </div>
 
         `
-        : ''
+        : ""
       }
 
     </section>
 
 
 
-    <!-- SAME CHANNEL VIDEOS -->
-
     ${
       otherVideos.length
+
       ? `
 
         <section class="channel-section">
@@ -857,107 +709,70 @@ function renderWatchPage(
 
               <article
                 class="video-card"
-                onclick="openVideo('${escapeHTML(
-                  v.youtube_id
-                )}')"
+                onclick="openVideo('${escapeHTML(v.youtube_id)}')"
               >
-
 
                 <div class="video-thumb">
 
-                  ${
-                    v.thumbnail
-                    ? `
+                  <img
+                    src="${
+                      v.thumbnail
+                      ? escapeHTML(v.thumbnail)
+                      : "https://i.ytimg.com/vi/" +
+                        encodeURIComponent(v.youtube_id) +
+                        "/hqdefault.jpg"
+                    }"
 
-                      <img
-                        src="${escapeHTML(
-                          v.thumbnail
-                        )}"
+                    alt="${escapeHTML(
+                      v.title || ""
+                    )}"
 
-                        alt="${escapeHTML(
-                          v.title || ''
-                        )}"
-
-                        loading="lazy"
-                      >
-
-                    `
-                    : `
-
-                      <img
-                        src="https://i.ytimg.com/vi/${encodeURIComponent(
-                          v.youtube_id
-                        )}/hqdefault.jpg"
-
-                        alt="${escapeHTML(
-                          v.title || ''
-                        )}"
-
-                        loading="lazy"
-                      >
-
-                    `
-                  }
+                    loading="lazy"
+                  >
 
                 </div>
-
 
 
                 <div class="video-card-body">
 
                   <h3>
-
                     ${escapeHTML(
-                      v.title || ''
+                      v.title || ""
                     )}
-
                   </h3>
 
 
                   <div class="video-card-meta">
 
                     ${escapeHTML(
-                      v.channel ||
-                      ''
+                      v.channel || ""
                     )}
 
                     ${
                       v.category
-                      ? `
-                        ·
-                        ${escapeHTML(
+                      ? " · " +
+                        escapeHTML(
                           v.category
-                        )}
-                      `
-                      : ''
+                        )
+                      : ""
                     }
 
                   </div>
 
                 </div>
 
-
               </article>
 
-            `).join('')}
+            `).join("")}
 
           </div>
 
         </section>
 
       `
-      : `
 
-        <section class="channel-section">
+      : ""
 
-          <div class="empty">
-            No more videos available
-            from this channel.
-          </div>
-
-        </section>
-
-      `
     }
 
   `;
@@ -965,30 +780,20 @@ function renderWatchPage(
 }
 
 
-/* =====================================================
-   LOAD
-===================================================== */
-
 async function loadWatchPage(){
 
   const container =
     document.getElementById(
-      'watchContent'
+      "watchContent"
     );
 
-
-  /* -----------------------------------------------
-     NO ID
-  ------------------------------------------------ */
 
   if(!videoId){
 
     container.innerHTML = `
 
       <div class="error">
-
         Video not found.
-
       </div>
 
     `;
@@ -1005,30 +810,26 @@ async function loadWatchPage(){
 
 
     const video =
-      videos.find(v => {
+      videos.find(v =>
 
-        return String(
-          v.youtube_id || ''
+        String(
+          v.youtube_id || ""
         )
+
         ===
-        String(videoId);
 
-      });
+        String(videoId)
 
+      );
 
-    /* ---------------------------------------------
-       VIDEO NOT FOUND
-    ---------------------------------------------- */
 
     if(!video){
 
       container.innerHTML = `
 
         <div class="error">
-
           This video is not available
           on NIKHILVERSE.
-
         </div>
 
       `;
@@ -1037,10 +838,6 @@ async function loadWatchPage(){
 
     }
 
-
-    /* ---------------------------------------------
-       RENDER
-    ---------------------------------------------- */
 
     renderWatchPage(
       video,
@@ -1051,7 +848,7 @@ async function loadWatchPage(){
   }catch(error){
 
     console.error(
-      'Watch page error:',
+      "Watch page error:",
       error
     );
 
@@ -1059,10 +856,8 @@ async function loadWatchPage(){
     container.innerHTML = `
 
       <div class="error">
-
         Unable to load this video.
         Please try again.
-
       </div>
 
     `;
@@ -1071,10 +866,6 @@ async function loadWatchPage(){
 
 }
 
-
-/* =====================================================
-   START
-===================================================== */
 
 loadWatchPage();
 
