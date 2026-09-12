@@ -1,7 +1,9 @@
 /* =========================================================
-   NIKHILVERSE — CLEAN DARK CINEMATIC UI
-   CAROUSEL SAFE VERSION
+   NIKHILVERSE
+   FINAL DARK CINEMATIC UI
+   ANDROID APP + HERO CAROUSEL
    ========================================================= */
+
 
 * {
   box-sizing: border-box;
@@ -10,13 +12,16 @@
 
 html {
   scroll-behavior: smooth;
+
   background: #050810;
 }
 
 
 body {
   margin: 0;
+
   background: #050810;
+
   color: #f4f7ff;
 
   font-family:
@@ -35,6 +40,7 @@ body {
 
 a {
   color: #b7c1d5;
+
   text-decoration: none;
 
   transition:
@@ -55,21 +61,26 @@ input {
 }
 
 
+
 /* =========================================================
    HEADER
    ========================================================= */
+
 
 header {
   height: 74px;
 
   display: flex;
+
   align-items: center;
 
   gap: 24px;
 
-  padding: 0 5%;
+  padding:
+    0 5%;
 
   position: sticky;
+
   top: 0;
 
   z-index: 100;
@@ -77,19 +88,23 @@ header {
   background:
     rgba(5, 8, 16, .94);
 
-  backdrop-filter: blur(16px);
+  backdrop-filter:
+    blur(16px);
 
   border-bottom:
     1px solid #182033;
 }
 
 
+
 /* =========================================================
    BRAND
    ========================================================= */
 
+
 .brand {
   display: flex;
+
   align-items: center;
 
   gap: 10px;
@@ -102,6 +117,7 @@ header {
 
 .brand img {
   width: 50px;
+
   height: 50px;
 
   object-fit: contain;
@@ -112,6 +128,7 @@ header {
 
 .brand span {
   display: flex;
+
   flex-direction: column;
 
   line-height: 1.05;
@@ -138,12 +155,15 @@ header {
 }
 
 
+
 /* =========================================================
    NAVIGATION
    ========================================================= */
 
+
 nav {
   display: flex;
+
   align-items: center;
 
   gap: 20px;
@@ -178,12 +198,15 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    HEADER ACTIONS
    ========================================================= */
 
+
 .header-actions {
   display: flex;
+
   align-items: center;
 
   gap: 9px;
@@ -192,16 +215,21 @@ nav a.active {
 }
 
 
+
 /* SEARCH */
+
 
 .search {
   display: flex;
+
   align-items: center;
 
   width: 190px;
+
   height: 38px;
 
-  padding: 0 10px;
+  padding:
+    0 10px;
 
   gap: 7px;
 
@@ -245,10 +273,49 @@ nav a.active {
 }
 
 
+
 /* AI BUTTON */
 
-.ai-btn,
+
+.ai-btn {
+  border:
+    1px solid #28344d;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  border-radius: 999px;
+
+  padding:
+    9px 13px;
+
+  white-space: nowrap;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.ai-btn:hover {
+  background: #101a2d;
+
+  border-color: #415271;
+}
+
+
+
+/* PREMIUM */
+
+
 .premium-btn {
+  background: #ffffff;
+
+  color: #08101f;
+
   border-radius: 999px;
 
   padding:
@@ -262,34 +329,6 @@ nav a.active {
 }
 
 
-.ai-btn {
-  border:
-    1px solid #28344d;
-
-  background: transparent;
-
-  color: #ffffff;
-
-  cursor: pointer;
-}
-
-
-.ai-btn:hover {
-  background: #101a2d;
-
-  border-color: #415271;
-}
-
-
-/* PREMIUM */
-
-.premium-btn {
-  background: #ffffff;
-
-  color: #08101f;
-}
-
-
 .premium-btn:hover {
   background: #dcecff;
 
@@ -297,13 +336,17 @@ nav a.active {
 }
 
 
+
 /* PROFILE */
+
 
 .profile-btn {
   width: 35px;
+
   height: 35px;
 
   display: grid;
+
   place-items: center;
 
   border:
@@ -322,9 +365,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    HERO
    ========================================================= */
+
 
 .hero {
   min-height: 650px;
@@ -332,6 +377,7 @@ nav a.active {
   position: relative;
 
   display: flex;
+
   align-items: center;
 
   padding:
@@ -345,9 +391,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
-   HERO CAROUSEL BACKGROUND
+   HERO CAROUSEL
    ========================================================= */
+
 
 .hero-carousel {
   position: absolute;
@@ -368,17 +416,17 @@ nav a.active {
 }
 
 
-/* EVERY SLIDE FULL SCREEN */
-
 .hero-slide {
   position: absolute;
 
   inset: 0;
 
   width: 100%;
+
   height: 100%;
 
   padding: 0;
+
   margin: 0;
 
   border: 0;
@@ -406,10 +454,9 @@ nav a.active {
 }
 
 
-/* THUMBNAIL */
-
 .hero-slide img {
   width: 100%;
+
   height: 100%;
 
   display: block;
@@ -420,9 +467,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
-   HERO DARK OVERLAY
+   HERO OVERLAY
    ========================================================= */
+
 
 .hero-overlay {
   position: absolute;
@@ -437,24 +486,26 @@ nav a.active {
 
     linear-gradient(
       90deg,
-      rgba(5, 8, 16, .98) 0%,
-      rgba(5, 8, 16, .88) 28%,
-      rgba(5, 8, 16, .50) 58%,
-      rgba(5, 8, 16, .74) 100%
+      rgba(5,8,16,.98) 0%,
+      rgba(5,8,16,.88) 28%,
+      rgba(5,8,16,.50) 58%,
+      rgba(5,8,16,.74) 100%
     ),
 
     linear-gradient(
       0deg,
       #050810 0%,
-      rgba(5, 8, 16, .18) 42%,
-      rgba(5, 8, 16, .58) 100%
+      rgba(5,8,16,.18) 42%,
+      rgba(5,8,16,.58) 100%
     );
 }
+
 
 
 /* =========================================================
    HERO CONTENT
    ========================================================= */
+
 
 .hero-content {
   position: relative;
@@ -511,7 +562,9 @@ nav a.active {
 }
 
 
+
 /* CTA */
+
 
 .cta {
   display: inline-block;
@@ -541,9 +594,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    HERO ARROWS
    ========================================================= */
+
 
 .hero-arrow {
   position: absolute;
@@ -553,9 +608,11 @@ nav a.active {
   z-index: 5;
 
   width: 46px;
+
   height: 46px;
 
   display: grid;
+
   place-items: center;
 
   transform:
@@ -577,7 +634,8 @@ nav a.active {
 
   cursor: pointer;
 
-  backdrop-filter: blur(8px);
+  backdrop-filter:
+    blur(8px);
 }
 
 
@@ -597,14 +655,17 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    HERO DOTS
    ========================================================= */
+
 
 .hero-dots {
   position: absolute;
 
   left: 50%;
+
   bottom: 28px;
 
   z-index: 5;
@@ -620,6 +681,7 @@ nav a.active {
 
 .hero-dot {
   width: 7px;
+
   height: 7px;
 
   padding: 0;
@@ -648,9 +710,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
-   CONTENT SECTIONS
+   CONTENT
    ========================================================= */
+
 
 .content-section {
   width: 100%;
@@ -659,10 +723,6 @@ nav a.active {
     0 0 18px;
 }
 
-
-/* =========================================================
-   SECTION TITLE
-   ========================================================= */
 
 .section-title {
   display: flex;
@@ -694,9 +754,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    VIDEO GRID
    ========================================================= */
+
 
 .video-grid {
   display: grid;
@@ -714,9 +776,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    VIDEO CARD
    ========================================================= */
+
 
 .card {
   min-width: 0;
@@ -749,7 +813,9 @@ nav a.active {
 }
 
 
+
 /* THUMB */
+
 
 .thumb {
   width: 100%;
@@ -780,6 +846,7 @@ nav a.active {
   display: block;
 
   width: 100% !important;
+
   height: 100% !important;
 
   object-fit: cover;
@@ -795,7 +862,9 @@ nav a.active {
 }
 
 
+
 /* CARD BODY */
+
 
 .card .body {
   padding: 15px;
@@ -831,9 +900,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    BLOG
    ========================================================= */
+
 
 .blog-grid {
   display: grid;
@@ -879,6 +950,7 @@ nav a.active {
 
 .blog .img img {
   width: 100%;
+
   height: 100%;
 
   object-fit: cover;
@@ -907,9 +979,11 @@ nav a.active {
 }
 
 
+
 /* =========================================================
    PREMIUM
    ========================================================= */
+
 
 .pricing {
   padding:
@@ -949,8 +1023,6 @@ nav a.active {
   line-height: 1.6;
 }
 
-
-/* PLANS */
 
 .plans {
   display: flex;
@@ -1025,9 +1097,287 @@ nav a.active {
 }
 
 
+
+/* =========================================================
+   ANDROID APP
+   ========================================================= */
+
+
+.app-section {
+  padding:
+    40px 5% 100px;
+}
+
+
+.app-box {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 45px;
+
+  max-width: 1200px;
+
+  margin:
+    0 auto;
+
+  padding: 55px;
+
+  overflow: hidden;
+
+  background:
+
+    radial-gradient(
+      circle at 85% 30%,
+      rgba(45,105,180,.35),
+      transparent 38%
+    ),
+
+    linear-gradient(
+      135deg,
+      #0b1426,
+      #070c17
+    );
+
+  border:
+    1px solid #243653;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 80px
+    rgba(0,0,0,.35);
+}
+
+
+.app-box::before {
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+
+  height: 300px;
+
+  right: -100px;
+
+  top: -120px;
+
+  background:
+    rgba(92,169,255,.10);
+
+  border-radius: 50%;
+
+  filter:
+    blur(10px);
+
+  pointer-events: none;
+}
+
+
+
+/* APP ICON */
+
+
+.app-icon {
+  position: relative;
+
+  z-index: 1;
+
+  width: 115px;
+
+  height: 115px;
+
+  flex-shrink: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #172c4d,
+      #0b1425
+    );
+
+  border:
+    1px solid #30486c;
+
+  font-size: 55px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.4);
+}
+
+
+
+/* APP CONTENT */
+
+
+.app-content {
+  position: relative;
+
+  z-index: 1;
+
+  max-width: 650px;
+}
+
+
+.app-content small {
+  color: #7890b0;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+}
+
+
+.app-content h2 {
+  margin:
+    10px 0 14px;
+
+  font-size:
+    clamp(
+      34px,
+      5vw,
+      58px
+    );
+
+  line-height: .98;
+
+  letter-spacing: -2px;
+}
+
+
+.app-content h2 i {
+  color: #70b2ff;
+
+  font-style: normal;
+}
+
+
+.app-content p {
+  margin: 0;
+
+  max-width: 590px;
+
+  color: #aebbd0;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+
+
+/* DOWNLOAD BUTTON */
+
+
+.app-download-main {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-top: 24px;
+
+  padding:
+    13px 20px;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  color: #07101e;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease;
+}
+
+
+.app-download-main:hover {
+  background: #dcecff;
+
+  transform:
+    translateY(-2px);
+}
+
+
+
+/* COMING SOON */
+
+
+.app-note {
+  display: block;
+
+  margin-top: 10px;
+
+  color: #6f7e96;
+
+  font-size: 11px;
+}
+
+
+
+/* HEADER APP BUTTON */
+
+
+.app-download-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding:
+    9px 13px;
+
+  border:
+    1px solid #283d5c;
+
+  border-radius: 999px;
+
+  background:
+    rgba(15,27,47,.8);
+
+  color: #d8e7fa;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+.app-download-btn:hover {
+  background: #152641;
+
+  border-color: #4b6c96;
+
+  color: #ffffff;
+}
+
+
+
 /* =========================================================
    FOOTER
    ========================================================= */
+
 
 footer {
   padding:
@@ -1059,6 +1409,7 @@ footer {
 
 .footer-brand img {
   width: 42px;
+
   height: 42px;
 
   object-fit: contain;
@@ -1096,9 +1447,11 @@ footer > a:hover {
 }
 
 
+
 /* =========================================================
    NIKHIL AI
    ========================================================= */
+
 
 .ai {
   position: fixed;
@@ -1232,9 +1585,11 @@ footer > a:hover {
 }
 
 
+
 /* =========================================================
    AI FLOATING BUTTON
    ========================================================= */
+
 
 .aifab {
   position: fixed;
@@ -1244,6 +1599,7 @@ footer > a:hover {
   bottom: 24px;
 
   width: 52px;
+
   height: 52px;
 
   border-radius: 50%;
@@ -1274,9 +1630,11 @@ footer > a:hover {
 }
 
 
+
 /* =========================================================
    SAFETY
    ========================================================= */
+
 
 [hidden] {
   display: none !important;
@@ -1303,9 +1661,11 @@ footer > a:hover {
 }
 
 
+
 /* =========================================================
    RESPONSIVE — 1200
    ========================================================= */
+
 
 @media (max-width: 1200px) {
 
@@ -1338,9 +1698,11 @@ footer > a:hover {
 }
 
 
+
 /* =========================================================
    RESPONSIVE — 900
    ========================================================= */
+
 
 @media (max-width: 900px) {
 
@@ -1399,12 +1761,32 @@ footer > a:hover {
     max-width: 560px;
   }
 
+
+  .app-box {
+    padding: 40px;
+
+    gap: 30px;
+  }
+
+
+  .app-icon {
+    width: 90px;
+
+    height: 90px;
+
+    font-size: 42px;
+
+    border-radius: 22px;
+  }
+
 }
+
 
 
 /* =========================================================
    RESPONSIVE — 600
    ========================================================= */
+
 
 @media (max-width: 600px) {
 
@@ -1418,6 +1800,7 @@ footer > a:hover {
 
   .brand img {
     width: 44px;
+
     height: 44px;
   }
 
@@ -1426,6 +1809,7 @@ footer > a:hover {
     position: absolute;
 
     left: 0;
+
     right: 0;
 
     top: 62px;
@@ -1446,6 +1830,11 @@ footer > a:hover {
 
 
   .premium-btn {
+    display: none;
+  }
+
+
+  .app-download-btn {
     display: none;
   }
 
@@ -1502,6 +1891,7 @@ footer > a:hover {
 
   .hero-arrow {
     width: 38px;
+
     height: 38px;
 
     font-size: 28px;
@@ -1610,13 +2000,67 @@ footer > a:hover {
   }
 
 
+  /* ANDROID APP MOBILE */
+
+
+  .app-section {
+    padding:
+      25px 12px 70px;
+  }
+
+
+  .app-box {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding:
+      30px 24px;
+
+    gap: 25px;
+
+    border-radius: 20px;
+  }
+
+
+  .app-icon {
+    width: 75px;
+
+    height: 75px;
+
+    font-size: 34px;
+
+    border-radius: 18px;
+  }
+
+
+  .app-content h2 {
+    font-size: 38px;
+
+    letter-spacing:
+      -1.5px;
+  }
+
+
+  .app-content p {
+    font-size: 14px;
+  }
+
+
+  .app-download-main {
+    width: 100%;
+  }
+
+
   footer {
     padding:
       40px 20px;
 
-    align-items: flex-start;
+    align-items:
+      flex-start;
 
-    flex-direction: column;
+    flex-direction:
+      column;
   }
 
 
