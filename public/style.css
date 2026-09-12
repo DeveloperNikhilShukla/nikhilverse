@@ -1,6 +1,6 @@
 /* =========================================================
    NIKHILVERSE
-   ORIGINAL DARK CINEMATIC UI
+   ORIGINAL DARK CINEMATIC UI + LOGO
    ========================================================= */
 
 * {
@@ -32,7 +32,6 @@ body {
   overflow-x: hidden;
 }
 
-
 /* =========================================================
    LINKS
    ========================================================= */
@@ -49,7 +48,6 @@ a {
 a:hover {
   color: #ffffff;
 }
-
 
 /* =========================================================
    HEADER
@@ -76,7 +74,6 @@ header {
 
   border-bottom: 1px solid #182033;
 }
-
 
 /* =========================================================
    BRAND
@@ -127,7 +124,6 @@ header {
   letter-spacing: 1.5px;
 }
 
-
 /* =========================================================
    NAVIGATION
    ========================================================= */
@@ -154,159 +150,53 @@ nav a:hover {
   color: #ffffff;
 }
 
-
 /* =========================================================
-   HEADER ACTIONS
+   PREMIUM PILL
    ========================================================= */
 
-.header-actions {
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  flex-shrink: 0;
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-.search {
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-
-  height: 38px;
-
-  padding:
-    0 11px;
-
-  background: #0a1020;
-
-  border:
-    1px solid
-    #202d46;
-
-  border-radius: 999px;
-}
-
-.search span {
-  color: #71809a;
-
-  font-size: 18px;
-}
-
-.search input {
-  width: 170px;
-
-  border: 0;
-
-  outline: 0;
-
-  background: transparent;
-
-  color: #ffffff;
-
-  font-size: 12px;
-}
-
-.search input::placeholder {
-  color: #68758c;
-}
-
-
-/* =========================================================
-   AI BUTTON
-   ========================================================= */
-
-.ai-btn {
-  background: transparent;
-
-  border:
-    1px solid
-    #28344d;
-
-  color: #ffffff;
-
-  border-radius: 20px;
-
-  padding:
-    9px 14px;
-
-  font-size: 13px;
-
-  white-space: nowrap;
-
-  cursor: pointer;
-}
-
-.ai-btn:hover {
-  background: #101a2d;
-
-  border-color: #415271;
-}
-
-
-/* =========================================================
-   PREMIUM BUTTON
-   ========================================================= */
-
-.premium-btn {
+.pill {
   background: #ffffff;
 
   color: #08101f;
 
-  padding:
-    9px 15px;
+  padding: 9px 16px;
 
   border-radius: 999px;
 
   font-weight: 700;
-
-  font-size: 13px;
-
-  white-space: nowrap;
 }
 
-.premium-btn:hover {
+.pill:hover {
   background: #dcecff;
 
   color: #08101f;
 }
 
-
 /* =========================================================
-   PROFILE
+   HEADER AI BUTTON
    ========================================================= */
 
-.profile-btn {
-  width: 36px;
-  height: 36px;
+.ai-header-btn {
+  background: transparent;
 
-  display: grid;
+  border: 1px solid #28344d;
 
-  place-items: center;
+  color: #ffffff;
 
-  border:
-    1px solid
-    #26334d;
+  border-radius: 20px;
 
-  border-radius: 50%;
-
-  color: #6aaeff;
+  padding: 9px 14px;
 
   font-size: 13px;
+
+  white-space: nowrap;
 }
 
-.profile-btn:hover {
+.ai-header-btn:hover {
   background: #101a2d;
-}
 
+  border-color: #415271;
+}
 
 /* =========================================================
    HERO
@@ -315,8 +205,7 @@ nav a:hover {
 .hero {
   min-height: 640px;
 
-  padding:
-    120px 7%;
+  padding: 120px 7%;
 
   display: flex;
 
@@ -358,14 +247,12 @@ nav a:hover {
     );
 
   pointer-events: none;
-
-  z-index: 1;
 }
 
 .hero-content {
   position: relative;
 
-  z-index: 5;
+  z-index: 2;
 
   max-width: 650px;
 }
@@ -379,8 +266,7 @@ nav a:hover {
 }
 
 .hero h1 {
-  margin:
-    15px 0;
+  margin: 15px 0;
 
   font-size:
     clamp(
@@ -412,99 +298,8 @@ nav a:hover {
   line-height: 1.7;
 }
 
-
 /* =========================================================
-   HERO CAROUSEL
-   ========================================================= */
-
-.hero-carousel {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  overflow: hidden;
-}
-
-.hero-slide {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  padding: 0;
-
-  border: 0;
-
-  background: transparent;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
-
-  cursor: pointer;
-}
-
-.hero-slide.active {
-  opacity: 1;
-
-  pointer-events: auto;
-}
-
-.hero-slide img {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-
-  object-position: center;
-
-  transform: scale(1.03);
-
-  transition:
-    transform 6s ease;
-}
-
-.hero-slide.active img {
-  transform: scale(1);
-}
-
-
-/* =========================================================
-   HERO OVERLAY
-   ========================================================= */
-
-.hero-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(5,8,16,.98) 0%,
-      rgba(5,8,16,.88) 28%,
-      rgba(5,8,16,.45) 62%,
-      rgba(5,8,16,.82) 100%
-    );
-}
-
-
-/* =========================================================
-   HERO CTA
+   CTA
    ========================================================= */
 
 .cta {
@@ -512,8 +307,7 @@ nav a:hover {
 
   margin-top: 20px;
 
-  padding:
-    11px 18px;
+  padding: 11px 18px;
 
   background: #ffffff;
 
@@ -530,123 +324,6 @@ nav a:hover {
   color: #08101f;
 }
 
-
-/* =========================================================
-   HERO ARROWS
-   ========================================================= */
-
-.hero-arrow {
-  position: absolute;
-
-  top: 50%;
-
-  transform:
-    translateY(-50%);
-
-  z-index: 10;
-
-  width: 46px;
-  height: 46px;
-
-  display: grid;
-
-  place-items: center;
-
-  border:
-    1px solid
-    rgba(255,255,255,.18);
-
-  border-radius: 50%;
-
-  background:
-    rgba(5,8,16,.58);
-
-  color: #ffffff;
-
-  font-size: 34px;
-
-  line-height: 1;
-
-  cursor: pointer;
-
-  backdrop-filter: blur(8px);
-
-  transition:
-    background .2s ease,
-    transform .2s ease;
-}
-
-.hero-arrow:hover {
-  background:
-    rgba(20,35,60,.85);
-
-  transform:
-    translateY(-50%)
-    scale(1.05);
-}
-
-.hero-prev {
-  left: 25px;
-}
-
-.hero-next {
-  right: 25px;
-}
-
-
-/* =========================================================
-   HERO DOTS
-   ========================================================= */
-
-.hero-dots {
-  position: absolute;
-
-  left: 7%;
-
-  bottom: 28px;
-
-  z-index: 10;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-}
-
-.hero-dot {
-  width: 8px;
-  height: 8px;
-
-  padding: 0;
-
-  border: 0;
-
-  border-radius: 50%;
-
-  background: #68758c;
-
-  opacity: .7;
-
-  cursor: pointer;
-
-  transition:
-    width .2s ease,
-    background .2s ease,
-    opacity .2s ease;
-}
-
-.hero-dot.active {
-  width: 24px;
-
-  border-radius: 999px;
-
-  background: #ffffff;
-
-  opacity: 1;
-}
-
-
 /* =========================================================
    SECTION
    ========================================================= */
@@ -655,41 +332,9 @@ section:not(.hero) {
   width: 100%;
 }
 
-
 /* =========================================================
    SECTION HEADER
    ========================================================= */
-
-.section-title {
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: end;
-
-  padding:
-    70px 6%
-    24px;
-}
-
-.section-title h2 {
-  margin: 0;
-
-  font-size: 38px;
-
-  line-height: 1.1;
-
-  color: #f4f7ff;
-}
-
-.section-title span {
-  color: #75819a;
-
-  font-size: 13px;
-}
-
-
-/* Compatibility with old class */
 
 .sectionhead {
   display: flex;
@@ -719,28 +364,9 @@ section:not(.hero) {
   font-size: 13px;
 }
 
-
 /* =========================================================
    VIDEO GRID
    ========================================================= */
-
-.video-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      4,
-      minmax(0, 1fr)
-    );
-
-  gap: 18px;
-
-  padding:
-    0 6%;
-}
-
-
-/* Compatibility */
 
 .grid {
   display: grid;
@@ -756,7 +382,6 @@ section:not(.hero) {
   padding:
     0 6%;
 }
-
 
 /* =========================================================
    VIDEO CARD
@@ -784,14 +409,12 @@ section:not(.hero) {
 }
 
 .card:hover {
-  transform:
-    translateY(-5px);
+  transform: translateY(-5px);
 
   border-color: #30476b;
 
   background: #0d1526;
 }
-
 
 /* =========================================================
    THUMB
@@ -829,14 +452,12 @@ section:not(.hero) {
   object-fit: cover;
 
   transition:
-    transform .3s ease;
+    transform 0.3s ease;
 }
 
 .card:hover .thumb img {
-  transform:
-    scale(1.04);
+  transform: scale(1.04);
 }
-
 
 /* =========================================================
    CARD BODY
@@ -874,28 +495,9 @@ section:not(.hero) {
   line-height: 1.4;
 }
 
-
 /* =========================================================
    BLOG
    ========================================================= */
-
-.blog-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      3,
-      minmax(0, 1fr)
-    );
-
-  gap: 20px;
-
-  padding:
-    0 6%;
-}
-
-
-/* Compatibility */
 
 .bloggrid {
   display: grid;
@@ -964,7 +566,6 @@ section:not(.hero) {
   line-height: 1.6;
 }
 
-
 /* =========================================================
    PREMIUM
    ========================================================= */
@@ -989,17 +590,6 @@ section:not(.hero) {
     10px 0 0;
 
   font-size: 38px;
-}
-
-.pricing > p {
-  color: #aab5c9;
-
-  max-width: 700px;
-
-  margin:
-    14px auto 0;
-
-  line-height: 1.7;
 }
 
 .plans {
@@ -1028,13 +618,12 @@ section:not(.hero) {
   border-radius: 18px;
 
   transition:
-    transform .2s ease,
-    border-color .2s ease;
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .plan:hover {
-  transform:
-    translateY(-4px);
+  transform: translateY(-4px);
 
   border-color: #3b5379;
 }
@@ -1066,7 +655,6 @@ section:not(.hero) {
 .plan button:hover {
   background: #8bc1ff;
 }
-
 
 /* =========================================================
    FOOTER
@@ -1132,114 +720,6 @@ footer > a {
 footer > a:hover {
   color: #ffffff;
 }
-
-
-/* =========================================================
-   SOCIAL MEDIA FOOTER
-   ========================================================= */
-
-.social-footer {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  gap: 14px;
-
-  margin: 0 auto;
-}
-
-.social-footer h3 {
-  margin: 0;
-
-  color: #f4f7ff;
-
-  font-size: 15px;
-
-  font-weight: 700;
-
-  letter-spacing: .3px;
-}
-
-.social-links {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  flex-wrap: wrap;
-
-  gap: 10px;
-}
-
-.social-link {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  min-height: 38px;
-
-  padding:
-    9px 13px;
-
-  border:
-    1px solid
-    #202d46;
-
-  border-radius: 999px;
-
-  background: #0a1020;
-
-  color: #b7c1d5;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  text-decoration: none;
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    background .2s ease,
-    color .2s ease;
-}
-
-.social-link:hover {
-  transform:
-    translateY(-2px);
-
-  color: #ffffff;
-
-  border-color: #4b638c;
-
-  background: #101a2d;
-}
-
-.social-link.youtube {
-  color: #ffb3b3;
-}
-
-.social-link.instagram {
-  color: #ffc1d9;
-}
-
-.social-link.facebook {
-  color: #b9d5ff;
-}
-
-.social-link.x {
-  color: #ffffff;
-}
-
-.social-link.telegram {
-  color: #a9dcff;
-}
-
 
 /* =========================================================
    AI PANEL
@@ -1363,14 +843,11 @@ footer > a:hover {
   font-size: 18px;
 
   font-weight: 700;
-
-  cursor: pointer;
 }
 
 .ainput button:hover {
   background: #8bc1ff;
 }
-
 
 /* =========================================================
    AI FLOATING BUTTON
@@ -1399,8 +876,6 @@ footer > a:hover {
 
   z-index: 200;
 
-  cursor: pointer;
-
   box-shadow:
     0 8px 30px
     rgba(0,0,0,.45);
@@ -1411,7 +886,6 @@ footer > a:hover {
 
   transform: scale(1.05);
 }
-
 
 /* =========================================================
    RESPONSIVE — 1200
@@ -1434,7 +908,6 @@ footer > a:hover {
     font-size: 13px;
   }
 
-  .video-grid,
   .grid {
     grid-template-columns:
       repeat(
@@ -1443,12 +916,7 @@ footer > a:hover {
       );
   }
 
-  .search input {
-    width: 120px;
-  }
-
 }
-
 
 /* =========================================================
    RESPONSIVE — 900
@@ -1481,11 +949,11 @@ footer > a:hover {
     display: none;
   }
 
-  .search {
-    display: none;
+  .ai-header-btn {
+    padding:
+      8px 11px;
   }
 
-  .video-grid,
   .grid {
     grid-template-columns:
       repeat(
@@ -1494,7 +962,6 @@ footer > a:hover {
       );
   }
 
-  .blog-grid,
   .bloggrid {
     grid-template-columns:
       repeat(
@@ -1507,12 +974,7 @@ footer > a:hover {
     flex-wrap: wrap;
   }
 
-  .hero {
-    min-height: 600px;
-  }
-
 }
-
 
 /* =========================================================
    RESPONSIVE — 600
@@ -1525,38 +987,12 @@ footer > a:hover {
 
     padding:
       0 12px;
-
-    gap: 8px;
   }
 
   .brand img {
     width: 44px;
     height: 44px;
   }
-
-  .header-actions {
-    margin-left: auto;
-  }
-
-  .ai-btn {
-    padding:
-      8px 10px;
-
-    font-size: 11px;
-  }
-
-  .premium-btn {
-    padding:
-      8px 11px;
-
-    font-size: 11px;
-  }
-
-  .profile-btn {
-    width: 32px;
-    height: 32px;
-  }
-
 
   nav {
     position: absolute;
@@ -1580,22 +1016,12 @@ footer > a:hover {
     font-size: 12px;
   }
 
-
   .hero {
     min-height: 560px;
 
     padding:
       90px 20px
       70px;
-  }
-
-  .hero-overlay {
-    background:
-      linear-gradient(
-        90deg,
-        rgba(5,8,16,.96),
-        rgba(5,8,16,.58)
-      );
   }
 
   .hero h1 {
@@ -1608,28 +1034,6 @@ footer > a:hover {
     font-size: 15px;
   }
 
-  .hero-arrow {
-    width: 38px;
-    height: 38px;
-
-    font-size: 28px;
-  }
-
-  .hero-prev {
-    left: 10px;
-  }
-
-  .hero-next {
-    right: 10px;
-  }
-
-  .hero-dots {
-    left: 20px;
-    bottom: 22px;
-  }
-
-
-  .section-title,
   .sectionhead {
     padding:
       50px 12px
@@ -1638,20 +1042,16 @@ footer > a:hover {
     display: block;
   }
 
-  .section-title h2,
   .sectionhead h2 {
     font-size: 28px;
   }
 
-  .section-title span,
   .sectionhead span {
     display: block;
 
     margin-top: 8px;
   }
 
-
-  .video-grid,
   .grid {
     grid-template-columns:
       repeat(
@@ -1681,15 +1081,12 @@ footer > a:hover {
     font-size: 10px;
   }
 
-
-  .blog-grid,
   .bloggrid {
     grid-template-columns: 1fr;
 
     padding:
       0 12px;
   }
-
 
   .pricing {
     padding:
@@ -1712,7 +1109,6 @@ footer > a:hover {
     max-width: 380px;
   }
 
-
   footer {
     padding:
       40px 20px;
@@ -1721,29 +1117,6 @@ footer > a:hover {
 
     flex-direction: column;
   }
-
-  .social-footer {
-    width: 100%;
-
-    align-items: flex-start;
-
-    margin:
-      10px 0 0;
-  }
-
-  .social-links {
-    justify-content: flex-start;
-  }
-
-  .social-link {
-    min-height: 36px;
-
-    padding:
-      8px 11px;
-
-    font-size: 12px;
-  }
-
 
   .ai {
     left: 12px;
@@ -1761,34 +1134,27 @@ footer > a:hover {
 
 }
 
-
 /* =========================================================
    EXTRA SAFETY
    ========================================================= */
 
 #videoGrid,
 #docGrid,
-#scifiGrid,
 #showGrid {
   width: 100%;
-
   min-width: 0;
 }
 
 #videoGrid .card,
 #docGrid .card,
-#scifiGrid .card,
 #showGrid .card {
   width: 100%;
-
   min-width: 0;
 }
-
 
 [hidden] {
   display: none !important;
 }
-
 
 /* =========================================================
    END
