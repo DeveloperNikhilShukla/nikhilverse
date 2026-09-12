@@ -1,149 +1,334 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NIKHILVERSE — Sci-Fi by Nikhil</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>NIKHILVERSE — Stories • Documentaries • Films</title>
+
   <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
-  <header class="topbar" id="topbar">
-    <a class="brand" href="#home" aria-label="NIKHILVERSE Home">
-      <img src="/assets/nikhilverse-logo.png" alt="NIKHILVERSE logo">
+  <!-- =========================
+       HEADER
+       ========================= -->
+
+  <header>
+
+    <a class="brand" href="#home">
+
+      <img
+        src="/assets/nikhilverse-logo.png"
+        alt="NIKHILVERSE Logo"
+      >
+
       <span>
         <b>NIKHILVERSE</b>
         <small>SCI-FI BY NIKHIL</small>
       </span>
+
     </a>
 
-    <nav class="main-nav">
-      <a class="active" href="#home">Home</a>
-      <a href="#videos">Movies</a>
-      <a href="#shows">TV Shows</a>
-      <a href="#documentaries">Documentaries</a>
-      <a href="#documentaries">Sci-Fi</a>
-      <a href="#videos">New & Popular</a>
-      <a href="#videos">My List</a>
+    <nav>
+
+      <a href="#home">Home</a>
+
+      <a href="#videos">Explore</a>
+
+      <a href="#docs">Documentaries</a>
+
+      <a href="#shows">Shows</a>
+
+      <a href="#blog">Blog</a>
+
+      <a class="pill" href="#premium">
+        Premium
+      </a>
+
     </nav>
 
-    <div class="header-actions">
-      <label class="search">
-        <span>⌕</span>
-        <input id="siteSearch" type="search" placeholder="Search movies, shows, documentaries...">
-      </label>
-      <button class="ai-btn" onclick="openAI()">🤖 <span>Nikhil AI</span></button>
-      <a class="premium-btn" href="#premium">👑 Premium</a>
-      <a class="profile-btn" href="/admin/" title="Profile / Admin">●</a>
-    </div>
+    <button
+      class="ai-header-btn"
+      onclick="openAI()"
+    >
+      🤖 Nikhil AI ✦
+    </button>
+
   </header>
 
-  <main id="home">
 
-    <section class="hero">
-      <div class="hero-overlay"></div>
+  <!-- =========================
+       MAIN
+       ========================= -->
+
+  <main>
+
+
+    <!-- =========================
+         HERO
+         ========================= -->
+
+    <section id="home" class="hero">
+
       <div class="hero-content">
-        <div class="eyebrow"><i></i> N DOCUMENTARY</div>
-        <h1>THE UNIVERSE</h1>
-        <h2>BEYOND OUR IMAGINATION</h2>
+
+        <small>
+          THE HOME OF YOUR STORIES
+        </small>
+
+        <h1>
+          Discover stories
+          <br>
+          <i>worth watching.</i>
+        </h1>
+
         <p>
-          Explore the mysteries of space, time and existence. Dive into unexplained
-          phenomena, ancient civilizations and the future of humanity.
+          Cinematic documentaries, shows and
+          original storytelling from Nikhil.
         </p>
-        <div class="hero-buttons">
-          <a class="watch-btn" href="#videos">▶ Watch Now</a>
-          <a class="list-btn" href="#videos">＋ My List</a>
-        </div>
+
+        <a
+          class="cta"
+          href="#videos"
+        >
+          Explore Videos →
+        </a>
+
       </div>
+
     </section>
 
-    <section class="content-section" id="videos">
-      <div class="section-title">
-        <h2>Trending Now</h2>
-        <a href="#videos">See All ›</a>
+
+    <!-- =========================
+         LATEST VIDEOS
+         ========================= -->
+
+    <section id="videos">
+
+      <div class="sectionhead">
+
+        <h2>
+          Latest Videos
+        </h2>
+
+        <span>
+          SIFI By Nikhil • TAH By Nikhil
+        </span>
+
       </div>
-      <div class="video-grid" id="videoGrid"></div>
+
+      <div
+        id="videoGrid"
+        class="grid"
+      ></div>
+
     </section>
 
-    <section class="content-section" id="documentaries">
-      <div class="section-title">
-        <h2>Documentaries</h2>
-        <a href="#documentaries">See All ›</a>
+
+    <!-- =========================
+         DOCUMENTARIES
+         ========================= -->
+
+    <section id="docs">
+
+      <div class="sectionhead">
+
+        <h2>
+          Documentaries
+        </h2>
+
+        <span>
+          Deep stories. Real subjects.
+        </span>
+
       </div>
-      <div class="video-grid" id="docGrid"></div>
+
+      <div
+        id="docGrid"
+        class="grid"
+      ></div>
+
     </section>
 
-    <section class="content-section" id="shows">
-      <div class="section-title">
-        <h2>Latest Episodes</h2>
+
+    <!-- =========================
+         SHOWS
+         ========================= -->
+
+    <section id="shows">
+
+      <div class="sectionhead">
+
+        <h2>
+          Shows
+        </h2>
+
+        <span>
+          Original stories & episodes
+        </span>
+
       </div>
-      <div class="video-grid">
-        <div id="videoGridMirror" class="video-grid-mirror"></div>
-      </div>
+
+      <div
+        id="showGrid"
+        class="grid"
+      ></div>
+
     </section>
 
-    <section class="content-section blog-section" id="blog">
-      <div class="section-title">
-        <h2>From the NIKHILVERSE Blog</h2>
-        <a href="#blog">See All ›</a>
+
+    <!-- =========================
+         BLOG
+         ========================= -->
+
+    <section id="blog">
+
+      <div class="sectionhead">
+
+        <h2>
+          From the Journal
+        </h2>
+
+        <span>
+          Stories behind the stories
+        </span>
+
       </div>
-      <div class="blog-grid" id="blogGrid"></div>
+
+      <div
+        id="blogGrid"
+        class="bloggrid"
+      ></div>
+
     </section>
 
-    <section class="premium-section" id="premium">
-      <div>
-        <div class="eyebrow"><i></i> NIKHILVERSE PREMIUM</div>
-        <h2>More stories. More mysteries. More to explore.</h2>
-        <p>Unlock premium documentaries, exclusive series, early access and bonus content.</p>
-      </div>
-      <div class="plans" id="plans"></div>
+
+    <!-- =========================
+         PREMIUM
+         ========================= -->
+
+    <section
+      id="premium"
+      class="pricing"
+    >
+
+      <small>
+        MEMBERSHIP
+      </small>
+
+      <h2>
+        Go deeper with NIKHILVERSE Premium.
+      </h2>
+
+      <div
+        id="plans"
+        class="plans"
+      ></div>
+
     </section>
 
   </main>
 
-  <div class="ai-panel" id="ai" hidden>
-    <div class="ai-head">
-      <div><b>🤖 Nikhil AI</b><small>Your NIKHILVERSE guide</small></div>
-      <button onclick="openAI()">×</button>
-    </div>
-    <div class="chat" id="chat">Ask me about documentaries, space, mysteries or anything on NIKHILVERSE.</div>
-    <div class="chat-input">
-      <input id="msg" type="text" placeholder="Ask Nikhil AI...">
-      <button onclick="askAI()">➤</button>
-    </div>
-  </div>
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
 
   <footer>
+
     <div class="footer-brand">
-      <img src="/assets/nikhilverse-logo.png" alt="">
-      <b>NIKHILVERSE</b>
+
+      <img
+        src="/assets/nikhilverse-logo.png"
+        alt="NIKHILVERSE"
+      >
+
+      <div>
+
+        <b>
+          NIKHILVERSE
+        </b>
+
+        <p>
+          Stories • Documentaries • Films • Ideas
+        </p>
+
+      </div>
+
     </div>
-    <p>© 2026 NIKHILVERSE · SCI-FI BY NIKHIL</p>
+
+    <a href="/admin/">
+      Admin Panel
+    </a>
+
   </footer>
 
-  <script src="/app.js"></script>
-  <script>
-    // Small search enhancement that works with the existing API-rendered cards.
-    const search = document.getElementById('siteSearch');
-    search?.addEventListener('input', () => {
-      const q = search.value.toLowerCase().trim();
-      document.querySelectorAll('.card').forEach(card => {
-        card.style.display = !q || card.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    });
 
-    // Keep the existing API-driven video grid as the source for "Latest Episodes".
-    const mirrorObserver = new MutationObserver(() => {
-      const target = document.getElementById('videoGridMirror');
-      const source = document.getElementById('videoGrid');
-      if (target && source && target.childElementCount === 0 && source.childElementCount) {
-        target.innerHTML = source.innerHTML;
-      }
-    });
-    mirrorObserver.observe(document.getElementById('videoGrid'), {childList:true});
-  </script>
+  <!-- =========================
+       NIKHIL AI
+       ========================= -->
+
+  <div
+    id="ai"
+    class="ai"
+    hidden
+  >
+
+    <div class="ahead">
+
+      <b>
+        🤖 Nikhil AI
+      </b>
+
+      <button
+        onclick="openAI()"
+        aria-label="Close AI"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div id="chat">
+      Hi 👋 Ask me anything or ask me to find NIKHILVERSE content.
+    </div>
+
+    <div class="ainput">
+
+      <input
+        id="msg"
+        placeholder="Ask Nikhil…"
+        autocomplete="off"
+      >
+
+      <button
+        onclick="askAI()"
+      >
+        →
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- AI FLOATING BUTTON -->
+
+  <button
+    class="aifab"
+    onclick="openAI()"
+    aria-label="Open Nikhil AI"
+  >
+    ✦
+  </button>
+
+
+  <!-- IMPORTANT:
+       Existing app.js remains unchanged -->
+
+  <script src="/app.js"></script>
+
 </body>
 </html>
