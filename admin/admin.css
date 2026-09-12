@@ -15,7 +15,9 @@ body{
 }
 
 
-/* ================= LOGIN ================= */
+/* =====================================================
+   LOGIN SCREEN
+===================================================== */
 
 .login-screen{
   min-height:100vh;
@@ -26,8 +28,16 @@ body{
   overflow:hidden;
 
   background:
-    radial-gradient(circle at 50% 35%,rgba(42,105,180,.18),transparent 35%),
-    radial-gradient(circle at 20% 80%,rgba(25,77,140,.10),transparent 30%),
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(42,105,180,.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(25,77,140,.10),
+      transparent 30%
+    ),
     #05070d;
 }
 
@@ -37,12 +47,23 @@ body{
   inset:0;
 
   background-image:
-    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+    linear-gradient(
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
+    );
 
   background-size:50px 50px;
 
-  mask-image:linear-gradient(to bottom,#000,transparent);
+  mask-image:linear-gradient(
+    to bottom,
+    #000,
+    transparent
+  );
 }
 
 .login-glow{
@@ -55,13 +76,16 @@ body{
   opacity:.10;
 
   filter:blur(150px);
+
   border-radius:50%;
 
   animation:loginGlow 6s ease-in-out infinite;
 }
 
 @keyframes loginGlow{
-  0%,100%{
+
+  0%,
+  100%{
     transform:scale(.9);
     opacity:.08;
   }
@@ -70,26 +94,44 @@ body{
     transform:scale(1.1);
     opacity:.15;
   }
+
 }
 
 .login-card{
-  width:min(430px,calc(100% - 30px));
+  width:min(
+    430px,
+    calc(100% - 30px)
+  );
 
   padding:42px 38px;
 
   position:relative;
   z-index:2;
 
-  background:rgba(9,14,25,.88);
+  background:rgba(
+    9,
+    14,
+    25,
+    .88
+  );
 
-  border:1px solid rgba(105,173,255,.25);
+  border:1px solid
+    rgba(
+      105,
+      173,
+      255,
+      .25
+    );
 
   border-radius:20px;
 
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.02),
-    0 25px 80px rgba(0,0,0,.7),
-    0 0 60px rgba(45,130,255,.08);
+    0 0 0 1px
+      rgba(255,255,255,.02),
+    0 25px 80px
+      rgba(0,0,0,.7),
+    0 0 60px
+      rgba(45,130,255,.08);
 
   backdrop-filter:blur(20px);
 
@@ -97,21 +139,28 @@ body{
 }
 
 @keyframes cardIn{
+
   from{
     opacity:0;
-    transform:translateY(20px) scale(.98);
+    transform:
+      translateY(20px)
+      scale(.98);
   }
 
   to{
     opacity:1;
     transform:none;
   }
+
 }
 
 .login-logo{
   text-align:center;
+
   font-size:31px;
+
   font-weight:900;
+
   letter-spacing:2px;
 }
 
@@ -123,20 +172,32 @@ body{
   color:#69adff;
 
   text-shadow:
-    0 0 15px rgba(105,173,255,.7);
+    0 0 15px
+      rgba(
+        105,
+        173,
+        255,
+        .7
+      );
 }
 
 .login-subtitle{
   text-align:center;
+
   color:#71829d;
+
   font-size:10px;
+
   letter-spacing:3px;
+
   margin-top:8px;
+
   font-weight:700;
 }
 
 .login-divider{
   width:60px;
+
   height:2px;
 
   margin:24px auto;
@@ -144,11 +205,18 @@ body{
   background:#69adff;
 
   box-shadow:
-    0 0 15px rgba(105,173,255,.9);
+    0 0 15px
+      rgba(
+        105,
+        173,
+        255,
+        .9
+      );
 }
 
 .login-card h1{
   text-align:center;
+
   margin:0;
 
   font-size:27px;
@@ -156,8 +224,11 @@ body{
 
 .login-description{
   text-align:center;
+
   color:#78869c;
-  margin:8px 0 28px;
+
+  margin:
+    8px 0 28px;
 }
 
 .input-group{
@@ -166,14 +237,19 @@ body{
 
 .input-group label{
   display:block;
+
   color:#9eacc1;
+
   font-size:12px;
+
   font-weight:600;
+
   margin-bottom:7px;
 }
 
 .login-card input{
   width:100%;
+
   height:48px;
 
   margin:0;
@@ -181,9 +257,11 @@ body{
   padding:0 14px;
 
   background:#080d17;
+
   color:#fff;
 
   border:1px solid #263650;
+
   border-radius:10px;
 
   outline:none;
@@ -191,12 +269,28 @@ body{
   transition:.25s;
 }
 
+.login-card input::placeholder{
+  color:#536178;
+}
+
 .login-card input:focus{
   border-color:#69adff;
 
   box-shadow:
-    0 0 0 3px rgba(105,173,255,.08),
-    0 0 20px rgba(105,173,255,.08);
+    0 0 0 3px
+      rgba(
+        105,
+        173,
+        255,
+        .08
+      ),
+    0 0 20px
+      rgba(
+        105,
+        173,
+        255,
+        .08
+      );
 }
 
 .password-wrap{
@@ -211,49 +305,74 @@ body{
   position:absolute;
 
   right:8px;
+
   top:6px;
 
   width:36px;
+
   height:36px;
 
   border:0;
+
   background:transparent;
 
   color:#8190a8;
 
   cursor:pointer;
+
+  border-radius:7px;
+
+  transition:.2s;
+}
+
+.eye-btn:hover{
+  background:#101a2a;
+
+  color:#fff;
 }
 
 .login-btn{
   width:100%;
+
   height:50px;
 
   margin-top:8px;
 
   border:0;
+
   border-radius:10px;
 
-  background:linear-gradient(
-    90deg,
-    #277dff,
-    #5aa9ff
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #277dff,
+      #5aa9ff
+    );
 
   color:white;
 
   font-weight:800;
+
   font-size:14px;
 
   cursor:pointer;
 
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   padding:0 18px;
 
   box-shadow:
-    0 0 25px rgba(40,125,255,.22);
+    0 0 25px
+      rgba(
+        40,
+        125,
+        255,
+        .22
+      );
 
   transition:.25s;
 }
@@ -262,7 +381,21 @@ body{
   transform:translateY(-1px);
 
   box-shadow:
-    0 0 35px rgba(40,125,255,.4);
+    0 0 35px
+      rgba(
+        40,
+        125,
+        255,
+        .4
+      );
+}
+
+.login-btn:active{
+  transform:translateY(0);
+}
+
+.login-btn:disabled{
+  cursor:not-allowed;
 }
 
 .login-error{
@@ -288,19 +421,26 @@ body{
 }
 
 
-/* ================= ADMIN LAYOUT ================= */
+/* =====================================================
+   ADMIN LAYOUT
+===================================================== */
 
 .admin-layout{
   min-height:100vh;
+
   display:flex;
+
   background:#060b14;
 }
 
 
-/* ================= SIDEBAR ================= */
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 aside{
   width:240px;
+
   min-height:100vh;
 
   background:
@@ -315,17 +455,21 @@ aside{
   padding:25px 18px;
 
   display:flex;
+
   flex-direction:column;
 }
 
 .brand{
-  padding:0 10px 20px;
+  padding:
+    0 10px 20px;
 
-  border-bottom:1px solid #18253a;
+  border-bottom:
+    1px solid #18253a;
 }
 
 .brand b{
   font-size:21px;
+
   letter-spacing:1px;
 }
 
@@ -333,13 +477,20 @@ aside{
   color:#69adff;
 
   text-shadow:
-    0 0 12px rgba(105,173,255,.4);
+    0 0 12px
+      rgba(
+        105,
+        173,
+        255,
+        .4
+      );
 }
 
 .brand p{
   color:#596981;
 
   font-size:9px;
+
   letter-spacing:2px;
 
   margin:6px 0 0;
@@ -367,6 +518,7 @@ aside nav a{
 
 aside nav a:hover{
   color:white;
+
   background:#101c30;
 }
 
@@ -376,14 +528,26 @@ aside nav a.active{
   background:
     linear-gradient(
       90deg,
-      rgba(69,145,255,.16),
+      rgba(
+        69,
+        145,
+        255,
+        .16
+      ),
       transparent
     );
 
-  border-left:2px solid #69adff;
+  border-left:
+    2px solid #69adff;
 
   box-shadow:
-    inset 15px 0 25px rgba(69,145,255,.03);
+    inset 15px 0 25px
+      rgba(
+        69,
+        145,
+        255,
+        .03
+      );
 }
 
 .logout-btn{
@@ -408,28 +572,40 @@ aside nav a.active{
 
 .logout-btn:hover{
   color:#ff7280;
+
   border-color:#713440;
+
+  background:#130e16;
 }
 
 
-/* ================= MAIN ================= */
+/* =====================================================
+   MAIN
+===================================================== */
 
 main{
   flex:1;
-  padding:30px 5%;
+
+  padding:
+    30px 5%;
+
   max-width:1500px;
 }
 
 header{
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
 
   margin-bottom:5px;
 }
 
 header h1{
-  margin:0 0 4px;
+  margin:
+    0 0 4px;
+
   font-size:28px;
 }
 
@@ -439,8 +615,11 @@ header span{
 
 .admin-status{
   font-size:10px;
+
   font-weight:700;
+
   letter-spacing:1px;
+
   color:#7890a9;
 }
 
@@ -448,6 +627,7 @@ header span{
   display:inline-block;
 
   width:7px;
+
   height:7px;
 
   background:#42e695;
@@ -457,11 +637,14 @@ header span{
   margin-right:5px;
 
   box-shadow:
-    0 0 10px #42e695;
+    0 0 10px
+      #42e695;
 }
 
 
-/* ================= STATS ================= */
+/* =====================================================
+   STATS
+===================================================== */
 
 .stats{
   display:grid;
@@ -495,7 +678,9 @@ header span{
 
 .stat:hover{
   border-color:#31547e;
-  transform:translateY(-2px);
+
+  transform:
+    translateY(-2px);
 }
 
 .stat strong{
@@ -509,7 +694,9 @@ header span{
 }
 
 
-/* ================= PANELS ================= */
+/* =====================================================
+   PANELS
+===================================================== */
 
 .panel{
   background:
@@ -530,7 +717,9 @@ header span{
 
 .panel-title{
   display:flex;
+
   align-items:center;
+
   gap:12px;
 
   margin-bottom:16px;
@@ -538,10 +727,13 @@ header span{
 
 .panel-icon{
   width:38px;
+
   height:38px;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
   background:#101d31;
@@ -553,12 +745,16 @@ header span{
 
 .panel h2{
   margin:0;
+
   font-size:17px;
 }
 
 .panel-title p{
-  margin:3px 0 0;
+  margin:
+    3px 0 0;
+
   color:#5f718a;
+
   font-size:11px;
 }
 
@@ -576,8 +772,6 @@ header span{
 .panel select{
   width:100%;
 
-  box-sizing:border-box;
-
   background:#080f1b;
 
   color:white;
@@ -591,6 +785,13 @@ header span{
   margin:6px 0;
 
   outline:none;
+
+  font:inherit;
+}
+
+.panel input::placeholder,
+.panel textarea::placeholder{
+  color:#536178;
 }
 
 .panel input:focus,
@@ -599,20 +800,32 @@ header span{
   border-color:#4d8dd6;
 
   box-shadow:
-    0 0 0 3px rgba(77,141,214,.06);
+    0 0 0 3px
+      rgba(
+        77,
+        141,
+        214,
+        .06
+      );
+}
+
+.panel select{
+  cursor:pointer;
 }
 
 textarea{
   min-height:150px;
+
   resize:vertical;
 }
 
 .publish-btn{
-  background:linear-gradient(
-    90deg,
-    #4d9cff,
-    #69adff
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #4d9cff,
+      #69adff
+    );
 
   color:#06101e;
 
@@ -632,24 +845,35 @@ textarea{
 }
 
 .publish-btn:hover{
-  transform:translateY(-1px);
+  transform:
+    translateY(-1px);
 
   box-shadow:
-    0 0 25px rgba(105,173,255,.2);
+    0 0 25px
+      rgba(
+        105,
+        173,
+        255,
+        .2
+      );
 }
 
 
-/* ================= INTEGRATION ================= */
+/* =====================================================
+   INTEGRATION
+===================================================== */
 
 .integration-item{
   display:flex;
+
   align-items:flex-start;
 
   gap:12px;
 
   padding:13px 0;
 
-  border-bottom:1px solid #162237;
+  border-bottom:
+    1px solid #162237;
 }
 
 .integration-item:last-child{
@@ -657,7 +881,8 @@ textarea{
 }
 
 .integration-item p{
-  margin:4px 0 0;
+  margin:
+    4px 0 0;
 
   color:#687890;
 
@@ -668,22 +893,42 @@ textarea{
   color:#e7bd4b;
 
   text-shadow:
-    0 0 8px rgba(231,189,75,.4);
+    0 0 8px
+      rgba(
+        231,
+        189,
+        75,
+        .4
+      );
 }
 
 .green{
   color:#42e695;
 
   text-shadow:
-    0 0 8px rgba(66,230,149,.4);
+    0 0 8px
+      rgba(
+        66,
+        230,
+        149,
+        .4
+      );
 }
 
 code{
   color:#69adff;
+
+  background:#081321;
+
+  padding:2px 5px;
+
+  border-radius:4px;
 }
 
 
-/* ================= RESPONSIVE ================= */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media(max-width:1000px){
 
@@ -701,6 +946,7 @@ code{
   }
 
 }
+
 
 @media(max-width:800px){
 
@@ -731,10 +977,15 @@ code{
 
 }
 
+
 @media(max-width:500px){
 
   .login-card{
     padding:32px 22px;
+  }
+
+  .login-logo{
+    font-size:27px;
   }
 
   .stats{
