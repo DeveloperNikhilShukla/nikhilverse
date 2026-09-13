@@ -288,35 +288,38 @@
 
     .hero-viewer-count{
       position:absolute;
-      left:6%;
-      bottom:74px;
+      right:8%;
+      bottom:18%;
       z-index:50;
       display:flex;
       flex-direction:column;
-      align-items:flex-start;
+      align-items:flex-end;
       line-height:1;
+      text-align:right;
       pointer-events:none;
-      text-shadow:0 5px 22px rgba(0,0,0,.9);
+      text-shadow:0 6px 28px rgba(0,0,0,.95),0 0 20px rgba(94,168,255,.22);
     }
 
     .hero-viewer-number{
-      min-height:58px;
-      font-size:52px;
-      line-height:1;
-      font-weight:950;
-      letter-spacing:-2px;
-      color:#ffffff;
+      min-height:82px;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:76px;
+      font-style:italic;
+      line-height:.9;
+      font-weight:700;
+      letter-spacing:-4px;
+      color:#f8fbff;
       opacity:1;
       visibility:visible;
     }
 
     .hero-viewer-label{
-      margin-top:9px;
-      font-size:12px;
+      margin-top:12px;
+      font-size:11px;
       line-height:1;
       font-weight:900;
-      letter-spacing:3px;
-      color:#7fbaff;
+      letter-spacing:4px;
+      color:#b8d9ff;
       text-transform:uppercase;
       opacity:1;
       visibility:visible;
@@ -324,12 +327,13 @@
 
     @media(max-width:600px){
       .hero-viewer-count{
-        left:14px;
-        bottom:62px;
+        right:14px;
+        bottom:16%;
       }
       .hero-viewer-number{
-        font-size:32px;
-        letter-spacing:-1px;
+        min-height:42px;
+        font-size:42px;
+        letter-spacing:-2px;
       }
       .hero-viewer-label{
         font-size:9px;
