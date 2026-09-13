@@ -289,37 +289,43 @@
     .hero-viewer-count{
       position:absolute;
       left:6%;
-      bottom:72px;
-      z-index:8;
+      bottom:74px;
+      z-index:50;
       display:flex;
       flex-direction:column;
       align-items:flex-start;
       line-height:1;
       pointer-events:none;
-      text-shadow:0 6px 24px rgba(0,0,0,.7);
+      text-shadow:0 5px 22px rgba(0,0,0,.9);
     }
 
     .hero-viewer-number{
-      min-height:54px;
-      font-size:46px;
-      font-weight:900;
+      min-height:58px;
+      font-size:52px;
+      line-height:1;
+      font-weight:950;
       letter-spacing:-2px;
-      color:#fff;
+      color:#ffffff;
+      opacity:1;
+      visibility:visible;
     }
 
     .hero-viewer-label{
-      margin-top:8px;
-      font-size:11px;
-      font-weight:800;
+      margin-top:9px;
+      font-size:12px;
+      line-height:1;
+      font-weight:900;
       letter-spacing:3px;
       color:#7fbaff;
       text-transform:uppercase;
+      opacity:1;
+      visibility:visible;
     }
 
     @media(max-width:600px){
       .hero-viewer-count{
         left:14px;
-        bottom:58px;
+        bottom:62px;
       }
       .hero-viewer-number{
         font-size:32px;
@@ -524,6 +530,12 @@
 
     <!-- Dark overlay -->
     <div class="hero-overlay"></div>
+
+    <!-- Combined YouTube audience count -->
+    <div class="hero-viewer-count" aria-live="polite" aria-label="Regular Viewers">
+      <div class="hero-viewer-number" id="heroTotalSubscribers">Loading…</div>
+      <div class="hero-viewer-label">Regular Viewers</div>
+    </div>
 
 
     <div class="hero-content">
@@ -938,11 +950,6 @@
                   alt=""
                 >
 
-                <div class="hero-viewer-count" aria-label="Regular Viewers">
-                  <div class="hero-viewer-number" data-hero-total-viewers>Loading…</div>
-                  <div class="hero-viewer-label">Regular Viewers</div>
-                </div>
-
               </div>
             `;
 
@@ -975,7 +982,15 @@
           );
 
         const heroViewerNumber =
-          document.querySelector("[data-hero-total-viewers]");
+          document.getElementById("heroTotalSubscribers");
+
+        function formatHeroNumber(value){
+          const n = Number(value || 0);
+          if (n >= 1000000000) return (n / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+          if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+          if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+          return n.toLocaleString('en-IN');
+        }
 
         function renderTotalViewers(){
           if (!heroViewerNumber) return;
@@ -983,13 +998,10 @@
           heroViewerNumber.textContent =
             total > 0
               ? formatHeroNumber(total) + "+"
-              : "—";
+              : "Loading…";
         }
 
         renderTotalViewers();
-
-
-        function formatHeroNumber(value){
           const n = Number(value || 0);
           if (n >= 1000000000) return (n / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
           if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
