@@ -644,13 +644,41 @@ app.get('/api/youtube/stats', async (req, res) => {
     const channelsByName = {};
 
     for (const channel of youtubeChannels) {
-      const response = await youtubeGet('channels', {
+      let response = await youtubeGet('channels', {
         part: 'statistics,snippet',
         forHandle: channel.handle
       });
 
-      const item = response.items?.[0];
-      if (!item) continue;
+      let item = response.items?.[0];
+
+      // If the handle lookup fails, fall back to a channel-name search.
+      // This keeps the live counter working even if a handle was renamed.
+      if (!item) {
+        const searchResponse = await youtubeGet('search', {
+          part: 'snippet',
+          q: channel.name,
+          type: 'channel',
+          maxResults: '5'
+        });
+
+        const candidate = searchResponse.items?.find(x =>
+          String(x.snippet?.title || '').trim().toLowerCase() ===
+          String(channel.name || '').trim().toLowerCase()
+        ) || searchResponse.items?.[0];
+
+        if (candidate?.snippet?.channelId) {
+          response = await youtubeGet('channels', {
+            part: 'statistics,snippet',
+            id: candidate.snippet.channelId
+          });
+          item = response.items?.[0];
+        }
+      }
+
+      if (!item) {
+        console.warn(`YouTube channel stats unavailable: ${channel.name} (${channel.handle})`);
+        continue;
+      }
 
       const stats = {
         name: item.snippet?.title || channel.name,
@@ -699,6 +727,7 @@ app.get('/api/youtube/stats', async (req, res) => {
       channels,
       channelsByName,
       totalSubscribers,
+      channelCount: Object.keys(channels).length,
       videos,
       updatedAt: new Date().toISOString()
     });
