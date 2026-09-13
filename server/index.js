@@ -641,56 +641,23 @@ app.get('/api/youtube/stats', async (req, res) => {
     }
 
     const channels = {};
-    const channelsByName = {};
 
     for (const channel of youtubeChannels) {
-      let response = await youtubeGet('channels', {
+      const response = await youtubeGet('channels', {
         part: 'statistics,snippet',
         forHandle: channel.handle
       });
 
-      let item = response.items?.[0];
+      const item = response.items?.[0];
+      if (!item) continue;
 
-      // If the handle lookup fails, fall back to a channel-name search.
-      // This keeps the live counter working even if a handle was renamed.
-      if (!item) {
-        const searchResponse = await youtubeGet('search', {
-          part: 'snippet',
-          q: channel.name,
-          type: 'channel',
-          maxResults: '5'
-        });
-
-        const candidate = searchResponse.items?.find(x =>
-          String(x.snippet?.title || '').trim().toLowerCase() ===
-          String(channel.name || '').trim().toLowerCase()
-        ) || searchResponse.items?.[0];
-
-        if (candidate?.snippet?.channelId) {
-          response = await youtubeGet('channels', {
-            part: 'statistics,snippet',
-            id: candidate.snippet.channelId
-          });
-          item = response.items?.[0];
-        }
-      }
-
-      if (!item) {
-        console.warn(`YouTube channel stats unavailable: ${channel.name} (${channel.handle})`);
-        continue;
-      }
-
-      const stats = {
+      channels[channel.handle] = {
         name: item.snippet?.title || channel.name,
         handle: channel.handle,
         subscribers: Number(item.statistics?.subscriberCount || 0),
         views: Number(item.statistics?.viewCount || 0),
         videos: Number(item.statistics?.videoCount || 0)
       };
-
-      channels[channel.handle] = stats;
-      channelsByName[channel.name] = stats;
-      if (stats.name) channelsByName[stats.name] = stats;
     }
 
     const ids = db.videos
@@ -717,17 +684,9 @@ app.get('/api/youtube/stats', async (req, res) => {
       }
     }
 
-    const totalSubscribers = Object.values(channels).reduce(
-      (total, channel) => total + Number(channel.subscribers || 0),
-      0
-    );
-
     res.json({
       ok: true,
       channels,
-      channelsByName,
-      totalSubscribers,
-      channelCount: Object.keys(channels).length,
       videos,
       updatedAt: new Date().toISOString()
     });
