@@ -641,6 +641,7 @@ app.get('/api/youtube/stats', async (req, res) => {
     }
 
     const channels = {};
+    const channelsByName = {};
 
     for (const channel of youtubeChannels) {
       const response = await youtubeGet('channels', {
@@ -651,13 +652,17 @@ app.get('/api/youtube/stats', async (req, res) => {
       const item = response.items?.[0];
       if (!item) continue;
 
-      channels[channel.handle] = {
+      const stats = {
         name: item.snippet?.title || channel.name,
         handle: channel.handle,
         subscribers: Number(item.statistics?.subscriberCount || 0),
         views: Number(item.statistics?.viewCount || 0),
         videos: Number(item.statistics?.videoCount || 0)
       };
+
+      channels[channel.handle] = stats;
+      channelsByName[channel.name] = stats;
+      if (stats.name) channelsByName[stats.name] = stats;
     }
 
     const ids = db.videos
@@ -684,9 +689,16 @@ app.get('/api/youtube/stats', async (req, res) => {
       }
     }
 
+    const totalSubscribers = Object.values(channels).reduce(
+      (total, channel) => total + Number(channel.subscribers || 0),
+      0
+    );
+
     res.json({
       ok: true,
       channels,
+      channelsByName,
+      totalSubscribers,
       videos,
       updatedAt: new Date().toISOString()
     });
