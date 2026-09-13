@@ -415,18 +415,26 @@
       padding:0 12px;
       border:1px solid #263c59;
       border-radius:999px;
-      background:#0b1728;
-      color:#cbd8e7;
+      background:linear-gradient(135deg,#132741,#091524);
+      color:#e7f1ff;
       font-size:11px;
       font-weight:700;
       text-decoration:none;
-      transition:border-color .2s ease,background .2s ease,color .2s ease;
+      box-shadow:inset 0 1px rgba(255,255,255,.05),0 5px 14px rgba(0,0,0,.22);
+      transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease;
     }
     .footer-social a:hover{
-      border-color:#62abff;
-      background:#10243e;
+      transform:translateY(-2px);
+      border-color:#7bbaff;
+      background:linear-gradient(135deg,#1b4271,#0b1b30);
       color:#fff;
+      box-shadow:0 8px 20px rgba(73,151,255,.22);
     }
+    .footer-social .social-youtube{border-color:rgba(255,68,68,.5);}
+    .footer-social .social-instagram{border-color:rgba(235,102,163,.48);}
+    .footer-social .social-facebook{border-color:rgba(95,151,255,.52);}
+    .footer-social .social-x{border-color:rgba(204,218,235,.44);}
+    .footer-social .social-telegram{border-color:rgba(81,177,255,.55);}
     @media(max-width:700px){
       .footer-social{justify-content:flex-start;}
     }
@@ -832,11 +840,11 @@
     </div>
 
     <div class="footer-social" aria-label="NIKHILVERSE social media">
-      <a href="https://www.youtube.com/@SIFIByNikhil" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://instagram.com/nikhilshuklaindianarmy" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.facebook.com/theancienthistorianss/" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://x.com/nikhilshuklaind" target="_blank" rel="noopener">X</a>
-      <a href="https://t.me/TheAncientHistorians/10" target="_blank" rel="noopener">Telegram</a>
+      <a class="social-youtube" href="https://www.youtube.com/@SIFIByNikhil" target="_blank" rel="noopener">▶ YouTube</a>
+      <a class="social-instagram" href="https://instagram.com/nikhilshuklaindianarmy" target="_blank" rel="noopener">◎ Instagram</a>
+      <a class="social-facebook" href="https://www.facebook.com/theancienthistorianss/" target="_blank" rel="noopener">f Facebook</a>
+      <a class="social-x" href="https://x.com/nikhilshuklaind" target="_blank" rel="noopener">𝕏</a>
+      <a class="social-telegram" href="https://t.me/TheAncientHistorians/10" target="_blank" rel="noopener">✈ Telegram</a>
     </div>
 
     <a href="/admin/">

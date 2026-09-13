@@ -28,6 +28,43 @@ function card(v){
   return `<article class="card" data-video-id="${escapeHTML(youtubeId)}" role="button" tabindex="0"><div class="thumb">${v.thumbnail ? `<img src="${escapeHTML(v.thumbnail)}" alt="${escapeHTML(v.title || '')}" style="width:100%;height:100%;object-fit:cover" loading="lazy">` : '▶'}</div><div class="body"><span class="meta">${v.access==='premium'?'🔒 PREMIUM':'FREE'} · ${escapeHTML(v.channel||'NIKHILVERSE')}</span><h3>${escapeHTML(v.title||'')}</h3><div class="meta">${escapeHTML(v.category||'Story')}</div><div class="youtube-stats"><span>👁 ${formatNumber(views)} views</span><span>👍 ${formatNumber(likes)} likes</span></div></div></article>`;
 }
 
+function setUpVideoSearch(videos){
+  const input=document.getElementById('siteSearch');
+  const sectionTitle=document.querySelector('#videos .section-title h2');
+  if(!input||!sectionTitle)return;
+
+  function searchableText(video){
+    return [video.title,video.description,video.category,video.channel]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+  }
+
+  function updateResults(){
+    const query=input.value.trim().toLowerCase();
+    const matches=query
+      ? videos.filter(video=>searchableText(video).includes(query))
+      : videos;
+
+    sectionTitle.textContent=query
+      ? `Search Results (${matches.length})`
+      : 'Latest Videos';
+
+    videoGrid.innerHTML=matches.length
+      ? matches.map(card).join('')
+      : `<p class="meta">No videos found for “${escapeHTML(input.value.trim())}”.</p>`;
+  }
+
+  input.addEventListener('input',updateResults);
+  input.addEventListener('keydown',event=>{
+    if(event.key==='Enter'){
+      event.preventDefault();
+      updateResults();
+      document.getElementById('videos').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+}
+
 function openVideo(youtubeId){
   const id = String(youtubeId || '').trim();
   if(!id) return;
@@ -63,6 +100,7 @@ async function load(){
     window.youtubeChannelStats = youtubeStats?.channels || {};
 
     videoGrid.innerHTML=vs.map(card).join('')||'<p class="meta">No videos yet. Connect YouTube API in .env.</p>';
+    setUpVideoSearch(vs);
 
     const documentaries=vs.filter(x=>(x.category||'').toLowerCase().includes('doc'));
     docGrid.innerHTML=documentaries.map(card).join('')||videoGrid.innerHTML;
