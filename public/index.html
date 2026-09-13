@@ -342,7 +342,40 @@
       }
     }
 
-    .hero-youtube-stats{
+    /* Playlist removed from main navbar */
+    .playlist-nav-wrap{
+      display:none !important;
+    }
+
+    .hero-total-viewers{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      margin:14px 0 18px;
+      position:relative;
+      z-index:6;
+      text-shadow:0 4px 24px rgba(0,0,0,.75);
+    }
+
+    .hero-total-viewers strong{
+      font-size:clamp(34px, 4vw, 58px);
+      line-height:.95;
+      font-weight:900;
+      letter-spacing:-2px;
+      color:#fff;
+    }
+
+    .hero-total-viewers span{
+      margin-top:5px;
+      font-size:11px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:2.4px;
+      text-transform:uppercase;
+      color:#7eb9ff;
+    }
+
+        .hero-youtube-stats{
       position:absolute;
       left:6%;
       bottom:72px;
@@ -441,93 +474,6 @@
 
 
 
-      <!-- ==================================================
-           YOUTUBE PLAYLISTS
-      =================================================== -->
-
-      <div
-        class="playlist-nav-wrap"
-        id="playlistNavWrap"
-      >
-
-        <button
-          class="playlist-nav-btn"
-          id="playlistNavBtn"
-          type="button"
-          aria-expanded="false"
-        >
-          <span>📂 Playlists</span>
-          <span class="playlist-nav-arrow">▾</span>
-        </button>
-
-        <div
-          class="playlist-panel"
-          id="playlistPanel"
-        >
-
-          <div class="playlist-panel-header">
-
-            <div class="playlist-heading">
-
-              <div class="playlist-heading-icon">
-                📂
-              </div>
-
-              <div>
-                <strong>YouTube Playlists</strong>
-                <small>All public playlists from your NIKHILVERSE channels</small>
-              </div>
-
-            </div>
-
-            <button
-              class="playlist-close"
-              id="playlistClose"
-              type="button"
-              aria-label="Close playlists"
-            >
-              ×
-            </button>
-
-          </div>
-
-          <div class="playlist-slider">
-
-            <button
-              class="playlist-scroll"
-              id="playlistLeft"
-              type="button"
-              aria-label="Previous playlists"
-            >
-              ‹
-            </button>
-
-            <div
-              class="playlist-track"
-              id="playlistTrack"
-            >
-              <div class="playlist-loading">
-                <span class="playlist-spinner"></span>
-                Loading playlists...
-              </div>
-            </div>
-
-            <button
-              class="playlist-scroll"
-              id="playlistRight"
-              type="button"
-              aria-label="Next playlists"
-            >
-              ›
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
       <a href="#videos">
         New & Popular
       </a>
@@ -619,6 +565,11 @@
         Cinematic documentaries, shows and original
         storytelling from Nikhil.
       </p>
+
+      <div class="hero-total-viewers" aria-live="polite">
+        <strong id="heroTotalViewers">—</strong>
+        <span>Regular Viewers</span>
+      </div>
 
       <a
         class="cta"
@@ -987,14 +938,7 @@
                   src="${video.thumbnail}"
                   alt=""
                 >
-
-                <div class="hero-youtube-stats">
-                  👥 ${formatHeroNumber(
-                    getHeroRegular Viewers(video)
-                  )} Regular Viewers
-                </div>
-
-              </div>
+</div>
             `;
 
           }).join("");
@@ -1032,15 +976,6 @@
           if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
           if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
           return n.toLocaleString('en-IN');
-        }
-
-        function getHeroRegular Viewers(video){
-          const handle =
-            video.channel === 'TAH By Nikhil'
-              ? '@TAHBYNikhil2'
-              : '@SIFIByNikhil';
-
-          return youtubeStats?.channels?.[handle]?.subscribers || 0;
         }
 
         function showSlide(index) {
