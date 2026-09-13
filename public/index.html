@@ -401,6 +401,36 @@
       color:#fff !important;
     }
 
+    .footer-social{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:8px;
+    }
+    .footer-social a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border:1px solid #263c59;
+      border-radius:999px;
+      background:#0b1728;
+      color:#cbd8e7;
+      font-size:11px;
+      font-weight:700;
+      text-decoration:none;
+      transition:border-color .2s ease,background .2s ease,color .2s ease;
+    }
+    .footer-social a:hover{
+      border-color:#62abff;
+      background:#10243e;
+      color:#fff;
+    }
+    @media(max-width:700px){
+      .footer-social{justify-content:flex-start;}
+    }
+
   </style>
 
 </head>
@@ -799,6 +829,14 @@
 
       </div>
 
+    </div>
+
+    <div class="footer-social" aria-label="NIKHILVERSE social media">
+      <a href="https://www.youtube.com/@SIFIByNikhil" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://instagram.com/nikhilshuklaindianarmy" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/theancienthistorianss/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://x.com/nikhilshuklaind" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/TheAncientHistorians/10" target="_blank" rel="noopener">Telegram</a>
     </div>
 
     <a href="/admin/">
