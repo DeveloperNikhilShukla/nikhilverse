@@ -628,6 +628,79 @@ function admin(req, res, next) {
 
 
 // ======================================================
+// REALTIME YOUTUBE STATS
+// ======================================================
+
+app.get('/api/youtube/stats', async (req, res) => {
+  try {
+    if (!process.env.YOUTUBE_API_KEY) {
+      return res.status(503).json({
+        ok: false,
+        error: 'YOUTUBE_API_KEY is not configured'
+      });
+    }
+
+    const channels = {};
+
+    for (const channel of youtubeChannels) {
+      const response = await youtubeGet('channels', {
+        part: 'statistics,snippet',
+        forHandle: channel.handle
+      });
+
+      const item = response.items?.[0];
+      if (!item) continue;
+
+      channels[channel.handle] = {
+        name: item.snippet?.title || channel.name,
+        handle: channel.handle,
+        subscribers: Number(item.statistics?.subscriberCount || 0),
+        views: Number(item.statistics?.viewCount || 0),
+        videos: Number(item.statistics?.videoCount || 0)
+      };
+    }
+
+    const ids = db.videos
+      .filter(v => v.youtube_id)
+      .map(v => v.youtube_id);
+
+    const videos = {};
+
+    for (let i = 0; i < ids.length; i += 50) {
+      const batch = ids.slice(i, i + 50);
+      if (!batch.length) continue;
+
+      const response = await youtubeGet('videos', {
+        part: 'statistics',
+        id: batch.join(',')
+      });
+
+      for (const item of response.items || []) {
+        videos[item.id] = {
+          views: Number(item.statistics?.viewCount || 0),
+          likes: Number(item.statistics?.likeCount || 0),
+          comments: Number(item.statistics?.commentCount || 0)
+        };
+      }
+    }
+
+    res.json({
+      ok: true,
+      channels,
+      videos,
+      updatedAt: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Realtime YouTube stats failed:', error);
+    res.status(500).json({
+      ok: false,
+      error: error.message || 'Unable to fetch YouTube statistics'
+    });
+  }
+});
+
+
+// ======================================================
 // PUBLIC VIDEOS
 // ======================================================
 
