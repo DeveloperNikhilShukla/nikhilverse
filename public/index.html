@@ -533,7 +533,7 @@
 
     <!-- Combined YouTube audience count -->
     <div class="hero-viewer-count" aria-live="polite" aria-label="Regular Viewers">
-      <div class="hero-viewer-number" id="heroTotalSubscribers">Loading…</div>
+      <div class="hero-viewer-number" id="heroTotalSubscribers">66.1K+</div>
       <div class="hero-viewer-label">Regular Viewers</div>
     </div>
 
@@ -874,6 +874,46 @@
        ===================================================== -->
 
   <script>
+    /* Keep the hero counter independent from carousel/video loading. */
+    (function () {
+      const counter = document.getElementById("heroTotalSubscribers");
+      const fallbackTotal = 66100;
+
+      function formatSubscriberTotal(value) {
+        const total = Number(value);
+        if (!Number.isFinite(total) || total <= 0) return "66.1K+";
+        if (total >= 1000000) return (total / 1000000).toFixed(1).replace(/\.0$/, "") + "M+";
+        if (total >= 1000) return (total / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
+        return total.toLocaleString("en-IN") + "+";
+      }
+
+      function showTotal(total) {
+        if (counter) counter.textContent = formatSubscriberTotal(total);
+      }
+
+      async function refreshSubscriberTotal() {
+        try {
+          const response = await fetch("/api/youtube/stats", { cache: "no-store" });
+          if (!response.ok) throw new Error("Subscriber stats request failed");
+
+          const stats = await response.json();
+          const channelTotal = Object.values(stats.channels || {}).reduce(
+            (sum, channel) => sum + Number(channel && channel.subscribers || 0), 0
+          );
+          const total = Number(stats.totalSubscribers) || channelTotal;
+          if (total > 0) showTotal(total);
+        } catch (error) {
+          console.warn("Subscriber stats unavailable; keeping last visible total.", error);
+        }
+      }
+
+      showTotal(fallbackTotal);
+      refreshSubscriberTotal();
+      window.setInterval(refreshSubscriberTotal, 30000);
+    })();
+  </script>
+
+  <script>
 
     (async function () {
 
@@ -994,20 +1034,11 @@
 
         function renderTotalViewers(){
           if (!heroViewerNumber) return;
-          const total = Number(window.totalYouTubeSubscribers || 0);
-          heroViewerNumber.textContent =
-            total > 0
-              ? formatHeroNumber(total) + "+"
-              : "Loading…";
+          const total = Number(window.totalYouTubeSubscribers || 66100);
+          heroViewerNumber.textContent = formatHeroNumber(total) + "+";
         }
 
         renderTotalViewers();
-          const n = Number(value || 0);
-          if (n >= 1000000000) return (n / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
-          if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-          if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-          return n.toLocaleString('en-IN');
-        }
 
         function showSlide(index) {
 
