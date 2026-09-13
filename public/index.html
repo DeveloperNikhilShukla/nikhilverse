@@ -342,70 +342,11 @@
       }
     }
 
-    .app-nav-link{
-      color:#7fc1ff !important;
-      font-weight:700;
-    }
-
-    .app-download{
-      scroll-margin-top:90px;
-      width:min(1250px,92%);
-      margin:0 auto 34px;
-      padding:30px 34px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:28px;
-      border:1px solid rgba(120,170,230,.18);
-      border-radius:22px;
-      background:linear-gradient(135deg,rgba(15,29,50,.92),rgba(7,14,26,.96));
-      box-shadow:0 18px 50px rgba(0,0,0,.24);
-    }
-
-    .app-download-copy h2{
-      margin:0 0 8px;
-      font-size:24px;
-    }
-
-    .app-download-copy p{
-      margin:0;
-      color:#91a5bd;
-      line-height:1.6;
-      font-size:13px;
-      max-width:700px;
-    }
-
-    .app-download-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:170px;
-      padding:13px 20px;
-      border-radius:999px;
-      background:#fff;
-      color:#07101d;
-      text-decoration:none;
-      font-weight:800;
-      white-space:nowrap;
-    }
-
-    @media(max-width:700px){
-      .app-download{
-        width:94%;
-        padding:22px;
-        flex-direction:column;
-        align-items:flex-start;
-      }
-      .app-download-btn{
-        width:100%;
-      }
-    }
-
     .hero-youtube-stats{
       position:absolute;
       left:6%;
       bottom:72px;
-      z-index:20;
+      z-index:5;
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -595,10 +536,6 @@
         My List
       </a>
 
-      <a class="app-nav-link" href="#download-app">
-        📱 Download App
-      </a>
-
     </nav>
 
 
@@ -665,10 +602,6 @@
     <!-- Dark overlay -->
     <div class="hero-overlay"></div>
 
-    <!-- Combined live YouTube subscribers -->
-    <div id="heroSubscriberStats" class="hero-youtube-stats">
-      👥 Loading subscribers…
-    </div>
 
     <div class="hero-content">
 
@@ -882,29 +815,6 @@
 
 
   <!-- =========================
-       ANDROID APP
-       ========================= -->
-
-  <section id="download-app" class="app-download">
-
-    <div class="app-download-copy">
-      <h2>NIKHILVERSE Android App 📱</h2>
-      <p>Watch NIKHILVERSE documentaries, sci-fi stories and exclusive content directly from your Android device.</p>
-    </div>
-
-    <a
-      class="app-download-btn"
-      href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-      target="_blank"
-      rel="noopener"
-    >
-      ⬇ Download App
-    </a>
-
-  </section>
-
-
-  <!-- =========================
        FOOTER
        ========================= -->
 
@@ -1023,9 +933,6 @@
       const next =
         document.getElementById("heroNext");
 
-      const subscriberBadge =
-        document.getElementById("heroSubscriberStats");
-
       if (!carousel) return;
 
       try {
@@ -1050,21 +957,10 @@
           }
         } catch (statsError) {
           console.warn("YouTube stats unavailable:", statsError);
-          if (subscriberBadge) {
-            subscriberBadge.textContent = '👥 Subscribers unavailable';
-          }
         }
 
         window.youtubeVideoStats = youtubeStats.videos || {};
         window.youtubeChannelStats = youtubeStats.channels || {};
-        window.youtubeChannelStatsByName = youtubeStats.channelsByName || {};
-
-        const totalSubscribers = Number(youtubeStats?.totalSubscribers || 0);
-        if (subscriberBadge) {
-          subscriberBadge.textContent = totalSubscribers > 0
-            ? `👥 ${formatHeroNumber(totalSubscribers)} Subscribers`
-            : '👥 Subscribers unavailable';
-        }
 
         const latest =
           videos
@@ -1091,6 +987,12 @@
                   src="${video.thumbnail}"
                   alt=""
                 >
+
+                <div class="hero-youtube-stats">
+                  👥 ${formatHeroNumber(
+                    getHeroRegular Viewers(video)
+                  )} Regular Viewers
+                </div>
 
               </div>
             `;
@@ -1130,6 +1032,15 @@
           if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
           if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
           return n.toLocaleString('en-IN');
+        }
+
+        function getHeroRegular Viewers(video){
+          const handle =
+            video.channel === 'TAH By Nikhil'
+              ? '@TAHBYNikhil2'
+              : '@SIFIByNikhil';
+
+          return youtubeStats?.channels?.[handle]?.subscribers || 0;
         }
 
         function showSlide(index) {
