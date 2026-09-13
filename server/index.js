@@ -1472,9 +1472,29 @@ ${contentContext}
       });
     }
 
-    const answer =
-      data.output_text ||
-      'Sorry, mujhe abhi response nahi mila.';
+    // `output_text` is an SDK convenience property. This app calls the REST
+    // endpoint directly, so also read text from the returned output messages.
+    const answer = [
+      data.output_text,
+      ...(Array.isArray(data.output)
+        ? data.output.flatMap(item =>
+            (item.type === 'message' && Array.isArray(item.content))
+              ? item.content
+                  .filter(part => part.type === 'output_text' && typeof part.text === 'string')
+                  .map(part => part.text)
+              : []
+          )
+        : [])
+    ]
+      .filter(text => typeof text === 'string' && text.trim())
+      .join('\n')
+      .trim();
+
+    if (!answer) {
+      return res.status(502).json({
+        error: 'Nikhil AI returned an empty response. Please try again.'
+      });
+    }
 
     res.json({
       answer,
