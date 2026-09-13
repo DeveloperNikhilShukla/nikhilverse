@@ -348,6 +348,7 @@
     }
 
     .app-download{
+      scroll-margin-top:90px;
       width:min(1250px,92%);
       margin:0 auto 34px;
       padding:30px 34px;
@@ -404,7 +405,7 @@
       position:absolute;
       left:6%;
       bottom:72px;
-      z-index:5;
+      z-index:20;
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -664,6 +665,10 @@
     <!-- Dark overlay -->
     <div class="hero-overlay"></div>
 
+    <!-- Combined live YouTube subscribers -->
+    <div id="heroSubscriberStats" class="hero-youtube-stats">
+      👥 Loading subscribers…
+    </div>
 
     <div class="hero-content">
 
@@ -1018,6 +1023,9 @@
       const next =
         document.getElementById("heroNext");
 
+      const subscriberBadge =
+        document.getElementById("heroSubscriberStats");
+
       if (!carousel) return;
 
       try {
@@ -1042,11 +1050,21 @@
           }
         } catch (statsError) {
           console.warn("YouTube stats unavailable:", statsError);
+          if (subscriberBadge) {
+            subscriberBadge.textContent = '👥 Subscribers unavailable';
+          }
         }
 
         window.youtubeVideoStats = youtubeStats.videos || {};
         window.youtubeChannelStats = youtubeStats.channels || {};
         window.youtubeChannelStatsByName = youtubeStats.channelsByName || {};
+
+        const totalSubscribers = Number(youtubeStats?.totalSubscribers || 0);
+        if (subscriberBadge) {
+          subscriberBadge.textContent = totalSubscribers > 0
+            ? `👥 ${formatHeroNumber(totalSubscribers)} Subscribers`
+            : '👥 Subscribers unavailable';
+        }
 
         const latest =
           videos
@@ -1073,10 +1091,6 @@
                   src="${video.thumbnail}"
                   alt=""
                 >
-
-                <div class="hero-youtube-stats">
-                  👥 ${formatHeroNumber(Number(youtubeStats?.totalSubscribers || 0))} Subscribers
-                </div>
 
               </div>
             `;
