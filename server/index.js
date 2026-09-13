@@ -660,6 +660,9 @@ app.get('/api/youtube/stats', async (req, res) => {
       };
     }
 
+    const totalSubscribers = Object.values(channels)
+      .reduce((total, channel) => total + Number(channel.subscribers || 0), 0);
+
     const ids = db.videos
       .filter(v => v.youtube_id)
       .map(v => v.youtube_id);
@@ -687,6 +690,7 @@ app.get('/api/youtube/stats', async (req, res) => {
     res.json({
       ok: true,
       channels,
+      totalSubscribers,
       videos,
       updatedAt: new Date().toISOString()
     });
