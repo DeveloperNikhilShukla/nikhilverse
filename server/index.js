@@ -628,109 +628,6 @@ function admin(req, res, next) {
 
 
 // ======================================================
-// REALTIME YOUTUBE STATS
-// ======================================================
-
-app.get('/api/youtube/stats', async (req, res) => {
-  try {
-    if (!process.env.YOUTUBE_API_KEY) {
-      return res.status(503).json({
-        ok: false,
-        error: 'YOUTUBE_API_KEY is not configured'
-      });
-    }
-
-    const channels = {};
-
-    for (const channel of youtubeChannels) {
-      let response = await youtubeGet('channels', {
-        part: 'statistics,snippet',
-        forHandle: channel.handle
-      });
-
-      let item = response.items?.[0];
-
-      // Fallback for channels whose handle is not returned by the API.
-      if (!item) {
-        const searchResponse = await youtubeGet('search', {
-          part: 'snippet',
-          q: channel.name,
-          type: 'channel',
-          maxResults: 5
-        });
-
-        const match = (searchResponse.items || []).find(
-          x => String(x.snippet?.title || '').trim().toLowerCase() ===
-               String(channel.name || '').trim().toLowerCase()
-        ) || searchResponse.items?.[0];
-
-        if (match?.id?.channelId) {
-          const detailResponse = await youtubeGet('channels', {
-            part: 'statistics,snippet',
-            id: match.id.channelId
-          });
-          item = detailResponse.items?.[0];
-        }
-      }
-
-      if (!item) continue;
-
-      channels[channel.handle] = {
-        name: item.snippet?.title || channel.name,
-        handle: channel.handle,
-        subscribers: Number(item.statistics?.subscriberCount || 0),
-        views: Number(item.statistics?.viewCount || 0),
-        videos: Number(item.statistics?.videoCount || 0)
-      };
-    }
-
-    const ids = db.videos
-      .filter(v => v.youtube_id)
-      .map(v => v.youtube_id);
-
-    const videos = {};
-
-    for (let i = 0; i < ids.length; i += 50) {
-      const batch = ids.slice(i, i + 50);
-      if (!batch.length) continue;
-
-      const response = await youtubeGet('videos', {
-        part: 'statistics',
-        id: batch.join(',')
-      });
-
-      for (const item of response.items || []) {
-        videos[item.id] = {
-          views: Number(item.statistics?.viewCount || 0),
-          likes: Number(item.statistics?.likeCount || 0),
-          comments: Number(item.statistics?.commentCount || 0)
-        };
-      }
-    }
-
-    const totalSubscribers = Object.values(channels).reduce(
-      (sum, channel) => sum + Number(channel?.subscribers || 0),
-      0
-    );
-
-    res.json({
-      ok: true,
-      channels,
-      totalSubscribers,
-      videos,
-      updatedAt: new Date().toISOString()
-    });
-  } catch (error) {
-    console.error('Realtime YouTube stats failed:', error);
-    res.status(500).json({
-      ok: false,
-      error: error.message || 'Unable to fetch YouTube statistics'
-    });
-  }
-});
-
-
-// ======================================================
 // PUBLIC VIDEOS
 // ======================================================
 
@@ -1472,29 +1369,9 @@ ${contentContext}
       });
     }
 
-    // `output_text` is an SDK convenience property. This app calls the REST
-    // endpoint directly, so also read text from the returned output messages.
-    const answer = [
-      data.output_text,
-      ...(Array.isArray(data.output)
-        ? data.output.flatMap(item =>
-            (item.type === 'message' && Array.isArray(item.content))
-              ? item.content
-                  .filter(part => part.type === 'output_text' && typeof part.text === 'string')
-                  .map(part => part.text)
-              : []
-          )
-        : [])
-    ]
-      .filter(text => typeof text === 'string' && text.trim())
-      .join('\n')
-      .trim();
-
-    if (!answer) {
-      return res.status(502).json({
-        error: 'Nikhil AI returned an empty response. Please try again.'
-      });
-    }
+    const answer =
+      data.output_text ||
+      'Sorry, mujhe abhi response nahi mila.';
 
     res.json({
       answer,
@@ -1508,6 +1385,46 @@ ${contentContext}
       error: 'Nikhil AI temporarily unavailable'
     });
   }
+});
+
+// ======================================================
+// LIGHTWEIGHT ANALYTICS + NEWSLETTER
+// ======================================================
+
+if (!db.analytics) db.analytics = { events: [], newsletter: [] };
+
+app.post('/api/analytics/event', (req, res) => {
+  try {
+    const allowed = new Set(['view','play','complete','search','watchlist','quiz']);
+    const type = String(req.body?.type || '').trim();
+    if (!allowed.has(type)) return res.status(400).json({ ok:false, error:'Invalid event type' });
+    const event = {
+      id: idOf(db.analytics.events),
+      type,
+      videoId: String(req.body?.videoId || '').slice(0,100),
+      title: String(req.body?.title || '').slice(0,300),
+      at: new Date().toISOString()
+    };
+    db.analytics.events.push(event);
+    if (db.analytics.events.length > 10000) db.analytics.events = db.analytics.events.slice(-10000);
+    save();
+    res.json({ok:true});
+  } catch (e) { res.status(500).json({ok:false,error:'Analytics unavailable'}); }
+});
+
+app.post('/api/newsletter/subscribe', (req, res) => {
+  const email = String(req.body?.email || '').trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ok:false,error:'Valid email required'});
+  if (!db.analytics.newsletter.includes(email)) { db.analytics.newsletter.push(email); save(); }
+  res.json({ok:true,message:'Subscribed'});
+});
+
+app.get('/api/admin/analytics', auth, admin, (req, res) => {
+  const events = db.analytics?.events || [];
+  const counts = events.reduce((a,e)=>{a[e.type]=(a[e.type]||0)+1;return a;},{});
+  const videoViews = {};
+  events.filter(e=>e.type==='view').forEach(e=>{const k=e.videoId||e.title||'unknown';videoViews[k]=(videoViews[k]||0)+1;});
+  res.json({ok:true,totalEvents:events.length,counts,newsletterSubscribers:(db.analytics?.newsletter||[]).length,topVideos:Object.entries(videoViews).sort((a,b)=>b[1]-a[1]).slice(0,20)});
 });
 
 // ======================================================
