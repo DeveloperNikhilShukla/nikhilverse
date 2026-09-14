@@ -18,20 +18,7 @@
   .appbox{width:100%!important;margin-top:15px!important;padding:18px!important;border-radius:12px!important}.appbox .app{width:100%;text-align:center;justify-content:center}.comments{padding:14px!important}.sidehead{padding:14px}.item{gap:9px}.thumb{width:100px;height:58px}.ititle{font-size:12px}
   .hero{padding:18px;margin-bottom:12px}.hero h1{font-size:24px}.hero p{font-size:12px}.count{font-size:12px}
 }
-</style>
-<link rel="canonical" id="canonical" href="https://nikhilverse.onrender.com/watch.html">
-<meta property="og:type" content="video.other">
-<meta property="og:site_name" content="NIKHILVERSE">
-<meta property="og:title" id="ogTitle" content="Watch — NIKHILVERSE">
-<meta property="og:description" id="ogDesc" content="Watch NIKHILVERSE documentaries, sci-fi stories and original videos.">
-<meta property="og:url" id="ogUrl" content="https://nikhilverse.onrender.com/watch.html">
-<meta property="og:image" id="ogImage" content="https://nikhilverse.onrender.com/nikhilverse-logo.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" id="twTitle" content="Watch — NIKHILVERSE">
-<meta name="twitter:description" id="twDesc" content="Watch NIKHILVERSE documentaries, sci-fi stories and original videos.">
-<meta name="twitter:image" id="twImage" content="https://nikhilverse.onrender.com/nikhilverse-logo.png">
-<script type="application/ld+json" id="videoSchema">{"@context":"https://schema.org","@type":"VideoObject","name":"NIKHILVERSE video","description":"NIKHILVERSE video","thumbnailUrl":["https://nikhilverse.onrender.com/nikhilverse-logo.png"],"embedUrl":"https://nikhilverse.onrender.com/watch.html"}</script>
-</head><body>
+</style></head><body>
 <header class="head"><nav class="nav"><button class="nv-mobile-menu-btn" id="nvMobileNavBtn" type="button" aria-label="Open menu">☰</button><a class="logo" href="/"><img src="/nikhilverse-logo.png" alt="NIKHILVERSE"><span>NIKHILVERSE<small>SCI-FI BY NIKHIL</small></span></a><div class="links"><a href="/">Home</a><a href="/#videos">Movies</a><a href="/#shows">TV Shows</a><a href="/#documentaries">Documentaries</a><a href="/#scifi">Sci-Fi</a><a href="/#premium">Premium</a></div><div class="actions"><a class="app" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">📱 Android App</a><a class="btn" href="/">← Back</a></div></nav><div class="nv-mobile-menu" id="nvMobileNav"><a href="/">🏠 Home</a><a href="/#videos">🎬 Videos</a><a href="/#shows">📺 TV Shows</a><a href="/#documentaries">🎞️ Documentaries</a><a href="/#scifi">🛸 Sci-Fi</a><a href="/#premium">👑 Premium</a><a class="app-link" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">📱 Download Android App</a></div></header>
 <main class="wrap"><div class="crumb"><a href="/">NIKHILVERSE</a> / Watch</div><div id="state" class="loading">Loading video…</div><div id="layout" class="layout" hidden><section><div class="mainbox"><div class="player"><div id="ytplayer"></div></div><div class="toolbar"><button id="resumeBtn">▶ Resume</button><button id="theaterBtn">⛶ Theater Mode</button><button id="audioBtn">🔊 Audio Mode</button><button id="shareBtn">↗ Share</button><button id="saveBtn">＋ Watchlist</button></div></div><section class="info"><h1 id="title"></h1><div class="meta" id="meta"></div><div class="stats" id="stats"></div><div class="desc" id="description"></div><div class="reactions"><button class="reaction" data-r="👍">👍 <span>0</span></button><button class="reaction" data-r="❤️">❤️ <span>0</span></button><button class="reaction" data-r="🔥">🔥 <span>0</span></button><button class="reaction" data-r="🤯">🤯 <span>0</span></button></div></section><section class="comments"><h2>Discussion / Theory Room</h2><textarea id="commentText" placeholder="Share your theory or comment…"></textarea><button id="commentBtn">Post Comment</button><div id="commentsList"></div></section></section><aside class="side"><div class="sidehead"><h2>More from NIKHILVERSE</h2><small id="sideCount"></small></div><div class="list" id="list"></div></aside></div></main>
 <section class="appbox"><div><h2>📱 NIKHILVERSE Android App</h2><p>Install the NIKHILVERSE Android app for a faster OTT-style experience.</p></div><a class="app" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">Download APK</a></section>
@@ -45,86 +32,16 @@ function formatCount(value){const n=Number(value||0);if(!Number.isFinite(n))retu
 function storeView(v){fetch('/api/analytics/event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'view',videoId:v.youtube_id,title:v.title})}).catch(()=>{});}
 function saveProgress(){if(!current||!player||typeof player.getCurrentTime!=='function')return;const t=player.getCurrentTime()||0;if(t>5)localStorage.setItem('nv_progress_'+current.youtube_id,JSON.stringify({time:t,title:current.title}));localStorage.setItem('nv_continue',JSON.stringify({id:current.youtube_id,time:t,title:current.title}));}
 function showPlayerError(code){const box=$('.player');if(!box)return;let msg='YouTube player could not load.';if(code===101||code===150)msg='This video does not allow embedding. You can still watch it on YouTube.';else if(code===100)msg='This video is private or has been removed.';else if(code===153)msg='YouTube blocked the embed because the browser referrer was not available.';box.insertAdjacentHTML('beforeend',`<div class="yt-error" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#000;color:#d9e7f5;text-align:center;padding:20px"><b>${esc(msg)}</b><a class="btn" href="https://www.youtube.com/watch?v=${encodeURIComponent(current.youtube_id)}" target="_blank" rel="noopener">Open on YouTube ↗</a></div>`);}
-function setVideoSEO(v){
-  const title=(v.title||'NIKHILVERSE Video').trim();
-  const desc=String(v.description||'Watch this NIKHILVERSE video.').replace(/\s+/g,' ').trim().slice(0,300);
-  const url=location.href.split('#')[0];
-  const canonical=document.getElementById('canonical');
-  if(canonical)canonical.href=url;
-  document.title=title+' — NIKHILVERSE';
-  const set=(id,value)=>{const el=document.getElementById(id);if(el)el.setAttribute('content',value);};
-  set('ogTitle',title+' — NIKHILVERSE'); set('ogDesc',desc); set('ogUrl',url);
-  set('twTitle',title+' — NIKHILVERSE'); set('twDesc',desc);
-  set('ogImage',v.thumbnail||`https://i.ytimg.com/vi/${encodeURIComponent(v.youtube_id)}/hqdefault.jpg`);
-  set('twImage',v.thumbnail||`https://i.ytimg.com/vi/${encodeURIComponent(v.youtube_id)}/hqdefault.jpg`);
-
-  const schema={
-    "@context":"https://schema.org",
-    "@type":"VideoObject",
-    "name":title,
-    "description":desc,
-    "thumbnailUrl":[v.thumbnail||`https://i.ytimg.com/vi/${encodeURIComponent(v.youtube_id)}/hqdefault.jpg`],
-    "uploadDate":v.published_at||undefined,
-    "embedUrl":`https://www.youtube.com/embed/${encodeURIComponent(v.youtube_id)}`,
-    "contentUrl":v.youtube_url||`https://www.youtube.com/watch?v=${encodeURIComponent(v.youtube_id)}`,
-    "publisher":{"@type":"Organization","name":"NIKHILVERSE","logo":{"@type":"ImageObject","url":"https://nikhilverse.onrender.com/nikhilverse-logo.png"}},
-    "interactionStatistic":[
-      {"@type":"InteractionCounter","interactionType":{"@type":"WatchAction"},"userInteractionCount":Number(v.view_count||0)},
-      {"@type":"InteractionCounter","interactionType":{"@type":"LikeAction"},"userInteractionCount":Number(v.like_count||0)}
-    ]
-  };
-  Object.keys(schema).forEach(k=>schema[k]===undefined&&delete schema[k]);
-  const node=document.getElementById('videoSchema');
-  if(node)node.textContent=JSON.stringify(schema);
-}
-function scoreRelated(a,b){
-  const tokenize=v=>new Set(String(`${v.title||''} ${v.description||''} ${v.category||''}`).toLowerCase().replace(/[^a-z0-9\u0900-\u097f]+/g,' ').split(/\s+/).filter(w=>w.length>3));
-  const A=tokenize(a),B=tokenize(b);
-  let overlap=0; A.forEach(w=>{if(B.has(w))overlap++;});
-  let score=overlap*4;
-  if(a.category&&b.category&&a.category===b.category)score+=6;
-  if(a.channel&&b.channel&&a.channel===b.channel)score+=2;
-  return score+Math.random()*2;
-}
-function relatedVideos(){
-  const seen=new Set();
-  const pool=videos.filter(v=>{
-    const key=v.youtube_id||v.id;
-    if(!key||key===current.youtube_id||seen.has(key))return false;
-    seen.add(key);
-    return true;
-  });
-  const ranked=pool.map(v=>({v,score:scoreRelated(current,v)})).sort((a,b)=>b.score-a.score);
-  const selected=ranked.slice(0,18).map(x=>x.v);
-  const selectedIds=new Set(selected.map(v=>v.youtube_id));
-  const fallback=pool.filter(v=>!selectedIds.has(v.youtube_id)).sort(()=>Math.random()-0.5);
-  return [...selected,...fallback].slice(0,80).sort(()=>Math.random()-.5);
-}
 function selectVideo(v,autoplay=true){
-  current=v; setVideoSEO(v);
+  current=v; document.title=(v.title||'Watch')+' — NIKHILVERSE';
   $('#title').textContent=v.title||'Untitled';
   $('#meta').textContent=[v.channel||'NIKHILVERSE',v.category||'Story',v.access||'free'].join(' · ');
-  $('#stats').textContent=`👁 ${formatCount(v.view_count)} views · 👍 ${formatCount(v.like_count)} likes`;
+  $('#stats').textContent=`👁 ${formatCount(v.view_count)} views · 👍 ${formatCount(v.like_count)} likes · 💬 ${formatCount(v.comment_count)} comments`;
   $('#description').textContent=v.description||'No description available.';
   localStorage.setItem('nv_last_video',v.youtube_id); storeView(v);
   const oldErr=$('.yt-error');if(oldErr)oldErr.remove();
   if(playerReady&&player){player.loadVideoById({videoId:v.youtube_id});if(!autoplay)player.pauseVideo();}
-  refreshCurrentLiveStats();
 }
-async function refreshCurrentLiveStats(){
-  if(!current?.youtube_id)return;
-  try{
-    const data=await fetch('/api/youtube/video-stats?ids='+encodeURIComponent(current.youtube_id),{cache:'no-store'}).then(r=>r.ok?r.json():{});
-    const s=data?.[current.youtube_id];
-    if(!s)return;
-    current.view_count=s.viewCount; current.like_count=s.likeCount;
-    $('#stats').textContent=`👁 ${formatCount(s.viewCount)} views · 👍 ${formatCount(s.likeCount)} likes`;
-    setVideoSEO(current);
-    const row=document.querySelector(`.item[data-id="${CSS.escape(current.youtube_id)}"]`);
-    if(row)row.querySelector('.num:last-child')?.replaceChildren(document.createTextNode(`👁 ${formatCount(s.viewCount)} · 👍 ${formatCount(s.likeCount)}`));
-  }catch(e){}
-}
-
 function onYouTubeIframeAPIReady(){playerReady=true;if(current&&!player)createPlayer();}
 function createPlayer(){
   if(player||!window.YT||!YT.Player||!current)return;
@@ -137,22 +54,17 @@ function createPlayer(){
     }
   }});
 }
-function renderList(){
-  const list=$('#list');
-  const related=relatedVideos();
-  $('#sideCount').textContent=related.length+' related videos';
-  list.innerHTML=related.map(v=>`<div class="item" data-id="${esc(v.youtube_id)}"><img src="${esc(v.thumbnail||'https://i.ytimg.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt=""><div><div class="num">${esc(v.channel||'NIKHILVERSE')}</div><b>${esc(v.title)}</b><div class="num">👁 ${formatCount(v.view_count)} · 👍 ${formatCount(v.like_count)}</div></div></div>`).join('');
-  list.querySelectorAll('.item').forEach(x=>x.onclick=()=>{const v=videos.find(z=>z.youtube_id===x.dataset.id);if(v){selectVideo(v,true);renderList();}});
-}
-
+function renderList(){const list=$('#list');const same=videos.filter(v=>v.youtube_id!==current.youtube_id);$('#sideCount').textContent=same.length+' more videos';list.innerHTML=same.slice(0,80).map(v=>`<div class="item" data-id="${esc(v.youtube_id)}"><img src="${esc(v.thumbnail||'https://i.ytimg.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt=""><div><div class="num">${esc(v.channel||'NIKHILVERSE')}</div><b>${esc(v.title)}</b><div class="num">👁 ${formatCount(v.view_count)} · 👍 ${formatCount(v.like_count)} · 💬 ${formatCount(v.comment_count)}</div></div></div>`).join('');list.querySelectorAll('.item').forEach(x=>x.onclick=()=>{const v=videos.find(z=>z.youtube_id===x.dataset.id);if(v){selectVideo(v,true);renderList();}});}
 function comments(){const key='nv_comments_'+current.youtube_id;const arr=JSON.parse(localStorage.getItem(key)||'[]');$('#commentsList').innerHTML=arr.map(c=>`<div class="comment"><b>Viewer</b> · ${esc(new Date(c.at).toLocaleString())}<br>${esc(c.text)}</div>`).join('')||'<p class="meta">No comments yet. Start the discussion.</p>';}
 async function load(){
   if(!id){$('#state').innerHTML='<div class="error">Video ID missing.</div>';return;}
   try{
     const r=await fetch('/api/videos',{cache:'no-store'});if(!r.ok)throw Error('Unable to load videos');
-    videos=await r.json();current=videos.find(v=>v.youtube_id===id);
+    videos=await r.json();
+    try{const sr=await fetch('/api/youtube/stats',{cache:'no-store'});if(sr.ok){const sd=await sr.json();const sm=new Map((sd.stats||[]).map(x=>[x.youtube_id,x]));videos.forEach(v=>{const st=sm.get(v.youtube_id);if(st){v.view_count=st.view_count;v.like_count=st.like_count;v.comment_count=st.comment_count;v.embeddable=st.embeddable;}});}}catch(_){}
+    current=videos.find(v=>v.youtube_id===id);
     if(!current)throw Error('This video is not available on NIKHILVERSE.');
-    $('#state').hidden=true;$('#layout').hidden=false;selectVideo(current,false);renderList();comments();refreshCurrentLiveStats();
+    $('#state').hidden=true;$('#layout').hidden=false;selectVideo(current,false);renderList();comments();
     const saved=JSON.parse(localStorage.getItem('nv_progress_'+current.youtube_id)||'null');if(saved)$('#resumeBtn').textContent='▶ Resume from '+Math.floor(saved.time)+'s';
     if(window.YT&&YT.Player)createPlayer();
   }catch(e){$('#state').innerHTML='<div class="error">'+esc(e.message)+'</div>';}
@@ -164,5 +76,5 @@ $('#shareBtn').onclick=async()=>{const u=location.href;if(navigator.share)naviga
 $('#saveBtn').onclick=()=>{let a=JSON.parse(localStorage.getItem('nv_watchlist')||'[]');a=a.includes(current.youtube_id)?a.filter(x=>x!==current.youtube_id):[...a,current.youtube_id];localStorage.setItem('nv_watchlist',JSON.stringify(a));$('#saveBtn').textContent=a.includes(current.youtube_id)?'✓ Saved':'＋ Watchlist';};
 $('#commentBtn').onclick=()=>{const text=$('#commentText').value.trim();if(!text)return;const key='nv_comments_'+current.youtube_id;const a=JSON.parse(localStorage.getItem(key)||'[]');a.unshift({text,at:Date.now()});localStorage.setItem(key,JSON.stringify(a.slice(0,100)));$('#commentText').value='';comments();};
 document.querySelectorAll('.reaction').forEach(b=>b.onclick=()=>{const k='nv_react_'+current.youtube_id+'_'+b.dataset.r;let n=Number(localStorage.getItem(k)||0)+1;localStorage.setItem(k,n);b.querySelector('span').textContent=n;});
-setInterval(saveProgress,10000);setInterval(refreshCurrentLiveStats,60000);window.addEventListener('beforeunload',saveProgress);load();
+setInterval(saveProgress,10000);window.addEventListener('beforeunload',saveProgress);load();
 </script></body></html>
