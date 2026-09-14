@@ -1,16 +1,16 @@
-NIKHILVERSE FIX — 15 Sep 2026
+NIKHILVERSE — LIVE YOUTUBE STATS + CARD/CAROUSEL INFO FIX
 
-Replace these 3 files in the existing GitHub repo:
+Replace these files in your GitHub repo:
 1. server/index.js
 2. public/app.js
 3. public/watch.html
 
-Fixes:
-- YouTube video player initialization made more reliable with origin + host and explicit error handling.
-- Watch page shows YouTube view/like counts.
-- Home/category cards show view/like counts.
-- YouTube sync now stores public statistics and embeddable status.
-- Existing watchlist/comments/resume/theater/share features retained.
+What this fixes:
+- Live YouTube view count, like count and comment count on every video card.
+- Live stats on the watch page.
+- /api/youtube/stats endpoint for fresh public stats.
+- Server refreshes YouTube statistics in batches (up to 50 IDs/request) and caches for 2 minutes.
+- Rich stats/info chips on video cards so mobile cards also show the requested information.
+- Watch-page sidebar shows views/likes/comments for related videos.
 
-After upload, Render should auto-deploy. Wait for the deploy to finish, then hard refresh the website.
-The first YouTube sync after deploy will populate statistics for all synced videos; automatic sync continues every 15 minutes.
+Important: YOUTUBE_API_KEY must be present in Render Environment Variables.
