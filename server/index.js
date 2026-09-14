@@ -94,173 +94,6 @@ const youtubeChannels = [
   }
 ];
 
-// ======================================================
-// LIVE YOUTUBE STATS + 24H SNAPSHOTS
-// ======================================================
-
-const youtubeStatsCache = new Map();
-const YOUTUBE_STATS_CACHE_MS = 60 * 1000;
-const SNAPSHOT_INTERVAL_MS = 15 * 60 * 1000;
-
-function ensureYoutubeSnapshots() {
-  if (!db.settings.youtube_view_snapshots || typeof db.settings.youtube_view_snapshots !== 'object') {
-    db.settings.youtube_view_snapshots = {};
-  }
-  return db.settings.youtube_view_snapshots;
-}
-
-function sumSnapshotViews(channelIds, nowMs) {
-  const snapshots = ensureYoutubeSnapshots();
-  const cutoff = nowMs - 24 * 60 * 60 * 1000;
-  let total = 0;
-
-  for (const id of channelIds) {
-    const list = Array.isArray(snapshots[id]) ? snapshots[id] : [];
-    const eligible = list.filter(x => Number(x.ts) <= cutoff).sort((a, b) => Number(b.ts) - Number(a.ts));
-    if (eligible[0]) total += Number(eligible[0].views || 0);
-  }
-  return total;
-}
-
-function recordChannelSnapshots(channelStats) {
-  const snapshots = ensureYoutubeSnapshots();
-  const now = Date.now();
-
-  for (const item of channelStats) {
-    const id = item.id;
-    if (!id) continue;
-
-    if (!Array.isArray(snapshots[id])) snapshots[id] = [];
-    const list = snapshots[id];
-
-    const last = list[list.length - 1];
-    if (!last || now - Number(last.ts || 0) >= 5 * 60 * 1000) {
-      list.push({
-        ts: now,
-        views: Number(item.viewCount || 0)
-      });
-    }
-
-    snapshots[id] = list
-      .filter(x => now - Number(x.ts || 0) <= 8 * 24 * 60 * 60 * 1000)
-      .slice(-1000);
-  }
-
-  db.settings.youtube_snapshots_updated_at = new Date(now).toISOString();
-  save();
-}
-
-async function resolveYoutubeChannels() {
-  const out = [];
-  for (const channel of youtubeChannels) {
-    const r = await youtubeGet('channels', {
-      part: 'id,snippet,statistics',
-      forHandle: channel.handle
-    });
-    const item = r.items?.[0];
-    if (!item) continue;
-
-    out.push({
-      id: item.id,
-      name: channel.name,
-      handle: channel.handle,
-      title: item.snippet?.title || channel.name,
-      viewCount: item.statistics?.viewCount || '0',
-      subscriberCount: item.statistics?.subscriberCount || '0',
-      videoCount: item.statistics?.videoCount || '0'
-    });
-  }
-  return out;
-}
-
-async function getLiveChannelStats() {
-  const channels = await resolveYoutubeChannels();
-  recordChannelSnapshots(channels);
-
-  const now = Date.now();
-  const snapshots = ensureYoutubeSnapshots();
-
-  const totalViews = channels.reduce((n, x) => n + Number(x.viewCount || 0), 0);
-  const totalSubscribers = channels.reduce((n, x) => n + Number(x.subscriberCount || 0), 0);
-  const totalVideos = channels.reduce((n, x) => n + Number(x.videoCount || 0), 0);
-
-  let views24h = 0;
-  for (const channel of channels) {
-    const list = Array.isArray(snapshots[channel.id]) ? snapshots[channel.id] : [];
-    const cutoff = now - 24 * 60 * 60 * 1000;
-    const old = list
-      .filter(x => Number(x.ts) <= cutoff)
-      .sort((a, b) => Number(b.ts) - Number(a.ts))[0];
-
-    if (old) {
-      views24h += Math.max(0, Number(channel.viewCount || 0) - Number(old.views || 0));
-    }
-  }
-
-  return {
-    ok: true,
-    updatedAt: new Date().toISOString(),
-    last24hAvailable: channels.every(channel => {
-      const list = Array.isArray(snapshots[channel.id]) ? snapshots[channel.id] : [];
-      return list.some(x => Number(x.ts) <= now - 24 * 60 * 60 * 1000);
-    }),
-    last24hViews: views24h,
-    totalViews,
-    totalSubscribers,
-    totalVideos,
-    channels
-  };
-}
-
-async function getLiveVideoStats(ids) {
-  const uniqueIds = [...new Set(
-    String(ids || '')
-      .split(',')
-      .map(x => x.trim())
-      .filter(Boolean)
-  )];
-
-  const cacheKey = uniqueIds.slice().sort().join(',');
-  const cached = youtubeStatsCache.get('videos:' + cacheKey);
-  if (cached && Date.now() - cached.ts < YOUTUBE_STATS_CACHE_MS) {
-    return cached.data;
-  }
-
-  const result = {};
-  for (let i = 0; i < uniqueIds.length; i += 50) {
-    const batch = uniqueIds.slice(i, i + 50);
-    const r = await youtubeGet('videos', {
-      part: 'statistics,snippet',
-      id: batch.join(',')
-    });
-
-    for (const video of r.items || []) {
-      result[video.id] = {
-        id: video.id,
-        title: video.snippet?.title || '',
-        viewCount: video.statistics?.viewCount || '0',
-        likeCount: video.statistics?.likeCount || '0',
-        commentCount: video.statistics?.commentCount || '0',
-        publishedAt: video.snippet?.publishedAt || null,
-        fetchedAt: new Date().toISOString()
-      };
-
-      const local = db.videos.find(v => v.youtube_id === video.id);
-      if (local) {
-        local.view_count = result[video.id].viewCount;
-        local.like_count = result[video.id].likeCount;
-      }
-    }
-  }
-
-  if (Object.keys(result).length) {
-    save();
-    youtubeStatsCache.set('videos:' + cacheKey, {ts: Date.now(), data: result});
-  }
-  return result;
-}
-
-
 async function youtubeGet(endpoint, params) {
   const key = process.env.YOUTUBE_API_KEY;
 
@@ -620,6 +453,14 @@ async function syncYouTube() {
             existing?.like_count ||
             '0',
 
+          comment_count:
+            video.statistics?.commentCount ||
+            existing?.comment_count ||
+            '0',
+
+          duration_seconds:
+            totalSeconds,
+
           // Whether YouTube allows this video to be embedded.
           embeddable:
             video.status?.embeddable !== false
@@ -809,46 +650,70 @@ function admin(req, res, next) {
 }
 
 
-
 // ======================================================
-// PUBLIC LIVE YOUTUBE STATS
+// LIVE YOUTUBE PUBLIC STATS CACHE
 // ======================================================
+let ytStatsCache = { at: 0, ok: false };
 
-app.get('/api/youtube/channel-stats', async (req, res) => {
+async function refreshYouTubeStats() {
+  const now = Date.now();
+  // Keep the public API responsive and avoid unnecessary quota use.
+  if (now - ytStatsCache.at < 120000) return ytStatsCache.ok;
+
+  const ids = db.videos
+    .map(v => v.youtube_id)
+    .filter(Boolean);
+
+  if (!ids.length || !process.env.YOUTUBE_API_KEY) {
+    ytStatsCache = { at: now, ok: false };
+    return false;
+  }
+
   try {
-    const now = Date.now();
-    const cache = db.settings.youtube_channel_stats_cache;
-    if (cache && now - Number(cache.ts || 0) < YOUTUBE_STATS_CACHE_MS) {
-      return res.json(cache.data);
+    for (let i = 0; i < ids.length; i += 50) {
+      const batch = ids.slice(i, i + 50);
+      const response = await youtubeGet('videos', {
+        part: 'statistics,status,contentDetails',
+        id: batch.join(',')
+      });
+
+      for (const item of response.items || []) {
+        const v = db.videos.find(x => x.youtube_id === item.id);
+        if (!v) continue;
+        if (item.statistics?.viewCount != null) v.view_count = String(item.statistics.viewCount);
+        if (item.statistics?.likeCount != null) v.like_count = String(item.statistics.likeCount);
+        if (item.statistics?.commentCount != null) v.comment_count = String(item.statistics.commentCount);
+        if (item.status?.embeddable != null) v.embeddable = item.status.embeddable;
+      }
     }
-
-    const data = await getLiveChannelStats();
-    db.settings.youtube_channel_stats_cache = { ts: now, data };
     save();
-    res.json(data);
-  } catch (e) {
-    console.error('YouTube channel stats failed:', e);
-    res.status(500).json({ error: e.message });
+    ytStatsCache = { at: now, ok: true };
+    return true;
+  } catch (error) {
+    console.error('Live YouTube stats refresh failed:', error.message || error);
+    ytStatsCache = { at: now, ok: false };
+    return false;
   }
-});
+}
 
-app.get('/api/youtube/video-stats', async (req, res) => {
-  try {
-    const ids = String(req.query.ids || req.query.id || '');
-    if (!ids) return res.json({});
-    const data = await getLiveVideoStats(ids);
-    res.json(data);
-  } catch (e) {
-    console.error('YouTube video stats failed:', e);
-    res.status(500).json({ error: e.message });
-  }
+app.get('/api/youtube/stats', async (req, res) => {
+  await refreshYouTubeStats();
+  const requested = String(req.query.ids || '').split(',').map(x => x.trim()).filter(Boolean);
+  const source = requested.length
+    ? db.videos.filter(v => requested.includes(String(v.youtube_id)))
+    : db.videos.filter(v => v.youtube_id);
+  res.json({
+    ok: true,
+    updatedAt: new Date().toISOString(),
+    stats: source.map(v => ({
+      youtube_id: v.youtube_id,
+      view_count: String(v.view_count || 0),
+      like_count: String(v.like_count || 0),
+      comment_count: String(v.comment_count || 0),
+      embeddable: v.embeddable !== false
+    }))
+  });
 });
-
-// Refresh snapshots while the Node process is alive. The 24h figure is
-// a derived near-real-time estimate, not YouTube Analytics' delayed report.
-setInterval(() => {
-  getLiveChannelStats().catch(e => console.error('YouTube snapshot failed:', e.message));
-}, SNAPSHOT_INTERVAL_MS);
 
 // ======================================================
 // PUBLIC VIDEOS
@@ -856,8 +721,9 @@ setInterval(() => {
 
 app.get(
   '/api/videos',
-  (req, res) => {
+  async (req, res) => {
 
+    await refreshYouTubeStats();
     res.json(
       db.videos
         .filter(
@@ -1648,33 +1514,6 @@ app.get('/api/admin/analytics', auth, admin, (req, res) => {
   const videoViews = {};
   events.filter(e=>e.type==='view').forEach(e=>{const k=e.videoId||e.title||'unknown';videoViews[k]=(videoViews[k]||0)+1;});
   res.json({ok:true,totalEvents:events.length,counts,newsletterSubscribers:(db.analytics?.newsletter||[]).length,topVideos:Object.entries(videoViews).sort((a,b)=>b[1]-a[1]).slice(0,20)});
-});
-
-
-// ======================================================
-// SEO SITEMAP
-// ======================================================
-
-app.get('/sitemap.xml', (req, res) => {
-  const base = 'https://nikhilverse.onrender.com';
-  const staticPages = [
-    '/', '/movies.html', '/tv-shows.html', '/documentaries.html',
-    '/sci-fi.html', '/playlist.html', '/search.html', '/premium.html',
-    '/my-list.html', '/profile.html'
-  ];
-
-  const urls = staticPages.map(pathname =>
-    `<url><loc>${base}${pathname}</loc></url>`
-  );
-
-  for (const video of db.videos.filter(v => v.youtube_id && (!v.status || v.status === 'published'))) {
-    const lastmod = video.published_at ? `<lastmod>${new Date(video.published_at).toISOString()}</lastmod>` : '';
-    urls.push(`<url><loc>${base}/watch.html?id=${encodeURIComponent(video.youtube_id)}</loc>${lastmod}</url>`);
-  }
-
-  res.type('application/xml').send(
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`
-  );
 });
 
 // ======================================================
