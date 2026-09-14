@@ -3,17 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NIKHILVERSE — Playlist</title>
+<title>NIKHILVERSE — Playlist</title><meta name="description" content="Watch a NIKHILVERSE playlist inside the NIKHILVERSE internal player."><meta name="robots" content="index,follow"><link rel="manifest" href="/manifest.webmanifest">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#050912;color:#eef6ff;font-family:Arial,Helvetica,sans-serif}body{min-height:100vh}
 a{color:inherit;text-decoration:none}
 .header{position:sticky;top:0;z-index:20;background:rgba(5,9,18,.94);backdrop-filter:blur(14px);border-bottom:1px solid #17263a}.nav{max-width:1400px;margin:auto;min-height:68px;display:flex;align-items:center;gap:24px;padding:10px 22px}.logo{font-weight:900;letter-spacing:2px;font-size:22px}.logo span{color:#25a7ff}.links{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:#9fb3ca}.links a:hover{color:#fff}.back{margin-left:auto;border:1px solid #294766;background:#0b1726;border-radius:10px;padding:10px 14px;color:#fff;cursor:pointer}.wrap{max-width:1400px;margin:auto;padding:24px 22px 60px}.crumb{color:#7590ac;font-size:13px;margin-bottom:15px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:22px}.playerbox{background:#07111e;border:1px solid #1a3149;border-radius:16px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.35)}.player{position:relative;aspect-ratio:16/9;background:#000}.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.info{padding:20px}.title{font-size:25px;line-height:1.25;font-weight:800;margin-bottom:10px}.meta{display:flex;gap:10px;flex-wrap:wrap;color:#86a1bc;font-size:13px}.description{margin-top:18px;color:#b9c8d8;white-space:pre-wrap;line-height:1.6;font-size:14px}.side{background:#07111e;border:1px solid #1a3149;border-radius:16px;overflow:hidden;height:fit-content;position:sticky;top:88px}.sidehead{padding:18px;border-bottom:1px solid #172b41}.sidehead h2{margin:0;font-size:17px}.sidehead small{display:block;color:#6f89a5;margin-top:6px}.list{max-height:calc(100vh - 180px);overflow:auto}.item{display:flex;gap:12px;padding:12px;border-bottom:1px solid #122236;cursor:pointer}.item:hover{background:#0b1b2d}.item.active{background:#102a43;box-shadow:inset 3px 0 #2ca9ff}.thumb{width:125px;height:70px;object-fit:cover;border-radius:8px;background:#02060b;flex:0 0 auto}.ititle{font-size:13px;line-height:1.4;font-weight:700;color:#eaf3fb}.num{font-size:11px;color:#66809b;margin-bottom:5px}.empty,.loading{padding:30px;color:#8198b0;text-align:center}.hero{background:linear-gradient(135deg,#0a1a2b,#07101d);border:1px solid #19334e;border-radius:16px;padding:28px;margin-bottom:22px}.hero h1{margin:0 0 8px;font-size:32px}.hero p{margin:0;color:#9bb0c5;line-height:1.6;max-width:900px}.count{display:inline-block;margin-top:14px;color:#59b8ff;font-size:13px}.error{color:#ff9898}.footer{text-align:center;border-top:1px solid #15253a;padding:25px;color:#627b95;font-size:12px;margin-top:30px}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:static}.list{max-height:500px}.links{display:none}}
 @media(max-width:600px){.nav{padding:10px 14px}.wrap{padding:18px 14px 40px}.title{font-size:20px}.hero h1{font-size:25px}.item{padding:10px}.thumb{width:105px;height:60px}}
+
+/* NIKHILVERSE mobile UI */
+.nv-mobile-menu-btn{display:none;border:1px solid #294766;background:#081321;color:#fff;border-radius:10px;width:42px;height:42px;font-size:22px;cursor:pointer}
+.nv-mobile-menu{display:none}
+@media(max-width:900px){
+  .nav{gap:10px;padding:9px 12px}.links{display:none!important}.nv-mobile-menu-btn{display:flex;align-items:center;justify-content:center;order:-1}
+  .nv-mobile-menu{position:fixed;display:none;left:10px;right:10px;top:65px;z-index:99999;background:rgba(5,9,18,.98);border:1px solid #294766;border-radius:15px;padding:9px;box-shadow:0 25px 70px rgba(0,0,0,.75)}
+  .nv-mobile-menu.open{display:block}.nv-mobile-menu a{display:block;padding:13px;border-radius:9px;color:#dce9f6;text-decoration:none}.nv-mobile-menu a:hover{background:#10253b}
+  .nv-mobile-menu .app-link{background:linear-gradient(135deg,#128cff,#685cff);color:#fff;font-weight:800;margin-top:5px}
+  .actions{display:flex!important;gap:6px!important;margin-left:auto!important}.actions .app{display:none!important}.actions .btn,.back{padding:8px 10px;font-size:12px}
+}
+@media(max-width:600px){
+  .nav{min-height:58px}.logo span{font-size:16px}.logo small{font-size:8px}.logo img{width:36px!important;height:36px!important}
+  .wrap{width:100%;padding:14px 10px 35px}.crumb{font-size:11px}.layout{grid-template-columns:1fr!important;gap:12px}.side{position:static!important}.list{max-height:420px!important}
+  .playerbox{border-radius:12px}.player{aspect-ratio:16/9}.info{padding:14px}.title{font-size:19px}.description{font-size:13px}.toolbar{display:grid!important;grid-template-columns:1fr 1fr!important;gap:7px!important}.toolbar button{min-height:42px!important;font-size:12px!important}
+  .appbox{width:100%!important;margin-top:15px!important;padding:18px!important;border-radius:12px!important}.appbox .app{width:100%;text-align:center;justify-content:center}.comments{padding:14px!important}.sidehead{padding:14px}.item{gap:9px}.thumb{width:100px;height:58px}.ititle{font-size:12px}
+  .hero{padding:18px;margin-bottom:12px}.hero h1{font-size:24px}.hero p{font-size:12px}.count{font-size:12px}
+}
 </style>
 </head>
 <body>
-<header class="header"><nav class="nav"><a class="logo" href="/"><span>NIKHIL</span>VERSE</a><div class="links"><a href="/">Home</a><a href="/#videos">Movies</a><a href="/#documentaries">Documentaries</a><a href="/#scifi">Sci-Fi</a><a href="/#shows">TV Shows</a></div><button class="back" onclick="location.href='/'">← Back</button></nav></header>
+<header class="header"><nav class="nav"><button class="nv-mobile-menu-btn" id="nvMobileNavBtn" type="button" aria-label="Open menu">☰</button><a class="logo" href="/"><img src="/nikhilverse-logo.png" alt="" style="width:42px;height:42px;object-fit:contain;vertical-align:middle;margin-right:8px"><span>NIKHIL</span>VERSE</a><div class="links"><a href="/">Home</a><a href="/#videos">Movies</a><a href="/#documentaries">Documentaries</a><a href="/#scifi">Sci-Fi</a><a href="/#shows">TV Shows</a><a href="/#premium">Premium</a></div><a class="back" style="margin-left:auto;margin-right:8px;background:linear-gradient(135deg,#128cff,#685cff);border-color:#69bbff" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">📱 Android App</a><button class="back" onclick="location.href='/'">← Back</button></nav><div class="nv-mobile-menu" id="nvMobileNav"><a href="/">🏠 Home</a><a href="/#videos">🎬 Videos</a><a href="/#shows">📺 TV Shows</a><a href="/#documentaries">🎞️ Documentaries</a><a href="/#scifi">🛸 Sci-Fi</a><a href="/#premium">👑 Premium</a><a class="app-link" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">📱 Download Android App</a></div></header>
 <main class="wrap">
 <div class="crumb"><a href="/">NIKHILVERSE</a> / YouTube Playlist</div>
 <section class="hero"><h1 id="playlistTitle">Loading playlist…</h1><p id="playlistDescription"></p><span class="count" id="playlistCount"></span></section>
@@ -21,7 +39,7 @@ a{color:inherit;text-decoration:none}
 <section class="playerbox"><div class="player"><iframe id="player" src="about:blank" title="NIKHILVERSE YouTube player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="info"><div class="title" id="videoTitle">Select a video</div><div class="meta"><span id="videoChannel"></span><span id="videoPosition"></span></div><div class="description" id="videoDescription"></div></div></section>
 <aside class="side"><div class="sidehead"><h2>Videos in this Playlist</h2><small id="sideCount">Loading…</small></div><div class="list" id="videoList"><div class="loading">Loading videos…</div></div></aside>
 </div>
-<div class="footer">© NIKHILVERSE • Internal playlist player</div>
+<section style="margin-top:28px;padding:24px;border:1px solid #1d3854;border-radius:16px;background:#07111e;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap"><div><h2 style="margin:0 0 6px">📱 NIKHILVERSE Android App</h2><p style="margin:0;color:#8196b1;font-size:13px">Install the Android app for a faster NIKHILVERSE experience.</p></div><a class="back" style="background:#fff;color:#111" href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk" target="_blank" rel="noopener">Download APK</a></section><div class="footer">© NIKHILVERSE • Internal playlist player</div>
 </main>
 <script>
 (function(){
@@ -36,5 +54,8 @@ a{color:inherit;text-decoration:none}
  load();
 })();
 </script>
-</body>
+<script>
+(function(){const b=document.getElementById('nvMobileNavBtn'),m=document.getElementById('nvMobileNav');if(!b||!m)return;b.addEventListener('click',e=>{e.stopPropagation();const o=m.classList.toggle('open');b.setAttribute('aria-expanded',String(o));});m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>m.classList.remove('open')));document.addEventListener('click',e=>{if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==b)m.classList.remove('open');});})();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});</script></body>
 </html>

@@ -9,7 +9,18 @@
     content="width=device-width,initial-scale=1"
   >
 
-  <title>NIKHILVERSE — Sci-Fi by Nikhil</title>
+  <title>NIKHILVERSE — Sci-Fi by Nikhil | Documentaries, Mysteries & Cosmos</title>
+  <meta name="description" content="NIKHILVERSE — documentaries, sci-fi stories, ancient history, aliens, mythology, technology and original storytelling by Nikhil.">
+  <meta name="keywords" content="NIKHILVERSE, sci-fi, documentaries, ancient history, aliens, mythology, space, mysteries, Nikhil">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#050912">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NIKHILVERSE — Sci-Fi by Nikhil">
+  <meta property="og:description" content="Discover documentaries, sci-fi stories, ancient mysteries and original storytelling.">
+  <meta property="og:image" content="/nikhilverse-logo.png">
+  <meta property="og:url" content="https://nikhilverse.onrender.com/">
+  <meta name="twitter:card" content="summary_large_image">
 
   <link
     rel="preconnect"
@@ -39,6 +50,62 @@
 
   <style>
 
+    .playlist-nav-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+
+    .playlist-nav-btn{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:0;
+      border:0;
+      background:transparent;
+      color:inherit;
+      font:inherit;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .playlist-nav-btn:hover{
+      color:#fff;
+    }
+
+    .playlist-nav-arrow{
+      font-size:11px;
+      transition:transform .2s ease;
+    }
+
+    .playlist-nav-btn.active .playlist-nav-arrow{
+      transform:rotate(180deg);
+    }
+
+    .playlist-panel{
+      position:absolute;
+      top:calc(100% + 18px);
+      left:50%;
+      width:min(980px,calc(100vw - 28px));
+      transform:translateX(-50%) translateY(-8px);
+      padding:18px;
+      background:linear-gradient(135deg,#07111f,#0b1829);
+      border:1px solid #274462;
+      border-radius:16px;
+      box-shadow:0 22px 65px rgba(0,0,0,.72),0 0 35px rgba(38,145,255,.12);
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      z-index:99999;
+      transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
+    }
+
+    .playlist-panel.open{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+      transform:translateX(-50%) translateY(0);
+    }
 
     .playlist-panel-header{
       display:flex;
@@ -286,161 +353,13 @@
       }
     }
 
-    .hero-viewer-count{
-      position:absolute;
-      right:8%;
-      bottom:18%;
-      z-index:50;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      line-height:1;
-      text-align:right;
-      pointer-events:none;
-      text-shadow:0 6px 28px rgba(0,0,0,.95),0 0 20px rgba(94,168,255,.22);
-    }
-
-    .hero-viewer-number{
-      min-height:82px;
-      font-family:Georgia,"Times New Roman",serif;
-      font-size:76px;
-      font-style:italic;
-      line-height:.9;
-      font-weight:700;
-      letter-spacing:-4px;
-      color:#f8fbff;
-      opacity:1;
-      visibility:visible;
-    }
-
-    .hero-viewer-label{
-      margin-top:12px;
-      font-size:14px;
-      line-height:1;
-      font-weight:900;
-      letter-spacing:4px;
-      color:#b8d9ff;
-      text-transform:uppercase;
-      opacity:1;
-      visibility:visible;
-    }
-
-    @media(max-width:600px){
-      .hero-viewer-count{
-        right:14px;
-        bottom:16%;
-      }
-      .hero-viewer-number{
-        min-height:42px;
-        font-size:42px;
-        letter-spacing:-2px;
-      }
-      .hero-viewer-label{
-        font-size:11px;
-        letter-spacing:2px;
-      }
-    }
-
-
-  
-    .app-download-section{
-      margin:10px 6% 70px;
-      padding:28px 32px;
-      border:1px solid rgba(127,186,255,.22);
-      border-radius:20px;
-      background:linear-gradient(135deg,rgba(14,25,48,.95),rgba(5,9,18,.92));
-      box-shadow:0 18px 60px rgba(0,0,0,.28);
-    }
-    .app-download-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:24px;
-    }
-    .app-download-section small{
-      color:#7fbaff;
-      font-size:10px;
-      font-weight:800;
-      letter-spacing:2.5px;
-    }
-    .app-download-section h2{
-      margin:7px 0 6px;
-      color:#fff;
-      font-size:26px;
-    }
-    .app-download-section p{
-      margin:0;
-      color:#9fb0c5;
-      font-size:13px;
-    }
-    .app-download-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      white-space:nowrap;
-      padding:13px 20px;
-      border-radius:999px;
-      background:#fff;
-      color:#07101d;
-      font-weight:800;
-      text-decoration:none;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
-    }
-    @media(max-width:700px){
-      .app-download-section{margin:10px 14px 50px;padding:22px;}
-      .app-download-inner{flex-direction:column;align-items:flex-start;}
-      .app-download-btn{width:100%;}
-    }
-
-  
-    .app-nav-link{
-      color:#7fbaff !important;
-      font-weight:800;
-    }
-    .app-nav-link:hover{
-      color:#fff !important;
-    }
-
-    .footer-social{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:8px;
-    }
-    .footer-social a{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:34px;
-      padding:0 12px;
-      border:1px solid #263c59;
-      border-radius:999px;
-      background:linear-gradient(135deg,#132741,#091524);
-      color:#e7f1ff;
-      font-size:11px;
-      font-weight:700;
-      text-decoration:none;
-      box-shadow:inset 0 1px rgba(255,255,255,.05),0 5px 14px rgba(0,0,0,.22);
-      transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease;
-    }
-    .footer-social a:hover{
-      transform:translateY(-2px);
-      border-color:#7bbaff;
-      background:linear-gradient(135deg,#1b4271,#0b1b30);
-      color:#fff;
-      box-shadow:0 8px 20px rgba(73,151,255,.22);
-    }
-    .footer-social .social-youtube{border-color:rgba(255,68,68,.5);}
-    .footer-social .social-instagram{border-color:rgba(235,102,163,.48);}
-    .footer-social .social-facebook{border-color:rgba(95,151,255,.52);}
-    .footer-social .social-x{border-color:rgba(204,218,235,.44);}
-    .footer-social .social-telegram{border-color:rgba(81,177,255,.55);}
-    @media(max-width:700px){
-      .footer-social{justify-content:flex-start;}
-    }
-
   </style>
 
+
+<style id="nv-mobile-base">
+@media(max-width:900px){header{position:sticky;top:0;z-index:10000}.header-actions{margin-left:auto}.brand img{max-width:44px}.brand span{font-size:16px}}
+@media(max-width:600px){body{overflow-x:hidden}.hero{min-height:520px}.hero-content{max-width:92%}.hero h1{font-size:42px!important;line-height:1.02!important}.video-grid,.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.card .body{padding:10px!important}.card h3{font-size:13px!important;line-height:1.35!important}.thumb{aspect-ratio:16/10}.header-actions .btn{padding:7px 9px!important}.playlist-panel{top:calc(100% + 8px)!important;left:8px!important;right:8px!important;width:auto!important;transform:translateY(-8px)!important}.playlist-panel.open{transform:translateY(0)!important}.playlist-card{flex-basis:175px!important}.playlist-scroll{display:none!important}}
+</style>
 </head>
 
 <body>
@@ -479,33 +398,108 @@
         Home
       </a>
 
+      <a href="/movies.html">Movies</a>
+
+      <a href="/tv-shows.html">TV Shows</a>
+
+      <a href="/documentaries.html">Documentaries</a>
+
+      <a href="/sci-fi.html">Sci-Fi</a>
+
+
+
+      <!-- ==================================================
+           YOUTUBE PLAYLISTS
+      =================================================== -->
+
+      <div
+        class="playlist-nav-wrap"
+        id="playlistNavWrap"
+      >
+
+        <button
+          class="playlist-nav-btn"
+          id="playlistNavBtn"
+          type="button"
+          aria-expanded="false"
+        >
+          <span>📂 Playlists</span>
+          <span class="playlist-nav-arrow">▾</span>
+        </button>
+
+        <div
+          class="playlist-panel"
+          id="playlistPanel"
+        >
+
+          <div class="playlist-panel-header">
+
+            <div class="playlist-heading">
+
+              <div class="playlist-heading-icon">
+                📂
+              </div>
+
+              <div>
+                <strong>YouTube Playlists</strong>
+                <small>All public playlists from your NIKHILVERSE channels</small>
+              </div>
+
+            </div>
+
+            <button
+              class="playlist-close"
+              id="playlistClose"
+              type="button"
+              aria-label="Close playlists"
+            >
+              ×
+            </button>
+
+          </div>
+
+          <div class="playlist-slider">
+
+            <button
+              class="playlist-scroll"
+              id="playlistLeft"
+              type="button"
+              aria-label="Previous playlists"
+            >
+              ‹
+            </button>
+
+            <div
+              class="playlist-track"
+              id="playlistTrack"
+            >
+              <div class="playlist-loading">
+                <span class="playlist-spinner"></span>
+                Loading playlists...
+              </div>
+            </div>
+
+            <button
+              class="playlist-scroll"
+              id="playlistRight"
+              type="button"
+              aria-label="Next playlists"
+            >
+              ›
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
       <a href="#videos">
-        Movies
-      </a>
-
-      <a href="#shows">
-        TV Shows
-      </a>
-
-      <a href="#documentaries">
-        Documentaries
-      </a>
-
-      <a href="#scifi">
-        Sci-Fi
-      </a>
-
-<a href="#videos">
         New & Popular
       </a>
 
-      <a href="#download-app" class="app-nav-link">
-        📱 Download App
-      </a>
-
-      <a href="#videos">
-        My List
-      </a>
+      <a href="/my-list.html">My List</a>
 
     </nav>
 
@@ -541,13 +535,7 @@
       </a>
 
 
-      <a
-        class="profile-btn"
-        href="/admin/"
-        title="Profile / Admin"
-      >
-        ●
-      </a>
+      <button class="profile-btn" type="button" title="NIKHILVERSE">●</button>
 
     </div>
 
@@ -572,12 +560,6 @@
 
     <!-- Dark overlay -->
     <div class="hero-overlay"></div>
-
-    <!-- Combined YouTube audience count -->
-    <div class="hero-viewer-count" aria-live="polite" aria-label="Regular Viewers">
-      <div class="hero-viewer-number" id="heroTotalSubscribers">66.1K+</div>
-      <div class="hero-viewer-label">Regular Viewers</div>
-    </div>
 
 
     <div class="hero-content">
@@ -791,27 +773,6 @@
   </section>
 
 
-
-  <!-- =========================
-       ANDROID APP DOWNLOAD
-       ========================= -->
-
-  <section class="app-download-section" id="download-app">
-    <div class="app-download-inner">
-      <div>
-        <small>WATCH ANYWHERE</small>
-        <h2>NIKHILVERSE Android App 📱</h2>
-        <p>Download the NIKHILVERSE Android app and enjoy your stories on mobile.</p>
-      </div>
-      <a
-        class="app-download-btn"
-        href="https://github.com/DeveloperNikhilShukla/Repository-name-nikhilverse-android/releases/latest/download/NIKHILVERSE.apk"
-        target="_blank"
-        rel="noopener"
-      >📱 Download App</a>
-    </div>
-  </section>
-
   <!-- =========================
        FOOTER
        ========================= -->
@@ -839,17 +800,7 @@
 
     </div>
 
-    <div class="footer-social" aria-label="NIKHILVERSE social media">
-      <a class="social-youtube" href="https://www.youtube.com/@SIFIByNikhil" target="_blank" rel="noopener">▶ YouTube</a>
-      <a class="social-instagram" href="https://instagram.com/nikhilshuklaindianarmy" target="_blank" rel="noopener">◎ Instagram</a>
-      <a class="social-facebook" href="https://www.facebook.com/theancienthistorianss/" target="_blank" rel="noopener">f Facebook</a>
-      <a class="social-x" href="https://x.com/nikhilshuklaind" target="_blank" rel="noopener">𝕏</a>
-      <a class="social-telegram" href="https://t.me/TheAncientHistorians/10" target="_blank" rel="noopener">✈ Telegram</a>
-    </div>
 
-    <a href="/admin/">
-      Admin Panel
-    </a>
 
   </footer>
 
@@ -924,46 +875,6 @@
        ===================================================== -->
 
   <script>
-    /* Keep the hero counter independent from carousel/video loading. */
-    (function () {
-      const counter = document.getElementById("heroTotalSubscribers");
-      const fallbackTotal = 66100;
-
-      function formatSubscriberTotal(value) {
-        const total = Number(value);
-        if (!Number.isFinite(total) || total <= 0) return "66.1K+";
-        if (total >= 1000000) return (total / 1000000).toFixed(1).replace(/\.0$/, "") + "M+";
-        if (total >= 1000) return (total / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
-        return total.toLocaleString("en-IN") + "+";
-      }
-
-      function showTotal(total) {
-        if (counter) counter.textContent = formatSubscriberTotal(total);
-      }
-
-      async function refreshSubscriberTotal() {
-        try {
-          const response = await fetch("/api/youtube/stats", { cache: "no-store" });
-          if (!response.ok) throw new Error("Subscriber stats request failed");
-
-          const stats = await response.json();
-          const channelTotal = Object.values(stats.channels || {}).reduce(
-            (sum, channel) => sum + Number(channel && channel.subscribers || 0), 0
-          );
-          const total = Number(stats.totalSubscribers) || channelTotal;
-          if (total > 0) showTotal(total);
-        } catch (error) {
-          console.warn("Subscriber stats unavailable; keeping last visible total.", error);
-        }
-      }
-
-      showTotal(fallbackTotal);
-      refreshSubscriberTotal();
-      window.setInterval(refreshSubscriberTotal, 30000);
-    })();
-  </script>
-
-  <script>
 
     (async function () {
 
@@ -988,31 +899,6 @@
 
         const videos =
           await response.json();
-
-        let youtubeStats = {
-          channels: {},
-          videos: {}
-        };
-
-        try {
-          const statsResponse =
-            await fetch("/api/youtube/stats");
-
-          if (statsResponse.ok) {
-            youtubeStats = await statsResponse.json();
-          }
-        } catch (statsError) {
-          console.warn("YouTube stats unavailable:", statsError);
-        }
-
-        window.youtubeVideoStats = youtubeStats.videos || {};
-        window.youtubeChannelStats = youtubeStats.channels || {};
-        window.totalYouTubeSubscribers = Number(
-          youtubeStats.totalSubscribers ||
-          Object.values(window.youtubeChannelStats).reduce(
-            (sum, channel) => sum + Number(channel?.subscribers || 0), 0
-          )
-        );
 
         const latest =
           videos
@@ -1071,24 +957,6 @@
             document.querySelectorAll(".hero-dot")
           );
 
-        const heroViewerNumber =
-          document.getElementById("heroTotalSubscribers");
-
-        function formatHeroNumber(value){
-          const n = Number(value || 0);
-          if (n >= 1000000000) return (n / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
-          if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-          if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-          return n.toLocaleString('en-IN');
-        }
-
-        function renderTotalViewers(){
-          if (!heroViewerNumber) return;
-          const total = Number(window.totalYouTubeSubscribers || 66100);
-          heroViewerNumber.textContent = formatHeroNumber(total) + "+";
-        }
-
-        renderTotalViewers();
 
         function showSlide(index) {
 
@@ -1181,8 +1049,194 @@
     })();
 
   </script>
-<!-- EXISTING APP.JS -->
+
+
+
+
+  <!-- ==================================================
+       PLAYLIST SLIDER JAVASCRIPT
+  =================================================== -->
+
+  <script>
+
+    (function(){
+
+      const btn = document.getElementById('playlistNavBtn');
+      const panel = document.getElementById('playlistPanel');
+      const close = document.getElementById('playlistClose');
+      const track = document.getElementById('playlistTrack');
+      const left = document.getElementById('playlistLeft');
+      const right = document.getElementById('playlistRight');
+      const wrap = document.getElementById('playlistNavWrap');
+
+      if (!btn || !panel || !track) return;
+
+      let loaded = false;
+
+      btn.addEventListener('click', async function(event){
+        event.stopPropagation();
+
+        const open = panel.classList.toggle('open');
+        btn.classList.toggle('active', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+        if (open && !loaded) {
+          await loadPlaylists();
+        }
+      });
+
+      close.addEventListener('click', function(event){
+        event.stopPropagation();
+        closePanel();
+      });
+
+      document.addEventListener('click', function(event){
+        if (wrap && !wrap.contains(event.target)) {
+          closePanel();
+        }
+      });
+
+      document.addEventListener('keydown', function(event){
+        if (event.key === 'Escape') {
+          closePanel();
+        }
+      });
+
+      left.addEventListener('click', function(event){
+        event.stopPropagation();
+        track.scrollBy({ left: -520, behavior: 'smooth' });
+      });
+
+      right.addEventListener('click', function(event){
+        event.stopPropagation();
+        track.scrollBy({ left: 520, behavior: 'smooth' });
+      });
+
+      function closePanel(){
+        panel.classList.remove('open');
+        btn.classList.remove('active');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      async function loadPlaylists(){
+
+        track.innerHTML = `
+          <div class="playlist-loading">
+            <span class="playlist-spinner"></span>
+            Loading all YouTube playlists...
+          </div>
+        `;
+
+        try {
+          const response = await fetch('/api/playlists');
+          const data = await response.json();
+
+          if (!response.ok || !data.ok || !Array.isArray(data.playlists)) {
+            throw new Error(data.error || 'Playlist data unavailable');
+          }
+
+          const playlists = data.playlists;
+
+          if (!playlists.length) {
+            track.innerHTML = `
+              <div class="playlist-loading">
+                No public YouTube playlists found.
+              </div>
+            `;
+            loaded = true;
+            return;
+          }
+
+          playlists.sort(function(a, b){
+            const channelCompare = String(a.channel || '').localeCompare(
+              String(b.channel || '')
+            );
+
+            if (channelCompare !== 0) return channelCompare;
+
+            return String(a.title || '').localeCompare(
+              String(b.title || '')
+            );
+          });
+
+          track.innerHTML = playlists.map(function(playlist){
+            const id = encodeURIComponent(playlist.id || '');
+            const title = escapeHTML(playlist.title || 'Untitled Playlist');
+            const channel = escapeHTML(playlist.channel || 'YouTube');
+            const thumbnail = playlist.thumbnail || '/nikhilverse-logo.png';
+            const count = Number(playlist.videoCount || 0);
+
+            return `
+              <a
+                class="playlist-card"
+                href="/playlist.html?id=${id}"
+              >
+
+                <div class="playlist-thumb-wrap">
+
+                  <img
+                    class="playlist-thumb"
+                    src="${thumbnail}"
+                    alt="${title}"
+                    loading="lazy"
+                  >
+
+                  <div class="playlist-overlay">
+                    <span class="playlist-play">▶</span>
+                  </div>
+
+                </div>
+
+                <div class="playlist-card-body">
+
+                  <div class="playlist-card-title">
+                    ${title}
+                  </div>
+
+                  <div class="playlist-card-channel">
+                    ${channel}
+                  </div>
+
+                  <div class="playlist-card-meta">
+                    📺 ${count} videos
+                  </div>
+
+                </div>
+
+              </a>
+            `;
+          }).join('');
+
+          loaded = true;
+
+        } catch (error) {
+          console.error('Playlist loading error:', error);
+
+          track.innerHTML = `
+            <div class="playlist-loading">
+              ❌ Playlists load nahi ho pa rahi hain.<br>
+              Please refresh and try again.
+            </div>
+          `;
+        }
+      }
+
+      function escapeHTML(value){
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+    })();
+
+  </script>
+
+
   <script src="/app.js"></script>
+  <script src="/enhancements.js"></script>
 
 </body>
 
