@@ -1,11 +1,16 @@
-NIKHILVERSE VIDEO INTERNAL FIX
+NIKHILVERSE FIX — 15 Sep 2026
 
-Replace in GitHub:
-public/index.html
-public/app.js
-public/watch.html
-public/playlist.html
-server/index.js
+Replace these 3 files in the existing GitHub repo:
+1. server/index.js
+2. public/app.js
+3. public/watch.html
 
-This version preserves YouTube auto-sync, makes all home video cards and hero slides open /watch.html?id=VIDEO_ID instead of YouTube, fixes the logo path, and adds /api/playlists plus /api/playlist for internal playlist pages.
-Do not change Render environment secrets. Commit to main, wait for Render deploy, then hard refresh with Ctrl+F5.
+Fixes:
+- YouTube video player initialization made more reliable with origin + host and explicit error handling.
+- Watch page shows YouTube view/like counts.
+- Home/category cards show view/like counts.
+- YouTube sync now stores public statistics and embeddable status.
+- Existing watchlist/comments/resume/theater/share features retained.
+
+After upload, Render should auto-deploy. Wait for the deploy to finish, then hard refresh the website.
+The first YouTube sync after deploy will populate statistics for all synced videos; automatic sync continues every 15 minutes.
