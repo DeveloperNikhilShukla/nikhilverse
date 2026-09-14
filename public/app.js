@@ -20,6 +20,54 @@ function card(v){
     <div class="body"><span class="meta">${v.access==='premium'?'🔒 PREMIUM':'FREE'} · ${escapeHTML(v.channel||'NIKHILVERSE')}</span><h3>${escapeHTML(v.title||'')}</h3><div class="meta">${escapeHTML(v.category||'Story')} · ${stats}</div></div>
   </article>`;
 }
+
+async function refreshLiveVideoStats(videos){
+  const ids=[...new Set(videos.map(v=>v.youtube_id).filter(Boolean))];
+  if(!ids.length)return;
+  const merged={};
+  for(let i=0;i<ids.length;i+=50){
+    const batch=ids.slice(i,i+50);
+    try{
+      const data=await get('/api/youtube/video-stats?ids='+encodeURIComponent(batch.join(',')));
+      Object.assign(merged,data||{});
+    }catch(e){
+      console.warn('Live YouTube video stats unavailable:',e.message);
+    }
+  }
+  if(!Object.keys(merged).length)return;
+  videos.forEach(v=>{
+    const s=merged[v.youtube_id];
+    if(!s)return;
+    v.view_count=s.viewCount;
+    v.like_count=s.likeCount;
+  });
+  document.querySelectorAll('[data-video-id]').forEach(cardEl=>{
+    const s=merged[cardEl.dataset.videoId];
+    if(!s)return;
+    const metaEls=cardEl.querySelectorAll('.meta');
+    const statsEl=metaEls[metaEls.length-1];
+    if(statsEl){
+      const category=cardEl.querySelector('h3')?.nextElementSibling?.textContent?.split(' · ')[0]||'Story';
+      statsEl.textContent=category+' · 👁 '+formatCount(s.viewCount)+' · 👍 '+formatCount(s.likeCount);
+    }
+  });
+  window.dispatchEvent(new CustomEvent('nv:live-stats',{detail:{videos,stats:merged}}));
+}
+
+async function refreshChannelStats(){
+  try{
+    const data=await get('/api/youtube/channel-stats');
+    const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+    set('nvTotalViews',formatCount(data.totalViews));
+    set('nvSubscribers',formatCount(data.totalSubscribers));
+    set('nvVideoCount',formatCount(data.totalVideos));
+    set('nv24hViews',data.last24hAvailable?formatCount(data.last24hViews):'Collecting…');
+    const stamp=document.getElementById('nvStatsUpdated');
+    if(stamp)stamp.textContent=data.last24hAvailable?'Live YouTube data · 24h figure is snapshot-based':'Live YouTube data · collecting 24h baseline';
+  }catch(e){
+    console.warn('Channel stats unavailable:',e.message);
+  }
+}
 function classify(v){
   const t=`${v.title||''} ${v.description||''} ${v.category||''}`.toLowerCase();
   if(/documentary|documentary|full episode/.test(t)) return 'doc';
@@ -41,6 +89,10 @@ async function load(){
     const bg=document.getElementById('blogGrid'); if(bg) bg.innerHTML=(Array.isArray(bs)?bs:[]).map(b=>`<article class="blog"><div class="img">${b.featured_image?`<img src="${escapeHTML(b.featured_image)}" alt="" loading="lazy">`:''}</div><div class="body"><span class="meta">${escapeHTML(b.author||'Nikhil')}</span><h3>${escapeHTML(b.title||'')}</h3><p class="meta">${escapeHTML(b.excerpt||'')}</p></div></article>`).join('')||'<p class="meta">No articles yet.</p>';
     const plans=document.getElementById('plans'); if(plans) plans.innerHTML=(Array.isArray(ps)?ps:[]).filter(p=>p.active!==0).map(p=>`<div class="plan"><span>${escapeHTML(p.name)}</span><h3>₹<strong>${escapeHTML(p.price)}</strong> / ${escapeHTML(p.period)}</h3><p>${escapeHTML(p.features)}</p><button onclick="alert('Premium checkout can be enabled from the admin payment settings.')">Join Premium</button></div>`).join('');
     window.dispatchEvent(new CustomEvent('nv:content-loaded',{detail:{videos}}));
+    refreshLiveVideoStats(videos);
+    refreshChannelStats();
+    clearInterval(window.nvStatsTimer);
+    window.nvStatsTimer=setInterval(()=>{refreshLiveVideoStats(videos);refreshChannelStats();},60000);
   }catch(error){
     console.error('Load error:',error);
     ['videoGrid','docGrid','scifiGrid','showGrid','blogGrid'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.children.length)el.innerHTML='<p class="meta">Content is temporarily unavailable. Please refresh in a moment.</p>';});
