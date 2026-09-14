@@ -260,7 +260,7 @@ async function syncYouTube() {
       const videoResponse = await youtubeGet(
         'videos',
         {
-          part: 'contentDetails,snippet,status',
+          part: 'contentDetails,snippet,status,statistics,player',
           id: batchIds.join(',')
         }
       );
@@ -440,7 +440,22 @@ async function syncYouTube() {
           source: 'youtube',
 
           youtube_url:
-            `https://www.youtube.com/watch?v=${videoId}`
+            `https://www.youtube.com/watch?v=${videoId}`,
+
+          // Live YouTube public statistics
+          view_count:
+            video.statistics?.viewCount ||
+            existing?.view_count ||
+            '0',
+
+          like_count:
+            video.statistics?.likeCount ||
+            existing?.like_count ||
+            '0',
+
+          // Whether YouTube allows this video to be embedded.
+          embeddable:
+            video.status?.embeddable !== false
         };
 
 
