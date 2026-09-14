@@ -4,12 +4,20 @@ async function get(u){
   return r.json();
 }
 function escapeHTML(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+function formatCount(value){
+  const n=Number(value||0);
+  if(!Number.isFinite(n)) return '0';
+  if(n>=1000000) return (n/1000000).toFixed(n>=10000000?0:1).replace(/\.0$/,'')+'M';
+  if(n>=1000) return (n/1000).toFixed(n>=10000?0:1).replace(/\.0$/,'')+'K';
+  return n.toLocaleString('en-IN');
+}
 function card(v){
   const id=v.youtube_id||'';
   const thumb=v.thumbnail||`https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
+  const stats=`👁 ${formatCount(v.view_count)} · 👍 ${formatCount(v.like_count)}`;
   return `<article class="card" data-video-id="${escapeHTML(id)}" tabindex="0" role="button" aria-label="Watch ${escapeHTML(v.title||'video')}">
     <div class="thumb"><img src="${escapeHTML(thumb)}" alt="${escapeHTML(v.title||'')}" loading="lazy"><span class="play-overlay">▶</span></div>
-    <div class="body"><span class="meta">${v.access==='premium'?'🔒 PREMIUM':'FREE'} · ${escapeHTML(v.channel||'NIKHILVERSE')}</span><h3>${escapeHTML(v.title||'')}</h3><div class="meta">${escapeHTML(v.category||'Story')}</div></div>
+    <div class="body"><span class="meta">${v.access==='premium'?'🔒 PREMIUM':'FREE'} · ${escapeHTML(v.channel||'NIKHILVERSE')}</span><h3>${escapeHTML(v.title||'')}</h3><div class="meta">${escapeHTML(v.category||'Story')} · ${stats}</div></div>
   </article>`;
 }
 function classify(v){
