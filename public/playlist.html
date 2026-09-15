@@ -58,5 +58,5 @@ a{color:inherit;text-decoration:none}
 <script>
 (function(){const b=document.getElementById('nvMobileNavBtn'),m=document.getElementById('nvMobileNav');if(!b||!m)return;b.addEventListener('click',e=>{e.stopPropagation();const o=m.classList.toggle('open');b.setAttribute('aria-expanded',String(o));});m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>m.classList.remove('open')));document.addEventListener('click',e=>{if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==b)m.classList.remove('open');});})();
 </script>
-<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});</script></body>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});</script><script src="/site-ui.js"></script></body>
 </html>

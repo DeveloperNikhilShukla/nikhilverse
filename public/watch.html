@@ -83,4 +83,4 @@ $('#youtubeCommentBtn').onclick=async()=>{const text=$('#commentText').value.tri
 $('#refreshYTComments').onclick=loadYouTubeComments;
 document.querySelectorAll('.reaction').forEach(b=>b.onclick=()=>{const k='nv_react_'+current.youtube_id+'_'+b.dataset.r;let n=Number(localStorage.getItem(k)||0)+1;localStorage.setItem(k,n);b.querySelector('span').textContent=n;});
 setInterval(saveProgress,10000);window.addEventListener('beforeunload',saveProgress);load();
-</script></body></html>
+</script><script src="/site-ui.js"></script></body></html>
