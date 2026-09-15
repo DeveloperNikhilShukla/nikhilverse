@@ -1,16 +1,11 @@
-NIKHILVERSE — LIVE YOUTUBE STATS + CARD/CAROUSEL INFO FIX
+NIKHILVERSE VIDEO INTERNAL FIX
 
-Replace these files in your GitHub repo:
-1. server/index.js
-2. public/app.js
-3. public/watch.html
+Replace in GitHub:
+public/index.html
+public/app.js
+public/watch.html
+public/playlist.html
+server/index.js
 
-What this fixes:
-- Live YouTube view count, like count and comment count on every video card.
-- Live stats on the watch page.
-- /api/youtube/stats endpoint for fresh public stats.
-- Server refreshes YouTube statistics in batches (up to 50 IDs/request) and caches for 2 minutes.
-- Rich stats/info chips on video cards so mobile cards also show the requested information.
-- Watch-page sidebar shows views/likes/comments for related videos.
-
-Important: YOUTUBE_API_KEY must be present in Render Environment Variables.
+This version preserves YouTube auto-sync, makes all home video cards and hero slides open /watch.html?id=VIDEO_ID instead of YouTube, fixes the logo path, and adds /api/playlists plus /api/playlist for internal playlist pages.
+Do not change Render environment secrets. Commit to main, wait for Render deploy, then hard refresh with Ctrl+F5.
