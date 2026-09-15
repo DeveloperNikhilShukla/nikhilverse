@@ -96,3 +96,56 @@
   function init(){addCSS();theme();addThemeButtons();addAppButtons();addSocials();stylePlayer();stylePills();enhanceBlog();}
   document.addEventListener('DOMContentLoaded',init);window.addEventListener('load',init);window.addEventListener('nv:content-loaded',init);
 })();
+
+/* NIKHILVERSE cinematic initial loader */
+(function(){
+  if (window.__NV_INITIAL_LOADER__) return;
+  window.__NV_INITIAL_LOADER__ = true;
+  const style = document.createElement('style');
+  style.textContent = `
+    #nvInitialLoader{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#04070d;color:#f4f8ff;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+    #nvInitialLoader.hide{opacity:0;visibility:hidden;pointer-events:none}
+    #nvInitialLoader:before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 42%,rgba(26,133,255,.18),transparent 25%),radial-gradient(circle at 18% 20%,rgba(229,9,20,.12),transparent 24%),radial-gradient(circle at 82% 72%,rgba(93,63,255,.12),transparent 28%);animation:nvLoaderGlow 5s ease-in-out infinite alternate}
+    .nv-loader-grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 90%)}
+    .nv-loader-box{position:relative;width:min(520px,88vw);padding:34px 28px 30px;text-align:center;border:1px solid rgba(74,150,224,.3);border-radius:28px;background:linear-gradient(145deg,rgba(8,18,32,.94),rgba(5,10,19,.9));box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 70px rgba(21,128,255,.10);backdrop-filter:blur(18px)}
+    .nv-loader-logo{width:78px;height:78px;border-radius:50%;object-fit:cover;border:1px solid rgba(125,190,255,.55);box-shadow:0 0 0 8px rgba(45,145,255,.05),0 0 35px rgba(45,145,255,.35);animation:nvLoaderPulse 2s ease-in-out infinite}
+    .nv-loader-title{margin:18px 0 4px;font-size:26px;letter-spacing:.12em;font-weight:950}
+    .nv-loader-sub{margin:0;color:#91a8c0;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+    .nv-loader-status{margin-top:22px;color:#dcecff;font-size:13px}
+    .nv-loader-bar{height:5px;margin:14px auto 0;width:min(330px,80%);border-radius:99px;overflow:hidden;background:#122238}
+    .nv-loader-bar span{display:block;width:35%;height:100%;border-radius:99px;background:linear-gradient(90deg,#148eff,#70d8ff,#e50914);box-shadow:0 0 18px rgba(49,157,255,.65);animation:nvLoaderSweep 1.25s linear infinite}
+    .nv-loader-skeletons{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:24px;opacity:.72}
+    .nv-loader-skel{height:54px;border-radius:9px;background:linear-gradient(100deg,#0c1a2b 25%,#19314b 40%,#0c1a2b 55%);background-size:250% 100%;animation:nvShimmer 1.45s linear infinite}
+    .nv-loader-skel:nth-child(2){animation-delay:.18s}.nv-loader-skel:nth-child(3){animation-delay:.36s}
+    .nv-loader-note{margin-top:16px;color:#607b95;font-size:11px}
+    @keyframes nvShimmer{to{background-position:-250% 0}}
+    @keyframes nvLoaderSweep{0%{transform:translateX(-280%)}100%{transform:translateX(330%)}}
+    @keyframes nvLoaderPulse{50%{transform:scale(1.035);box-shadow:0 0 0 10px rgba(45,145,255,.04),0 0 48px rgba(45,145,255,.5)}}
+    @keyframes nvLoaderGlow{to{transform:scale(1.08) rotate(3deg);filter:hue-rotate(12deg)}}
+    @media(max-width:560px){.nv-loader-box{padding:28px 20px 24px;border-radius:22px}.nv-loader-logo{width:68px;height:68px}.nv-loader-title{font-size:21px}.nv-loader-skeletons{gap:6px}.nv-loader-skel{height:44px}}
+    @media(prefers-reduced-motion:reduce){#nvInitialLoader:before,.nv-loader-logo,.nv-loader-bar span,.nv-loader-skel{animation:none!important}.nv-loader-bar span{width:100%}}
+  `;
+  document.head.appendChild(style);
+  const loader = document.createElement('div');
+  loader.id='nvInitialLoader';
+  loader.setAttribute('aria-busy','true');
+  loader.innerHTML=`<div class="nv-loader-grid"></div><div class="nv-loader-box"><img class="nv-loader-logo" src="/nikhilverse-logo.png" onerror="this.style.display='none'" alt="NIKHILVERSE"><div class="nv-loader-title">NIKHILVERSE</div><p class="nv-loader-sub">Discover stories worth watching</p><div class="nv-loader-status" id="nvLoaderStatus">Connecting to NIKHILVERSE…</div><div class="nv-loader-bar"><span></span></div><div class="nv-loader-skeletons"><i class="nv-loader-skel"></i><i class="nv-loader-skel"></i><i class="nv-loader-skel"></i></div><div class="nv-loader-note">Fetching the latest videos & YouTube data</div></div>`;
+  (document.body || document.documentElement).prepend(loader);
+  const started=Date.now();
+  let apiDone=false, pageLoaded=false;
+  const status=()=>document.getElementById('nvLoaderStatus');
+  const hide=()=>{if(Date.now()-started<700)return setTimeout(hide,700-(Date.now()-started));loader.classList.add('hide');loader.setAttribute('aria-busy','false');setTimeout(()=>loader.remove(),600)};
+  const check=()=>{if(pageLoaded && apiDone) hide();};
+  const observer=()=>{
+    try{
+      const entries=performance.getEntriesByType('resource').map(x=>x.name);
+      apiDone=entries.some(x=>/\/api\/(videos|youtube|playlists|playlist|blogs|plans)/i.test(x));
+    }catch(e){}
+    if(apiDone && status()) status().textContent='Latest data loaded ✓';
+    check();
+  };
+  window.addEventListener('load',()=>{pageLoaded=true;setTimeout(observer,180);setTimeout(observer,650);});
+  const perfTimer=setInterval(observer,350);
+  setTimeout(()=>{clearInterval(perfTimer);hide();},9000);
+  setTimeout(()=>{if(status() && !apiDone)status().textContent='Loading your NIKHILVERSE experience…';},1800);
+})();
