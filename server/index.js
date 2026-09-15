@@ -41,6 +41,7 @@ const initial = {
     }
   ],
   payments: [],
+  youtubeSnapshots: [],
   settings: {
     site_name: 'NIKHILVERSE',
     youtube_sync: 'off',
@@ -57,6 +58,9 @@ try {
   db = initial;
   save();
 }
+
+if (!Array.isArray(db.youtubeSnapshots)) db.youtubeSnapshots = [];
+if (!db.settings) db.settings = {};
 
 function save() {
   fs.writeFileSync(dbFile, JSON.stringify(db, null, 2));
@@ -418,6 +422,8 @@ async function syncYouTube() {
 
           youtube_id: videoId,
 
+          channel_id: channelItem.id,
+
           channel: channel.name,
 
           category:
@@ -713,6 +719,161 @@ app.get('/api/youtube/stats', async (req, res) => {
       embeddable: v.embeddable !== false
     }))
   });
+});
+
+// ======================================================
+// YOUTUBE CHANNEL STATS + 24H SNAPSHOTS
+// ======================================================
+let ytChannelStatsCache = { at: 0, data: null };
+
+function pruneYouTubeSnapshots() {
+  const cutoff = Date.now() - 3 * 24 * 60 * 60 * 1000;
+  db.youtubeSnapshots = (db.youtubeSnapshots || []).filter(x => Date.parse(x.at) >= cutoff);
+  if (db.youtubeSnapshots.length > 500) db.youtubeSnapshots = db.youtubeSnapshots.slice(-500);
+}
+
+async function getChannelStatsFresh() {
+  const ids = [];
+  const names = {};
+  for (const ch of youtubeChannels) {
+    const r = await youtubeGet('channels', { part: 'id,snippet,statistics', forHandle: ch.handle });
+    const item = r.items?.[0];
+    if (item) {
+      ids.push(item.id);
+      names[item.id] = { name: ch.name, handle: ch.handle };
+    }
+  }
+  if (!ids.length) throw new Error('No configured YouTube channels found');
+
+  const response = await youtubeGet('channels', { part: 'snippet,statistics', id: ids.join(',') });
+  const now = new Date().toISOString();
+  const channels = (response.items || []).map(item => {
+    const st = item.statistics || {};
+    const info = names[item.id] || {};
+    return {
+      channelId: item.id,
+      name: info.name || item.snippet?.title || 'YouTube',
+      handle: info.handle || '',
+      title: item.snippet?.title || info.name || 'YouTube',
+      thumbnail: item.snippet?.thumbnails?.default?.url || '',
+      views: Number(st.viewCount || 0),
+      subscribers: Number(st.subscriberCount || 0),
+      videos: Number(st.videoCount || 0),
+      hiddenSubscribers: !!st.hiddenSubscriberCount,
+      at: now
+    };
+  });
+
+  pruneYouTubeSnapshots();
+  for (const ch of channels) {
+    const last = [...db.youtubeSnapshots].reverse().find(x => x.channelId === ch.channelId);
+    if (!last || Date.now() - Date.parse(last.at) >= 5 * 60 * 1000) {
+      db.youtubeSnapshots.push({ channelId: ch.channelId, views: ch.views, at: now });
+    }
+  }
+  pruneYouTubeSnapshots();
+  save();
+
+  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+  for (const ch of channels) {
+    const history = (db.youtubeSnapshots || [])
+      .filter(x => x.channelId === ch.channelId && Date.parse(x.at) <= Date.parse(ch.at))
+      .sort((a,b) => Date.parse(a.at) - Date.parse(b.at));
+    const old = history.find(x => Date.parse(x.at) <= cutoff) || history[0];
+    ch.views24h = old ? Math.max(0, ch.views - Number(old.views || 0)) : 0;
+    ch.has24hBaseline = !!old && Date.now() - Date.parse(old.at) >= 23 * 60 * 60 * 1000;
+  }
+
+  const total = channels.reduce((a,c)=>a+c.views,0);
+  const subscribers = channels.reduce((a,c)=>a+c.subscribers,0);
+  const videos = channels.reduce((a,c)=>a+c.videos,0);
+  const views24h = channels.reduce((a,c)=>a+c.views24h,0);
+  return {
+    ok: true,
+    updatedAt: now,
+    channels,
+    combined: { views: total, subscribers, videos, views24h,
+      has24hBaseline: channels.every(c => c.has24hBaseline) }
+  };
+}
+
+app.get('/api/youtube/channel-stats', async (req, res) => {
+  try {
+    const now = Date.now();
+    if (ytChannelStatsCache.data && now - ytChannelStatsCache.at < 120000) return res.json(ytChannelStatsCache.data);
+    const data = await getChannelStatsFresh();
+    ytChannelStatsCache = { at: now, data };
+    res.json(data);
+  } catch (e) {
+    console.error('Channel stats error:', e.message || e);
+    res.status(500).json({ ok:false, error:e.message || 'YouTube channel stats unavailable' });
+  }
+});
+
+// ======================================================
+// YOUTUBE COMMENTS: PUBLIC READ + OWNER OAUTH WRITE
+// ======================================================
+
+async function youtubeOAuthAccessToken() {
+  const refreshToken = process.env.YOUTUBE_REFRESH_TOKEN;
+  const clientId = process.env.YOUTUBE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.YOUTUBE_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET;
+  if (!refreshToken || !clientId || !clientSecret) return null;
+  const r = await fetch('https://oauth2.googleapis.com/token', {
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({client_id:clientId,client_secret:clientSecret,refresh_token:refreshToken,grant_type:'refresh_token'})
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data?.error_description || data?.error || 'YouTube OAuth token refresh failed');
+  return data.access_token;
+}
+
+async function youtubeOAuthRequest(endpoint, params, method='GET', body=null) {
+  const token = await youtubeOAuthAccessToken();
+  if (!token) throw new Error('YouTube OAuth is not configured. Add YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET and YOUTUBE_REFRESH_TOKEN.');
+  const url = new URL(YOUTUBE_API_BASE + '/' + endpoint);
+  Object.entries(params || {}).forEach(([k,v])=>url.searchParams.set(k,v));
+  const r = await fetch(url, {method, headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : undefined});
+  const data = await r.json();
+  if (!r.ok) throw new Error(data?.error?.message || `YouTube OAuth API error ${r.status}`);
+  return data;
+}
+
+app.get('/api/youtube/comments', async (req,res) => {
+  try {
+    const videoId = String(req.query.videoId || '').trim();
+    const maxResults = Math.min(100, Math.max(1, Number(req.query.maxResults || 20)));
+    if (!videoId) return res.status(400).json({ok:false,error:'videoId is required'});
+    const data = await youtubeGet('commentThreads', {part:'snippet', videoId, maxResults, order:'relevance', textFormat:'plainText'});
+    const comments = (data.items || []).map(item => {
+      const s = item.snippet?.topLevelComment?.snippet || {};
+      return {id:item.id, author:s.authorDisplayName || 'YouTube user', avatar:s.authorProfileImageUrl || '', text:s.textDisplay || s.textOriginal || '', publishedAt:s.publishedAt || '', likeCount:Number(s.likeCount || 0)};
+    });
+    res.json({ok:true, comments, nextPageToken:data.nextPageToken || null});
+  } catch(e) {
+    console.error('YouTube comments read error:', e.message || e);
+    res.status(500).json({ok:false,error:e.message || 'Unable to load YouTube comments'});
+  }
+});
+
+app.post('/api/youtube/comments', async (req,res) => {
+  try {
+    const videoId = String(req.body?.videoId || '').trim();
+    const text = String(req.body?.text || '').trim();
+    if (!videoId || !text) return res.status(400).json({ok:false,error:'videoId and text are required'});
+    if (text.length > 10000) return res.status(400).json({ok:false,error:'Comment is too long'});
+    const video = db.videos.find(v => String(v.youtube_id) === videoId);
+    if (!video?.channel_id) return res.status(400).json({ok:false,error:'Video channel ID is not available. Run YouTube Sync first.'});
+    const data = await youtubeOAuthRequest('commentThreads', {part:'snippet'}, 'POST', {
+      snippet:{channelId:video.channel_id, videoId, topLevelComment:{snippet:{textOriginal:text}}}
+    });
+    const s = data.snippet?.topLevelComment?.snippet || {};
+    res.json({ok:true,comment:{id:data.id,author:s.authorDisplayName || 'YouTube',text:s.textDisplay || text,publishedAt:s.publishedAt || new Date().toISOString(),likeCount:Number(s.likeCount || 0)}});
+  } catch(e) {
+    console.error('YouTube comment write error:', e.message || e);
+    res.status(500).json({ok:false,error:e.message || 'Unable to post comment to YouTube'});
+  }
 });
 
 // ======================================================
@@ -1530,6 +1691,10 @@ app.get(
       )
     )
 );
+
+// Keep channel snapshots fresh while the Render instance is awake.
+setTimeout(() => { getChannelStatsFresh().catch(()=>{}); }, 5000);
+setInterval(() => { getChannelStatsFresh().catch(()=>{}); }, 15 * 60 * 1000);
 
 
 // ======================================================
