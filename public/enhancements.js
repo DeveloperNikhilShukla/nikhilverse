@@ -35,9 +35,6 @@
 
     // App links in header/footer, admin links hidden from public UI
     $$('a[href="/admin/"],a[href="/admin"]').forEach(a=>a.remove());
-    addMobileNavigation();
-    const actions=$('.header-actions');
-    if(actions && !actions.querySelector('.nv-app-btn')){ const a=document.createElement('a'); a.className='nv-app-btn'; a.href=APK; a.target='_blank'; a.rel='noopener'; a.textContent='📱 Android App'; actions.insertBefore(a, actions.firstChild); }
     const footer=$('footer');
     if(footer && !footer.querySelector('.nv-footer-app')){ const a=document.createElement('a'); a.className='nv-app-btn nv-footer-app'; a.href=APK; a.target='_blank'; a.rel='noopener'; a.textContent='📱 Download Android App'; a.style.margin='12px 0'; footer.appendChild(a); }
 

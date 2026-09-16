@@ -48,12 +48,12 @@
     document.querySelectorAll('.nv-theme-btn').forEach(b=>{b.textContent=saved==='light'?'🌙':'☀️';b.title=saved==='light'?'Switch to dark mode':'Switch to light mode';});
   }
   function addThemeButtons(){
-    const containers=[...document.querySelectorAll('.header-actions')];
+    const containers=[...document.querySelectorAll('.header-actions,.actions')];
     containers.forEach(c=>{if(c.querySelector('.nv-theme-btn'))return;const b=document.createElement('button');b.className='nv-theme-btn';b.type='button';b.textContent='☀️';b.onclick=()=>{const light=!document.body.classList.contains('nv-light');localStorage.setItem('nv_theme',light?'light':'dark');theme()};c.appendChild(b)});
   }
   function addAppButtons(){
     // Header: place App next to Nikhil AI where the user expects it.
-    document.querySelectorAll('.header-actions').forEach(c=>{
+    document.querySelectorAll('.header-actions,.actions').forEach(c=>{
       if(c.querySelector('.nv-header-app'))return;
       const a=document.createElement('a');a.className='nv-header-app nv-app-download';a.href=APK;a.target='_blank';a.rel='noopener';a.textContent='📱 App';c.insertBefore(a,c.querySelector('.nv-theme-btn')||null);
     });

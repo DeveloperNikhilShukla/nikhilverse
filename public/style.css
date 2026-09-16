@@ -1160,106 +1160,121 @@ footer > a:hover {
    END
    ========================================================= */
 
-
 /* =========================================================
-   NIKHILVERSE FINAL HEADER / LAYOUT STABILITY PATCH
+   NIKHILVERSE 2026 FINAL HEADER / CINEMATIC OVERRIDES
    ========================================================= */
 header{
-  width:100%;
-  min-width:0;
-  height:76px;
-  padding:0 3.8%;
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr) auto;
-  align-items:center;
-  column-gap:24px;
+  min-height:74px;
+  height:auto;
+  padding:10px clamp(18px,4vw,64px);
+  gap:18px;
+  flex-wrap:nowrap;
   overflow:visible;
-  white-space:nowrap;
 }
-header .brand{min-width:205px;max-width:225px;overflow:hidden}
-header .brand img{width:48px;height:48px;flex:0 0 48px;border-radius:50%}
+header .brand{
+  flex:0 0 auto;
+  min-width:205px;
+  max-width:235px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+header .brand img{
+  width:50px;
+  height:50px;
+  flex:0 0 50px;
+  object-fit:cover;
+  border-radius:50%;
+  display:block;
+}
 header .brand span{min-width:0}
-header .brand span b{font-size:18px;white-space:nowrap}
+header .brand span b{display:block;font-size:18px;line-height:1.1;white-space:nowrap;letter-spacing:.8px}
+header .brand span small{display:block;font-size:8px;letter-spacing:3px;margin-top:4px;white-space:nowrap;color:#8d9db0}
 header nav{
   min-width:0;
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
   overflow-x:auto;
   overflow-y:visible;
+  white-space:nowrap;
   scrollbar-width:none;
-  gap:20px;
-  justify-content:flex-start;
 }
 header nav::-webkit-scrollbar{display:none}
 header nav>a,header .playlist-nav-wrap{flex:0 0 auto}
+header nav>a{font-size:12px;padding:9px 0;color:#c5d0df}
+header nav>a.active{color:#fff}
+header .playlist-nav-wrap{display:flex;align-items:center}
+header .playlist-nav-btn{font-size:12px}
 header .header-actions{
-  min-width:0;
   flex:0 0 auto;
-  gap:8px;
   margin-left:0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:7px;
+  white-space:nowrap;
 }
-header .search{width:230px;height:40px}
-header .ai-btn,header .premium-btn,header .profile-btn,header .nv-header-app,header .nv-theme-btn{height:40px}
-header .ai-btn{padding:0 11px}
-header .premium-btn{padding:0 13px}
-header .nv-header-app{padding:0 12px!important}
-header .nv-theme-btn{min-width:40px}
+header .search{width:210px;height:40px;flex:0 1 210px}
+header .search input{font-size:11px}
+header .ai-btn,header .premium-btn,header .profile-btn{height:40px}
+header .ai-btn{padding:0 10px;font-size:11px}
+header .premium-btn{padding:0 12px;font-size:11px}
+header .profile-btn{width:40px;flex:0 0 40px}
+header .nv-theme-btn{height:40px;min-width:40px;padding:0 10px}
+header .nv-header-app{height:40px!important;padding:0 12px!important;font-size:11px!important}
 
-/* Keep injected controls from creating a second visual row. */
-header .header-actions{position:relative;z-index:200}
-header .header-actions>*{flex-shrink:0}
-
-/* Playlist dropdown stays attached to the navigation item. */
-.playlist-nav-wrap{position:relative;z-index:500}
-.playlist-panel{z-index:99999}
-
-/* Hero images always fill the cinematic frame cleanly. */
-.hero{min-height:620px;isolation:isolate}
+/* Keep the hero visually dominant and avoid accidental content overlap. */
+.hero{position:relative;min-height:620px;overflow:hidden}
 .hero-carousel,.hero-slide{position:absolute;inset:0;width:100%;height:100%}
-.hero-slide{opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease}
-.hero-slide.active{opacity:1;visibility:visible}
-.hero-slide>img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-.hero-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,7,13,.96) 0%,rgba(3,7,13,.78) 30%,rgba(3,7,13,.28) 64%,rgba(3,7,13,.58) 100%),linear-gradient(0deg,rgba(3,7,13,.95),transparent 38%);pointer-events:none}
-.hero .hero-content{position:relative;z-index:5}
-.hero .hero-arrow,.hero .hero-dots,.hero .yt-hero-info{z-index:6}
+.hero-slide>img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,7,13,.95) 0%,rgba(3,7,13,.78) 30%,rgba(3,7,13,.26) 67%,rgba(3,7,13,.58) 100%),linear-gradient(0deg,rgba(3,7,13,.96),transparent 42%);pointer-events:none}
+.hero-content{position:relative;z-index:5}
 
-/* Make cards feel like an OTT catalog rather than plain HTML. */
-.card{position:relative;background:linear-gradient(180deg,#0b1522,#07101b);border:1px solid rgba(101,160,210,.12);box-shadow:0 12px 35px rgba(0,0,0,.18)}
-.card .thumb{position:relative}
-.card .thumb:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 58%,rgba(0,0,0,.48));pointer-events:none}
-.play-overlay{position:absolute;left:12px;bottom:12px;z-index:2;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.95);color:#08101f;font-size:13px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
-.card .body{padding:12px 13px 14px}
-.card h3{min-height:38px}
+/* Card polish */
+.grid,.video-grid{align-items:stretch}
+.card{position:relative;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,#0b1522,#07101b);border:1px solid rgba(101,160,210,.16);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.card:hover{transform:translateY(-4px);border-color:rgba(67,165,255,.55);box-shadow:0 18px 40px rgba(0,0,0,.35),0 0 24px rgba(30,140,255,.08)}
+.card .thumb{position:relative;overflow:hidden}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.card:hover .thumb img{transform:scale(1.035)}
+.play-overlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:rgba(7,15,26,.82);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:18px;opacity:0;transition:.22s;z-index:4;pointer-events:none}
+.card:hover .play-overlay{opacity:1;transform:translate(-50%,-50%) scale(1)}
 
-@media(max-width:1500px){
-  header{column-gap:16px}
-  header .brand{min-width:185px;max-width:195px}
-  header nav{gap:14px}
-  header nav a{font-size:12px}
-  header .search{width:190px}
-  header .ai-btn{padding:0 9px}
-  header .premium-btn{padding:0 10px}
-  header .nv-header-app{padding:0 9px!important}
+/* The mobile menu is intentionally disabled; the desktop navigation collapses cleanly. */
+.nv-mobile-menu,.nv-mobile-menu-btn{display:none!important}
+
+@media(max-width:1250px){
+  header{gap:12px;padding-left:20px;padding-right:20px}
+  header nav{gap:12px}
+  header .brand{min-width:190px;max-width:205px}
+  header .brand img{width:46px;height:46px;flex-basis:46px}
+  header .brand span b{font-size:16px}
+  header .search{width:175px;flex-basis:175px}
+  header nav>a,header .playlist-nav-btn{font-size:11px}
 }
-@media(max-width:1180px){
-  header{grid-template-columns:auto minmax(0,1fr);height:72px}
-  header nav{grid-column:2;grid-row:1;max-width:100%}
-  header .header-actions{position:absolute;right:18px;top:76px;background:rgba(5,8,16,.96);padding:8px;border:1px solid #1b2b40;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
-  header .search{width:220px}
+@media(max-width:1050px){
+  header .brand{min-width:170px;max-width:180px}
+  header .brand span small{display:none}
+  header nav{gap:10px}
+  header .search{width:145px;flex-basis:145px}
+  header .ai-btn{padding:0 8px}
+  header .premium-btn{padding:0 9px}
+  header .nv-header-app{display:none!important}
 }
-@media(max-width:760px){
-  header{height:66px;padding:0 12px;grid-template-columns:auto 1fr;column-gap:10px}
-  header .brand{min-width:0;max-width:170px}
-  header .brand img{width:40px;height:40px;flex-basis:40px}
+@media(max-width:800px){
+  header{padding:8px 12px;gap:9px}
+  header .brand{min-width:auto;max-width:155px}
+  header .brand img{width:42px;height:42px;flex-basis:42px}
   header .brand span b{font-size:15px}
-  header .brand span small{font-size:7px;letter-spacing:1px}
-  header nav{display:none}
-  header .header-actions{top:68px;right:10px;left:10px;justify-content:flex-end;overflow-x:auto}
-  header .search{width:min(48vw,240px)}
-  header .ai-btn span{display:none}
-  header .nv-header-app{font-size:0!important;width:40px;padding:0!important;justify-content:center}
-  header .nv-header-app:first-letter{font-size:16px}
-  .hero{min-height:540px;padding:0 7% 85px}
-  .hero-content{max-width:90%}
-  .hero h1{font-size:clamp(38px,11vw,58px)!important}
-  .hero h2{font-size:13px;letter-spacing:4px}
-  .hero p{font-size:13px}
+  header nav{order:3;position:absolute;left:12px;right:12px;top:68px;background:rgba(5,8,16,.98);padding:8px 10px;border:1px solid #1d3650;border-radius:12px;display:none;box-shadow:0 18px 45px rgba(0,0,0,.55)}
+  header .header-actions{margin-left:auto}
+  header .search{display:none}
+  header .ai-btn{font-size:0;width:40px;padding:0}
+  header .ai-btn:first-letter{font-size:16px}
+  header .premium-btn{font-size:0;width:40px;padding:0}
+  header .premium-btn:first-letter{font-size:15px}
+  header .profile-btn{display:none}
+  .hero{min-height:540px}
 }

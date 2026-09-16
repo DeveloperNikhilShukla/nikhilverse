@@ -40,7 +40,7 @@
 
   <link
     rel="stylesheet"
-    href="/style.css"
+    href="/style.css?v=20260916-final"
   >
 
 
@@ -905,14 +905,10 @@
         const videos =
           await response.json();
 
-        const cleanHero = videos.filter(v => {
-          if (!v.thumbnail || !v.youtube_id) return false;
-          const text = `${v.title || ''} ${v.description || ''}`.toLowerCase();
-          return !/(disclaimer|work of fiction|fiction and meant|purely fictional|no animals were hurt|mature subject matter|viewer.?s discretion|company and\/or platform)/i.test(text);
-        });
-        const latest = (cleanHero.length ? cleanHero : videos)
-          .filter(v => v.thumbnail && v.youtube_id)
-          .slice(0, 5);
+        const latest =
+          videos
+            .filter(v => v.thumbnail && v.youtube_id)
+            .slice(0, 5);
 
         if (!latest.length) {
           return;
