@@ -40,7 +40,7 @@
 
   <link
     rel="stylesheet"
-    href="/style.css?v=20260916-final"
+    href="/style.css?v=20260916-polish2"
   >
 
 
@@ -923,7 +923,7 @@
             const safeChannel = String(video.channel || 'YouTube').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
             const views = window.NVFormat ? window.NVFormat(video.view_count) : Number(video.view_count||0).toLocaleString('en-IN');
             const likes = window.NVFormat ? window.NVFormat(video.like_count) : Number(video.like_count||0).toLocaleString('en-IN');
-            return `<div class="hero-slide ${index === 0 ? "active" : ""}" data-index="${index}" onclick="window.location.href='/watch.html?id='+encodeURIComponent('${video.youtube_id}')"><img src="${video.thumbnail}" alt="${safeTitle}"><div class="yt-hero-info"><b>${safeTitle}</b><div class="yt-hero-meta">${safeChannel} · 👁 ${views} · 👍 ${likes}</div><a class="yt-hero-btn" href="https://www.youtube.com/watch?v=${encodeURIComponent(video.youtube_id)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ Watch on YouTube ↗</a></div></div>`;
+            return `<div class="hero-slide ${index === 0 ? "active" : ""}" data-index="${index}" onclick="window.location.href='/watch.html?id='+encodeURIComponent('${video.youtube_id}')"><img src="${video.thumbnail}" alt="${safeTitle}"></div>`;
 
           }).join("");
 
@@ -1235,8 +1235,8 @@
 window.NVFormat=function(value){const n=Number(value||0);if(!Number.isFinite(n))return '0';if(n>=1e9)return (n/1e9).toFixed(n>=1e10?0:1).replace(/\.0$/,'')+'B';if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1).replace(/\.0$/,'')+'M';if(n>=1e3)return (n/1e3).toFixed(n>=1e4?0:1).replace(/\.0$/,'')+'K';return n.toLocaleString('en-IN')};
 async function loadYouTubeChannelStats(){try{const r=await fetch('/api/youtube/channel-stats',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();const grid=document.getElementById('ytChannelGrid');if(grid&&Array.isArray(d.channels)&&d.channels.length){grid.innerHTML=d.channels.map(c=>`<div class="yt-channel"><div class="yt-channel-name">${String(c.name||'YouTube').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}</div><div class="yt-channel-stats"><div class="yt-stat"><small>Total Views</small><b>${NVFormat(c.views)}</b></div><div class="yt-stat"><small>Subscribers</small><b>${c.hiddenSubscribers?'Hidden':NVFormat(c.subscribers)}</b></div><div class="yt-stat"><small>Total Videos</small><b>${NVFormat(c.videos)}</b></div><div class="yt-stat"><small>Last 24 Hours</small><b>${c.has24hBaseline?NVFormat(c.views24h):'Collecting…'}</b></div></div></div>`).join('')}const x=d.combined||{};const combined=document.getElementById('ytCombined');if(combined)combined.textContent=`Combined: Total Views ${NVFormat(x.views)} · Subscribers ${NVFormat(x.subscribers)} · Videos ${NVFormat(x.videos)} · Last 24h Views ${x.has24hBaseline?NVFormat(x.views24h):'Collecting…'}`;}catch(e){console.warn('YouTube channel stats unavailable',e)}}
 loadYouTubeChannelStats();setInterval(loadYouTubeChannelStats,120000);
-</script><script src="/app.js"></script><script src="/site-ui.js"></script>
-  <script src="/enhancements.js"></script>
+</script><script src="/app.js?v=20260916-polish2"></script><script src="/site-ui.js?v=20260916-polish2"></script>
+  <script src="/enhancements.js?v=20260916-polish2"></script>
 
 </body>
 
